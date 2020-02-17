@@ -1,4 +1,6 @@
-const stripe = window.Stripe(process.env.GATSBY_STRIPE_PUBLIC_KEY)
+const stripe =
+  typeof window !== "undefined" &&
+  window.Stripe(process.env.GATSBY_STRIPE_PUBLIC_KEY)
 
 export const checkout = async skus => {
   const response = await fetch("/.netlify/functions/createCheckout", {
