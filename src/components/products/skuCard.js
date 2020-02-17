@@ -1,4 +1,5 @@
 import React from "react"
+import { checkout } from "../../stripe/checkout"
 
 const cardStyles = {
   display: "flex",
@@ -35,13 +36,9 @@ const formatPrice = (amount, currency) => {
 }
 
 const SkuCard = class extends React.Component {
-  async redirectToCheckout(event, sku, quantity = 1) {
+  async redirectToCheckout(event, sku) {
     event.preventDefault()
-    const { error } = await this.props.stripe.redirectToCheckout({
-      items: [{ sku, quantity }],
-      successUrl: `http://localhost:8000/page-2/`,
-      cancelUrl: `http://localhost:8000/advanced`,
-    })
+    const { error } = checkout([sku])
 
     if (error) {
       console.warn("Error:", error)
@@ -49,14 +46,17 @@ const SkuCard = class extends React.Component {
   }
 
   render() {
-    const sku = this.props.sku
+    const { sku, onAddToCart } = this.props
     return (
       <div style={cardStyles}>
         <h4>{sku.attributes.name}</h4>
         <p>Price: {formatPrice(sku.price, sku.currency)}</p>
+        <button style={buttonStyles} onClick={() => onAddToCart(sku)}>
+          Add to cart
+        </button>
         <button
           style={buttonStyles}
-          onClick={event => this.redirectToCheckout(event, sku.id)}
+          onClick={event => this.redirectToCheckout(event, sku)}
         >
           BUY ME
         </button>

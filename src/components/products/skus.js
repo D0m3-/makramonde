@@ -11,17 +11,6 @@ const containerStyles = {
 }
 
 class Skus extends Component {
-  // Initialise Stripe.js with your publishable key.
-  // You can find your key in the Dashboard:
-  // https://dashboard.stripe.com/account/apikeys
-  state = {
-    stripe: null,
-  }
-  componentDidMount() {
-    const stripe = window.Stripe(process.env.GATSBY_STRIPE_PUBLIC_KEY)
-    this.setState({ stripe })
-  }
-
   render() {
     return (
       <StaticQuery
@@ -44,7 +33,11 @@ class Skus extends Component {
         render={({ skus }) => (
           <div style={containerStyles}>
             {skus.edges.map(({ node: sku }) => (
-              <SkuCard key={sku.id} sku={sku} stripe={this.state.stripe} />
+              <SkuCard
+                key={sku.id}
+                sku={sku}
+                onAddToCart={this.props.onAddToCart}
+              />
             ))}
           </div>
         )}
