@@ -1,5 +1,5 @@
 import React from "react"
-import { redirectToCheckout } from "../../stripe/checkout"
+import { checkout } from "../../stripe/checkout"
 
 const cardStyles = {
   display: "flex",
@@ -38,7 +38,7 @@ const formatPrice = (amount, currency) => {
 const SkuCard = class extends React.Component {
   async redirectToCheckout(event, sku) {
     event.preventDefault()
-    const { error } = redirectToCheckout([sku])
+    const { error } = checkout([sku])
 
     if (error) {
       console.warn("Error:", error)

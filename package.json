@@ -15,12 +15,14 @@
     "gatsby-source-filesystem": "^2.1.46",
     "gatsby-source-stripe": "^3.0.5",
     "gatsby-transformer-sharp": "^2.3.13",
+    "netlify-lambda": "^1.6.3",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-helmet": "^5.2.1"
   },
   "devDependencies": {
+    "netlify-cli": "^2.32.0",
     "prettier": "^1.19.1"
   },
   "keywords": [
@@ -36,6 +38,7 @@
     "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
+    "postinstall": "netlify-lambda install",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "repository": {
