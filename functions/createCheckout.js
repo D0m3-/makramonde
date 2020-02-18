@@ -1,13 +1,15 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
 
 exports.handler = async function(event, context, callback) {
+  const { origin, referer } = event.headers
+  console.log("context event", context, event)
   const incoming = JSON.parse(event.body)
   const { skuIds } = incoming
   try {
     const skus = await getSkus({ skuIds })
     console.log("skus ", skus)
     console.log("type ", typeof skus)
-    const data = await createCheckout({ skus })
+    const data = await createCheckout({ skus, origin, referer })
     return respond({ id: data.id })
   } catch (err) {
     console.log(err)
@@ -30,7 +32,7 @@ async function getSkus({ skuIds }) {
   return await Promise.all(skuIds.map(async id => stripe.skus.retrieve(id)))
 }
 
-async function createCheckout({ skus }) {
+async function createCheckout({ skus, origin, referer }) {
   console.log("begin checkout session")
   const items = skus.map(sku => ({
     name: sku.attributes.name,
@@ -42,8 +44,8 @@ async function createCheckout({ skus }) {
   console.log("items ", items)
   // create a session
   const session = await stripe.checkout.sessions.create({
-    success_url: "https://example.com/success",
-    cancel_url: "https://example.com/cancel",
+    success_url: `${origin}/success/`,
+    cancel_url: referer,
     payment_method_types: ["card"],
     line_items: items,
   })

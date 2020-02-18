@@ -16,14 +16,3 @@ export const checkout = async skus => {
     sessionId: data.id,
   })
 }
-
-export const redirectToCheckout = async skus =>
-  await stripe.redirectToCheckout({
-    items: skus.map(sku => ({
-      sku: sku.id,
-      quantity: 1,
-    })),
-    successUrl: `http://localhost:8000/page-2/`,
-    cancelUrl: `http://localhost:8000/advanced`,
-    billingAddressCollection: `required`,
-  })
