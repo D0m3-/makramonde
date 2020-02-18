@@ -20,6 +20,7 @@ const IndexPage = () => {
         <Image />
       </div>
       <CartButton items={[...cartItems]} onClear={() => setCartItems([])} />
+      <br />
       <Link to="/test/">Go to test</Link>
     </Layout>
   )

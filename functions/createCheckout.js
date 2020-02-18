@@ -1,14 +1,12 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
+const Shipping = require("../common/constants/shipping")
 
 exports.handler = async function(event, context, callback) {
   const { origin, referer } = event.headers
-  console.log("context event", context, event)
   const incoming = JSON.parse(event.body)
   const { skuIds } = incoming
   try {
     const skus = await getSkus({ skuIds })
-    console.log("skus ", skus)
-    console.log("type ", typeof skus)
     const data = await createCheckout({ skus, origin, referer })
     return respond({ id: data.id })
   } catch (err) {
@@ -28,12 +26,10 @@ const respond = fulfillmentText => {
 }
 
 async function getSkus({ skuIds }) {
-  console.log("get skus ", skuIds)
   return await Promise.all(skuIds.map(async id => stripe.skus.retrieve(id)))
 }
 
-async function createCheckout({ skus, origin, referer }) {
-  console.log("begin checkout session")
+async function createCheckout({ skus, origin, referer, shippingId }) {
   const items = skus.map(sku => ({
     name: sku.attributes.name,
     amount: sku.price,
@@ -41,7 +37,17 @@ async function createCheckout({ skus, origin, referer }) {
     quantity: 1,
     ...(sku.image && { images: [sku.image] }),
   }))
-  console.log("items ", items)
+
+  // Add shipping line
+  const totalAmount = skus.reduce((total, sku) => total + sku.price, 0)
+  const shipping = Shipping.SHIPPING[shippingId || Shipping.FRANCE_METRO]
+  const isDiscount = totalAmount >= shipping.discountFrom
+  items.push({
+    name: (isDiscount && shipping.descriptionDiscount) || shipping.description,
+    amount: (isDiscount && 1) || shipping.amount,
+    currency: shipping.currency,
+    quantity: 1,
+  })
   // create a session
   const session = await stripe.checkout.sessions.create({
     success_url: `${origin}/success/`,
