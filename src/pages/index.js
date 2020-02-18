@@ -11,7 +11,7 @@ const IndexPage = () => {
   const [cartItems, setCartItems] = useState(new Set())
   return (
     <Layout>
-      <SEO title="Home" />
+      <SEO title="Accueil" lang="fr" description="Bijoux uniques en macramé" />
       <h1>Bonjour</h1>
       <p>Welcome to my shop!</p>
       <p>Have a look at my awesome craft.</p>
