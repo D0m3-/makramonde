@@ -1,5 +1,5 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
-const Shipping = require("../common/constants/shipping")
+const Shipping = require("./constants/shipping")
 
 exports.handler = async function(event, context, callback) {
   const { origin, referer } = event.headers
