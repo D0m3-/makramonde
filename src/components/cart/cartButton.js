@@ -3,7 +3,10 @@ import { checkout } from "../../stripe/checkout"
 import { CartContext } from "./cart"
 
 const CartButton = () => {
-  const { items, empty } = useContext(CartContext)
+  const { items, empty } = useContext(CartContext) || {
+    items: [],
+    empy: () => {},
+  }
   return (
     <div>
       <p>{items.length} in the cart</p>

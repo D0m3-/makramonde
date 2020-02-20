@@ -1,12 +1,10 @@
 import React, { useState } from "react"
-import { Link } from "gatsby"
 
-import Layout from "../components/layout"
 import Image from "../components/image"
 import SEO from "../components/seo"
-import Skus from "../components/products/skus"
-import CartButton from "../components/cart/cartButton"
 import { getProductUrl } from "../util/link"
+import Layout from "../components/layout"
+import SwipeLink from "../components/animation/swipe"
 
 const IndexPage = ({ data }) => {
   const firstProduct = data.allStripeProduct.edges[0].node
@@ -15,9 +13,9 @@ const IndexPage = ({ data }) => {
       <SEO title="Accueil" lang="fr" description="Bijoux uniques en macramé" />
       <h1>Bonjour</h1>
       <p>Bienvenue dans ma boutique</p>
-      <Link to={getProductUrl(firstProduct)}>
+      <SwipeLink direction="left" to={getProductUrl(firstProduct)}>
         Par ici pour voir mes créations !
-      </Link>
+      </SwipeLink>
       <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
         <Image />
       </div>

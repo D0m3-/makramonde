@@ -1,11 +1,12 @@
 import React, { useContext } from "react"
-import { graphql, Link } from "gatsby"
+import { graphql } from "gatsby"
 
-import Layout from "../components/layout"
 import { formatPrice } from "../util/price"
 import { CartContext } from "../components/cart/cart"
 import { checkout } from "../stripe/checkout"
 import { getProductUrl } from "../util/link"
+import Layout from "../components/layout"
+import SwipeLink from "../components/animation/swipe"
 
 const Product = ({ data }) => {
   const product = data.stripeProduct
@@ -13,7 +14,7 @@ const Product = ({ data }) => {
   const { next, previous } = data.allStripeProduct.edges.find(
     edge => edge.node.id == product.id
   )
-  const { addItem } = useContext(CartContext)
+  const { addItem } = useContext(CartContext) || { addItem: () => {} }
   return (
     <Layout>
       <h1>{product.name}</h1>
@@ -28,8 +29,16 @@ const Product = ({ data }) => {
       <button onClick={() => addItem(sku)}>Ajouter au panier</button>
       <button onClick={() => checkout([sku])}>Acheter immediatement</button>
       <br></br>
-      {previous && <Link to={getProductUrl(previous)}>{"<"}</Link>}
-      {next && <Link to={getProductUrl(next)}>{">"}</Link>}
+      {previous && (
+        <SwipeLink direction="right" to={getProductUrl(previous)}>
+          {"<"}
+        </SwipeLink>
+      )}
+      {next && (
+        <SwipeLink direction="left" to={getProductUrl(next)}>
+          {">"}
+        </SwipeLink>
+      )}
     </Layout>
   )
 }

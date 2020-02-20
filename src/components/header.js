@@ -1,7 +1,8 @@
-import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
 import CartButton from "./cart/cartButton"
+import AniLink from "gatsby-plugin-transition-link/AniLink"
+import SwipeLink from "./animation/swipe"
 
 const Header = ({ siteTitle }) => {
   return (
@@ -19,7 +20,8 @@ const Header = ({ siteTitle }) => {
         }}
       >
         <h1 style={{ margin: 0 }}>
-          <Link
+          <SwipeLink
+            direction="right"
             to="/"
             style={{
               color: `white`,
@@ -27,7 +29,7 @@ const Header = ({ siteTitle }) => {
             }}
           >
             {siteTitle}
-          </Link>
+          </SwipeLink>
         </h1>
         <CartButton />
       </div>
