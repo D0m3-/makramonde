@@ -5,11 +5,11 @@
  */
 
 const path = require("path")
+const { getProductUrl } = require("./src/util/link")
 
 exports.createPages = async ({ graphql, actions }) => {
   // **Note:** The graphql function call returns a Promise
   // see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise for more info
-  const slug = require("slug")
 
   const { createPage } = actions
 
@@ -31,7 +31,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   result.data.allStripeProduct.edges.forEach(({ node }) =>
     createPage({
-      path: `/products/${slug(node.name)}-${node.created}`,
+      path: getProductUrl(node),
       component: path.resolve(`./src/templates/product.js`),
       context: {
         // Data passed to context is available

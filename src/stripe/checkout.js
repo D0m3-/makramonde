@@ -9,7 +9,7 @@ export const checkout = async skus => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ skuIds: skus.map(skus => skus.id) }),
+    body: JSON.stringify({ skuIds: skus.map(sku => sku.id) }),
   })
   const data = await response.json()
   return stripe.redirectToCheckout({
