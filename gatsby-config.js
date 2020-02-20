@@ -35,9 +35,15 @@ module.exports = {
     {
       resolve: `gatsby-source-stripe`,
       options: {
-        objects: ["Sku"],
+        objects: ["Sku", "Product"],
         secretKey: process.env.STRIPE_SECRET_KEY,
         downloadFiles: true,
+      },
+    },
+    {
+      resolve: "gatsby-plugin-transition-link",
+      options: {
+        layout: require.resolve(`./src/components/pageWrapper.js`),
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
