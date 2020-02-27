@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { checkout } from '../../stripe/checkout'
 import { CartContext } from './cart'
 import { Icon, Badge, Button } from 'antd'
-import styles from './cartButton.module.less'
+import styles from './cartButton2.module.less'
 import cx from 'classnames'
 
 const CartButton = () => {
