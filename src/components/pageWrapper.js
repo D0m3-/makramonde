@@ -6,7 +6,7 @@ import { hot } from 'react-hot-loader/root'
 const PageWrapper = ({ children, data }) => {
   return (
     <CartProvider>
-      <Layout pageTitle={data.stripeProduct && data.stripeProduct.name}>
+      <Layout pageTitle={data && data.stripeProduct && data.stripeProduct.name}>
         {children}
       </Layout>
     </CartProvider>
