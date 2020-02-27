@@ -3,6 +3,7 @@ import { checkout } from '../../stripe/checkout'
 import { CartContext } from './cart'
 import { Icon, Badge, Button } from 'antd'
 import styles from './cartButton.module.less'
+import cx from 'classnames'
 
 const CartButton = () => {
   const { items, empty } = useContext(CartContext) || {
@@ -18,9 +19,13 @@ const CartButton = () => {
           type="shopping-cart"
         ></Icon>
       </Badge>
-      {!!items.length && (
-        <Icon className={styles.delete} onClick={empty} type="delete"></Icon>
-      )}
+      <Icon
+        className={cx(styles.delete, {
+          [styles.hide]: !items.length
+        })}
+        onClick={empty}
+        type="delete"
+      ></Icon>
     </>
   )
 }

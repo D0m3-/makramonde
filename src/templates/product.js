@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { graphql } from 'gatsby'
 
 import { formatPrice } from '../util/price'
@@ -6,10 +6,28 @@ import { CartContext } from '../components/cart/cart'
 import { checkout } from '../stripe/checkout'
 import { getProductUrl } from '../util/link'
 import SwipeLink from '../components/animation/swipe'
-import { Row, Col, Button } from 'antd'
+import { Row, Col, Button, Modal } from 'antd'
 import styles from './product.module.less'
 
+const Arrow = ({ node, icon, direction }) => (
+  <SwipeLink
+    className={styles.arrowContainer}
+    direction={direction === 'right' ? 'left' : 'right'}
+    to={node && getProductUrl(node)}
+  >
+    <Button
+      type="primary"
+      ghost
+      icon={direction}
+      disabled={!node}
+      block
+      className={styles.arrow}
+    ></Button>
+  </SwipeLink>
+)
+
 const Product = ({ data }) => {
+  const [image, setImage] = useState()
   const product = data.stripeProduct
   const sku = data.stripeSku
   const { next, previous } = data.allStripeProduct.edges.find(
@@ -19,52 +37,60 @@ const Product = ({ data }) => {
   return (
     <Row type="flex" align="middle" className={'full-height'}>
       <Col span={2}>
-        <SwipeLink
-          className={styles.arrowContainer}
-          direction="right"
-          to={previous && getProductUrl(previous)}
-        >
-          <Button
-            type="link"
-            icon="left"
-            disabled={!previous}
-            block
-            className={'full-height'}
-          ></Button>
-        </SwipeLink>
+        <Arrow node={previous} direction="left" />
       </Col>
       <Col span={20}>
         <div className={styles.content}>
-          <h1>{product.name}</h1>
-          <p>{product.caption}</p>
           <p>{product.description}</p>
-          <p>Price: {formatPrice(sku.price, sku.currency)}</p>
+          <div className={styles.price}>
+            <div>
+              <strong>Prix :</strong>
+              <span className={styles.marginLeft}>
+                {formatPrice(sku.price, sku.currency)}
+              </span>
+            </div>
+            <div>
+              <Button
+                type="default"
+                icon="plus-circle"
+                onClick={() => addItem(sku)}
+              >
+                panier
+              </Button>
+              <Button
+                className={styles.marginLeft}
+                type="primary"
+                icon="shopping"
+                onClick={() => checkout([sku])}
+              >
+                acheter
+              </Button>
+            </div>
+          </div>
           <div className={styles.images}>
             {product.images.map(url => (
               <div key={url}>
-                <img src={url} />
+                <img
+                  src={url}
+                  onClick={() => setImage(url)}
+                  className={styles.image}
+                />
               </div>
             ))}
           </div>
-          <button onClick={() => addItem(sku)}>Ajouter au panier</button>
-          <button onClick={() => checkout([sku])}>Acheter immediatement</button>
         </div>
       </Col>
       <Col span={2}>
-        <SwipeLink
-          className={styles.arrowContainer}
-          direction="left"
-          to={next && getProductUrl(next)}
-        >
-          <Button
-            type="link"
-            icon="right"
-            disabled={!next}
-            block
-            className={'full-height'}
-          ></Button>
-        </SwipeLink>
+        <Arrow node={next} direction="right" />
       </Col>
+      <Modal
+        visible={image}
+        onCancel={() => setImage()}
+        footer={null}
+        width="80%"
+      >
+        <img src={image} className={styles.imageModal} />
+      </Modal>
     </Row>
   )
 }

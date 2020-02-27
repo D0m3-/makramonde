@@ -17,7 +17,7 @@ import SiteSider from './sider/sider'
 
 const { Header, Content, Footer, Sider } = Layout
 
-const SiteLayout = ({ children }) => {
+const SiteLayout = ({ children, pageTitle }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -32,10 +32,10 @@ const SiteLayout = ({ children }) => {
 
   const DEFAULT_COL_PROPS = {
     sm: { span: 20, offset: 2 },
-    md: { span: 14, offset: 5 },
-    lg: { span: 12, offset: 6 },
-    xl: { span: 10, offset: 7 },
-    xxl: { span: 8, offset: 8 }
+    md: { span: 16, offset: 4 },
+    lg: { span: 14, offset: 5 },
+    xl: { span: 12, offset: 6 },
+    xxl: { span: 10, offset: 7 }
   }
 
   return (
@@ -45,9 +45,9 @@ const SiteLayout = ({ children }) => {
       </Sider>
       <Layout>
         <Header>
-          <SiteHeader siteTitle={title} />
+          <SiteHeader pageTitle={pageTitle} />
         </Header>
-        <Content>
+        <Content className={styles.content}>
           <Row className={'full-height'}>
             <Col {...DEFAULT_COL_PROPS}>{children}</Col>
           </Row>
