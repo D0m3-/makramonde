@@ -5,9 +5,9 @@ import { hot } from 'react-hot-loader/root'
 
 const PageWrapper = ({ children }) => {
   return (
-    <Layout>
-      <CartProvider>{children}</CartProvider>
-    </Layout>
+    <CartProvider>
+      <Layout>{children}</Layout>
+    </CartProvider>
   )
 }
 

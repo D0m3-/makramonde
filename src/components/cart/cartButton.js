@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { checkout } from '../../stripe/checkout'
 import { CartContext } from './cart'
 import { Icon, Badge, Button } from 'antd'
+import styles from './cartButton.module.less'
 
 const CartButton = () => {
   const { items, empty } = useContext(CartContext) || {
@@ -11,15 +12,14 @@ const CartButton = () => {
   return (
     <>
       <Badge count={items.length}>
-        <Button
-          onClick={() => checkout(items)}
-          type="link"
-          icon="shopping-cart"
-          size="large"
-        ></Button>
+        <Icon
+          className={styles.cart}
+          onClick={items.length && (() => checkout(items))}
+          type="shopping-cart"
+        ></Icon>
       </Badge>
-      {items.length && (
-        <Button onClick={empty} type="link" icon="delete"></Button>
+      {!!items.length && (
+        <Icon className={styles.delete} onClick={empty} type="delete"></Icon>
       )}
     </>
   )
