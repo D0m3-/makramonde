@@ -8,6 +8,7 @@ import { getProductUrl } from '../util/link'
 import SwipeLink from '../components/animation/swipe'
 import { Row, Col, Button, Modal } from 'antd'
 import styles from './product.module.less'
+import SEO from '../components/seo'
 
 const Arrow = ({ node, icon, direction }) => (
   <SwipeLink
@@ -40,6 +41,7 @@ const Product = ({ data }) => {
         <Arrow node={previous} direction="left" />
       </Col>
       <Col span={20}>
+        <SEO title={product.name} description={product.description} />
         <div className={styles.content}>
           <p>{product.description}</p>
           <div className={styles.price}>
