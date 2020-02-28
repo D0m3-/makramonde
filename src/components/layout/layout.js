@@ -40,7 +40,7 @@ const SiteLayout = ({ children, pageTitle }) => {
 
   return (
     <Layout className={'full-height'}>
-      <Sider>
+      <Sider breakpoint="md" collapsedWidth="0" className={styles.sider}>
         <SiteSider siteTitle={title} />
       </Sider>
       <Layout>

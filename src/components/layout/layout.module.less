@@ -3,3 +3,10 @@
 .content {
   padding: @padding-lg 0;
 }
+
+.sider {
+  &:global(.ant-layout-sider-below) {
+    position: absolute;
+    z-index: 100;
+  }
+}
