@@ -13,7 +13,8 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const { createPage } = actions
 
-  const result = await graphql(`
+  // Product pages
+  const productsQuery = await graphql(`
     query {
       allStripeProduct(
         filter: { active: { eq: true }, shippable: { eq: true } }
@@ -32,7 +33,7 @@ exports.createPages = async ({ graphql, actions }) => {
     }
   `)
 
-  result.data.allStripeProduct.edges.forEach(({ node }) =>
+  productsQuery.data.allStripeProduct.edges.forEach(({ node }) =>
     createPage({
       path: getProductUrl(node),
       component: path.resolve(`./src/templates/product.js`),
@@ -43,4 +44,35 @@ exports.createPages = async ({ graphql, actions }) => {
       }
     })
   )
+
+  // Markdown pages
+  const markdownTemplate = path.resolve(`src/templates/markdownTemplate.js`)
+  const markdownQuery = await graphql(`
+    {
+      allMarkdownRemark {
+        edges {
+          node {
+            frontmatter {
+              path
+            }
+          }
+        }
+      }
+    }
+  `)
+  console.log('markdown')
+  // Handle errors
+  if (markdownQuery.errors) {
+    reporter.panicOnBuild(`Error while running GraphQL query.`)
+    return
+  }
+  console.log('no error')
+  markdownQuery.data.allMarkdownRemark.edges.forEach(({ node }) => {
+    console.log('path', node.frontmatter.path)
+    createPage({
+      path: node.frontmatter.path,
+      component: markdownTemplate,
+      context: {} // additional data can be passed via context
+    })
+  })
 }

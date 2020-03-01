@@ -5,6 +5,7 @@ import Logo from '../../logo'
 import SwipeLink from '../../animation/swipe'
 import { Menu, Icon } from 'antd'
 import { StaticQuery } from 'gatsby'
+import { getProductUrl } from '../../../util/link'
 
 const { SubMenu } = Menu
 
@@ -19,6 +20,7 @@ const SiteSider = ({ siteTitle }) => {
             edges {
               node {
                 name
+                created
                 metadata {
                   category
                 }
@@ -33,12 +35,15 @@ const SiteSider = ({ siteTitle }) => {
           (categories, { node }) => {
             const category = node.metadata && node.metadata.category
             if (!category) {
-              autres.push(node.name)
+              autres[node.name] = getProductUrl(node)
               return categories
             }
             return {
               ...categories,
-              [category]: [...(categories[category] || []), node.name]
+              [category]: {
+                ...categories[category],
+                [node.name]: getProductUrl(node)
+              }
             }
           },
           {}
@@ -62,7 +67,12 @@ const SiteSider = ({ siteTitle }) => {
                 </SwipeLink>
               </h1>
             </div>
-            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" className={styles.capitalize}>
+            <Menu
+              theme="dark"
+              defaultSelectedKeys={['1']}
+              mode="inline"
+              className={styles.capitalize}
+            >
               <Menu.Item key="1">
                 <Icon type="pie-chart" />
                 <span>Accueil</span>
@@ -79,12 +89,21 @@ const SiteSider = ({ siteTitle }) => {
                       </span>
                     }
                   >
-                    {categories[category].sort().map(name => (
-                      <Menu.Item key={name}>{name}</Menu.Item>
-                    ))}
+                    {Object.keys(categories[category])
+                      .sort()
+                      .map(name => (
+                        <Menu.Item key={name}>
+                          <SwipeLink
+                            direction="left"
+                            to={categories[category][name]}
+                          >
+                            {name}
+                          </SwipeLink>
+                        </Menu.Item>
+                      ))}
                   </SubMenu>
                 ))}
-              {!!autres.length && (
+              {!!Object.keys(autres).length && (
                 <SubMenu
                   key={'autres'}
                   title={
@@ -94,9 +113,15 @@ const SiteSider = ({ siteTitle }) => {
                     </span>
                   }
                 >
-                  {autres.sort().map(name => (
-                    <Menu.Item key={name}>{name}</Menu.Item>
-                  ))}
+                  {Object.keys(autres)
+                    .sort()
+                    .map(name => (
+                      <Menu.Item key={name}>
+                        <SwipeLink direction="left" to={autres[name]}>
+                          {name}
+                        </SwipeLink>
+                      </Menu.Item>
+                    ))}
                 </SubMenu>
               )}
               <Menu.Item key="2">
@@ -105,7 +130,11 @@ const SiteSider = ({ siteTitle }) => {
               </Menu.Item>
               <Menu.Item key="3">
                 <Icon type="desktop" />
-                <span>Legal</span>
+                <span>
+                  <SwipeLink direction="left" to={'/legal'}>
+                    Légal
+                  </SwipeLink>
+                </span>
               </Menu.Item>
             </Menu>
           </>
