@@ -4,69 +4,114 @@ import styles from './sider.module.less'
 import Logo from '../../logo'
 import SwipeLink from '../../animation/swipe'
 import { Menu, Icon } from 'antd'
+import { StaticQuery } from 'gatsby'
 
 const { SubMenu } = Menu
 
 const SiteSider = ({ siteTitle }) => {
   return (
-    <>
-      <div className={styles.container}>
-        <div className={styles.logo}>
-          <Logo />
-        </div>
-        <h1 className={styles.title}>
-          <SwipeLink
-            direction="right"
-            to="/"
-            style={{
-              color: `white`,
-              textDecoration: `none`
-            }}
-          >
-            {siteTitle}
-          </SwipeLink>
-        </h1>
-      </div>
-      <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-        <Menu.Item key="1">
-          <Icon type="pie-chart" />
-          <span>Option 1</span>
-        </Menu.Item>
-        <Menu.Item key="2">
-          <Icon type="desktop" />
-          <span>Option 2</span>
-        </Menu.Item>
-        <SubMenu
-          key="sub1"
-          title={
-            <span>
-              <Icon type="user" />
-              <span>User</span>
-            </span>
+    <StaticQuery
+      query={graphql`
+        query {
+          allStripeProduct(
+            filter: { active: { eq: true }, shippable: { eq: true } }
+          ) {
+            edges {
+              node {
+                name
+                metadata {
+                  category
+                }
+              }
+            }
           }
-        >
-          <Menu.Item key="3">Tom</Menu.Item>
-          <Menu.Item key="4">Bill</Menu.Item>
-          <Menu.Item key="5">Alex</Menu.Item>
-        </SubMenu>
-        <SubMenu
-          key="sub2"
-          title={
-            <span>
-              <Icon type="team" />
-              <span>Team</span>
-            </span>
-          }
-        >
-          <Menu.Item key="6">Team 1</Menu.Item>
-          <Menu.Item key="8">Team 2</Menu.Item>
-        </SubMenu>
-        <Menu.Item key="9">
-          <Icon type="file" />
-          <span>File</span>
-        </Menu.Item>
-      </Menu>
-    </>
+        }
+      `}
+      render={data => {
+        const autres = []
+        const categories = data.allStripeProduct.edges.reduce(
+          (categories, { node }) => {
+            const category = node.metadata && node.metadata.category
+            if (!category) {
+              autres.push(node.name)
+              return categories
+            }
+            return {
+              ...categories,
+              [category]: [...(categories[category] || []), node.name]
+            }
+          },
+          {}
+        )
+        return (
+          <>
+            <div className={styles.container}>
+              <div className={styles.logo}>
+                <Logo />
+              </div>
+              <h1 className={styles.title}>
+                <SwipeLink
+                  direction="right"
+                  to="/"
+                  style={{
+                    color: `white`,
+                    textDecoration: `none`
+                  }}
+                >
+                  {siteTitle}
+                </SwipeLink>
+              </h1>
+            </div>
+            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" className={styles.capitalize}>
+              <Menu.Item key="1">
+                <Icon type="pie-chart" />
+                <span>Accueil</span>
+              </Menu.Item>
+              {Object.keys(categories)
+                .sort()
+                .map(category => (
+                  <SubMenu
+                    key={category}
+                    title={
+                      <span>
+                        <Icon type="user" />
+                        <span>{category}</span>
+                      </span>
+                    }
+                  >
+                    {categories[category].sort().map(name => (
+                      <Menu.Item key={name}>{name}</Menu.Item>
+                    ))}
+                  </SubMenu>
+                ))}
+              {!!autres.length && (
+                <SubMenu
+                  key={'autres'}
+                  title={
+                    <span>
+                      <Icon type="user" />
+                      <span>autres</span>
+                    </span>
+                  }
+                >
+                  {autres.sort().map(name => (
+                    <Menu.Item key={name}>{name}</Menu.Item>
+                  ))}
+                </SubMenu>
+              )}
+              <Menu.Item key="2">
+                <Icon type="desktop" />
+                <span>Contact</span>
+              </Menu.Item>
+              <Menu.Item key="3">
+                <Icon type="desktop" />
+                <span>Legal</span>
+              </Menu.Item>
+            </Menu>
+          </>
+        )
+      }}
+    />
   )
 }
 

@@ -4,8 +4,8 @@
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
 
-const path = require("path")
-const { getProductUrl } = require("./src/util/link")
+const path = require('path')
+const { getProductUrl } = require('./src/util/link')
 
 exports.createPages = async ({ graphql, actions }) => {
   // **Note:** The graphql function call returns a Promise
@@ -23,6 +23,9 @@ exports.createPages = async ({ graphql, actions }) => {
             id
             name
             created
+            metadata {
+              category
+            }
           }
         }
       }
@@ -36,8 +39,8 @@ exports.createPages = async ({ graphql, actions }) => {
       context: {
         // Data passed to context is available
         // in page queries as GraphQL variables.
-        id: node.id,
-      },
+        id: node.id
+      }
     })
   )
 }
