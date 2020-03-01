@@ -31,6 +31,7 @@ const SiteLayout = ({ children, pageTitle }) => {
   const title = data.site.siteMetadata.title
 
   const DEFAULT_COL_PROPS = {
+    xs: { span: 20, offset: 2 },
     sm: { span: 20, offset: 2 },
     md: { span: 16, offset: 4 },
     lg: { span: 14, offset: 5 },

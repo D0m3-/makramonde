@@ -44,14 +44,14 @@ const Product = ({ data }) => {
         <SEO title={product.name} description={product.description} />
         <div className={styles.content}>
           <p>{product.description}</p>
-          <div className={styles.price}>
-            <div>
+          <div className={styles.buy}>
+            <div className={styles.price}>
               <strong>Prix :</strong>
               <span className={styles.marginLeft}>
                 {formatPrice(sku.price, sku.currency)}
               </span>
             </div>
-            <div>
+            <div className={styles.buttons}>
               <Button
                 type="default"
                 icon="plus-circle"
