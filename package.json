@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "author": "Florian Bernard <florian.bernard.0@gmail.com>",
   "dependencies": {
-    "antd": "^3.26.12",
+    "antd": "^4.0.0",
     "classnames": "^2.2.6",
     "gatsby": "^2.19.7",
     "gatsby-image": "^2.2.39",
