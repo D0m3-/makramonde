@@ -5,7 +5,7 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { useStaticQuery, graphql } from 'gatsby'
 import { Layout, Row, Col } from 'antd'
@@ -17,7 +17,7 @@ import SiteSider from './sider/sider'
 
 const { Header, Content, Footer, Sider } = Layout
 
-const SiteLayout = ({ children, pageTitle }) => {
+const SiteLayout = ({ children, pageTitle, location }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -39,10 +39,27 @@ const SiteLayout = ({ children, pageTitle }) => {
     xxl: { span: 10, offset: 7 }
   }
 
+  const [collapseSider, setCollapseSider] = useState(false)
+  const [brokenSider, setBrokenSider] = useState(false)
+
   return (
     <Layout className={'full-height ant-layout-has-sider'}>
-      <Sider breakpoint="md" collapsedWidth="0" className={styles.sider}>
-        <SiteSider siteTitle={title} />
+      <Sider
+        breakpoint="md"
+        collapsedWidth="0"
+        className={styles.sider}
+        collapsed={brokenSider && collapseSider}
+        onBreakpoint={broken => {
+          setBrokenSider(broken)
+          setCollapseSider(broken)
+        }}
+        onCollapse={(collapse, type) => setCollapseSider(collapse)}
+      >
+        <SiteSider
+          siteTitle={title}
+          location={location}
+          collapse={() => setCollapseSider(true)}
+        />
       </Sider>
       <Layout>
         <Header>

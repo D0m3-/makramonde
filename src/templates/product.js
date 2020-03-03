@@ -1,5 +1,11 @@
 import React, { useContext, useState } from 'react'
 import { graphql } from 'gatsby'
+import {
+  PlusCircleOutlined,
+  ShoppingOutlined,
+  RightOutlined,
+  LeftOutlined
+} from '@ant-design/icons'
 
 import { formatPrice } from '../util/price'
 import { CartContext } from '../components/cart/cart'
@@ -19,7 +25,7 @@ const Arrow = ({ node, icon, direction }) => (
     <Button
       type="primary"
       ghost
-      icon={direction}
+      icon={direction === 'right' ? <RightOutlined /> : <LeftOutlined />}
       disabled={!node}
       block
       className={styles.arrow}
@@ -54,7 +60,7 @@ const Product = ({ data }) => {
             <div className={styles.buttons}>
               <Button
                 type="default"
-                icon="plus-circle"
+                icon={<PlusCircleOutlined />}
                 onClick={() => addItem(sku)}
               >
                 panier
@@ -62,7 +68,7 @@ const Product = ({ data }) => {
               <Button
                 className={styles.marginLeft}
                 type="primary"
-                icon="shopping"
+                icon={<ShoppingOutlined />}
                 onClick={() => checkout([sku])}
               >
                 acheter

@@ -3,13 +3,19 @@ import React from 'react'
 import styles from './sider.module.less'
 import Logo from '../../logo'
 import SwipeLink from '../../animation/swipe'
-import { Menu, Icon } from 'antd'
+import {
+  TagsOutlined,
+  HomeOutlined,
+  MessageOutlined,
+  FileTextOutlined
+} from '@ant-design/icons'
+import { Menu } from 'antd'
 import { StaticQuery } from 'gatsby'
 import { getProductUrl } from '../../../util/link'
 
 const { SubMenu } = Menu
 
-const SiteSider = ({ siteTitle }) => {
+const SiteSider = ({ siteTitle, location, collapse }) => {
   return (
     <StaticQuery
       query={graphql`
@@ -70,12 +76,16 @@ const SiteSider = ({ siteTitle }) => {
             <Menu
               theme="dark"
               defaultSelectedKeys={['1']}
+              selectedKeys={[location.pathname]}
               mode="inline"
-              className={styles.capitalize}
+              className={styles.menu}
+              onClick={collapse}
             >
-              <Menu.Item key="1">
-                <Icon type="pie-chart" />
-                <span>Accueil</span>
+              <Menu.Item key="/">
+                <SwipeLink direction="right" to={'/'}>
+                  <HomeOutlined />
+                  Accueil
+                </SwipeLink>
               </Menu.Item>
               {Object.keys(categories)
                 .sort()
@@ -84,7 +94,7 @@ const SiteSider = ({ siteTitle }) => {
                     key={category}
                     title={
                       <span>
-                        <Icon type="user" />
+                        <TagsOutlined />
                         <span>{category}</span>
                       </span>
                     }
@@ -92,7 +102,7 @@ const SiteSider = ({ siteTitle }) => {
                     {Object.keys(categories[category])
                       .sort()
                       .map(name => (
-                        <Menu.Item key={name}>
+                        <Menu.Item key={categories[category][name]}>
                           <SwipeLink
                             direction="left"
                             to={categories[category][name]}
@@ -108,7 +118,7 @@ const SiteSider = ({ siteTitle }) => {
                   key={'autres'}
                   title={
                     <span>
-                      <Icon type="user" />
+                      <TagsOutlined />
                       <span>autres</span>
                     </span>
                   }
@@ -116,7 +126,7 @@ const SiteSider = ({ siteTitle }) => {
                   {Object.keys(autres)
                     .sort()
                     .map(name => (
-                      <Menu.Item key={name}>
+                      <Menu.Item key={autres[name]}>
                         <SwipeLink direction="left" to={autres[name]}>
                           {name}
                         </SwipeLink>
@@ -125,16 +135,14 @@ const SiteSider = ({ siteTitle }) => {
                 </SubMenu>
               )}
               <Menu.Item key="2">
-                <Icon type="desktop" />
+                <MessageOutlined />
                 <span>Contact</span>
               </Menu.Item>
-              <Menu.Item key="3">
-                <Icon type="desktop" />
-                <span>
-                  <SwipeLink direction="left" to={'/legal'}>
-                    Légal
-                  </SwipeLink>
-                </span>
+              <Menu.Item key="/legal">
+                <SwipeLink direction="left" to={'/legal'}>
+                  <FileTextOutlined />
+                  Légal
+                </SwipeLink>
               </Menu.Item>
             </Menu>
           </>
