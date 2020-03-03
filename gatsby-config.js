@@ -2,6 +2,9 @@ require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`
 })
 
+const fs = require('fs')
+const lessToJs = require('less-vars-to-js')
+
 module.exports = {
   siteMetadata: {
     title: `Makramonde`,
@@ -64,7 +67,8 @@ module.exports = {
       resolve: 'gatsby-plugin-less',
       options: {
         import: '~antd/dist/antd.less',
-        javascriptEnabled: true
+        javascriptEnabled: true,
+        modifyVars: lessToJs(fs.readFileSync('./src/makramonde.less', 'utf8'))
       }
     }
     // this (optional) plugin enables Progressive Web App + Offline functionality

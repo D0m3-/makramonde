@@ -57,24 +57,11 @@ const SiteSider = ({ siteTitle, location, collapse }) => {
         return (
           <>
             <div className={styles.container}>
-              <div className={styles.logo}>
+              <SwipeLink direction="right" to="/">
                 <Logo />
-              </div>
-              <h1 className={styles.title}>
-                <SwipeLink
-                  direction="right"
-                  to="/"
-                  style={{
-                    color: `white`,
-                    textDecoration: `none`
-                  }}
-                >
-                  {siteTitle}
-                </SwipeLink>
-              </h1>
+              </SwipeLink>
             </div>
             <Menu
-              theme="dark"
               defaultSelectedKeys={['1']}
               selectedKeys={[location.pathname]}
               mode="inline"

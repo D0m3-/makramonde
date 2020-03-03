@@ -1,9 +1,13 @@
-import React, { useState } from "react"
+import React, { useState } from 'react'
 
-import Image from "../components/image"
-import SEO from "../components/seo"
-import { getProductUrl } from "../util/link"
-import SwipeLink from "../components/animation/swipe"
+import Image from '../components/image'
+import SEO from '../components/seo'
+import { getProductUrl } from '../util/link'
+import SwipeLink from '../components/animation/swipe'
+import {
+  SHIPPING,
+  FRANCE_METRO
+} from '../../functions/createCheckout/constants/shipping'
 
 const IndexPage = ({ data }) => {
   const firstProduct = data.allStripeProduct.edges[0].node
@@ -12,6 +16,11 @@ const IndexPage = ({ data }) => {
       <SEO title="Accueil" lang="fr" description="Bijoux uniques en macramé" />
       <h1>Bonjour</h1>
       <p>Bienvenue dans ma boutique</p>
+      <p>
+        Livraison à 1 centime à partir de{' '}
+        {SHIPPING[FRANCE_METRO].discountFrom / 100}€, en France Metropolitaine
+        uniquement.
+      </p>
       <SwipeLink direction="left" to={getProductUrl(firstProduct)}>
         Par ici pour voir mes créations !
       </SwipeLink>

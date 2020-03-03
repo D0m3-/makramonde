@@ -45,6 +45,7 @@ const SiteLayout = ({ children, pageTitle, location }) => {
   return (
     <Layout className={'full-height ant-layout-has-sider'}>
       <Sider
+        theme="light"
         breakpoint="md"
         collapsedWidth="0"
         className={styles.sider}
@@ -62,7 +63,7 @@ const SiteLayout = ({ children, pageTitle, location }) => {
         />
       </Sider>
       <Layout>
-        <Header>
+        <Header theme="light">
           <SiteHeader pageTitle={pageTitle} />
         </Header>
         <Content className={styles.content}>
@@ -71,9 +72,9 @@ const SiteLayout = ({ children, pageTitle, location }) => {
           </Row>
         </Content>
         <Footer>
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
+          <span className={styles.footer}>
+            © Oriane Bernard {new Date().getFullYear()}. Tous droits réservés.
+          </span>
         </Footer>
       </Layout>
     </Layout>
