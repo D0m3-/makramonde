@@ -3,7 +3,7 @@ import { checkout } from '../../stripe/checkout'
 import { CartContext } from './cart'
 import { ShoppingCartOutlined, DeleteOutlined } from '@ant-design/icons'
 import { Badge, Button } from 'antd'
-import styles from './cartButton2.module.less'
+import styles from './cartButton.module.less'
 import cx from 'classnames'
 
 const CartButton = () => {

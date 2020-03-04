@@ -39,32 +39,20 @@ const SiteLayout = ({ children, pageTitle, location }) => {
     xxl: { span: 10, offset: 7 }
   }
 
-  const [collapseSider, setCollapseSider] = useState(false)
-  const [brokenSider, setBrokenSider] = useState(false)
-
   return (
-    <Layout className={'full-height ant-layout-has-sider'}>
+    <Layout hasSider className={'full-height'}>
       <Sider
         theme="light"
         breakpoint="md"
         collapsedWidth="0"
         className={styles.sider}
-        collapsed={brokenSider && collapseSider}
-        onBreakpoint={broken => {
-          setBrokenSider(broken)
-          setCollapseSider(broken)
-        }}
-        onCollapse={(collapse, type) => setCollapseSider(collapse)}
+        trigger={null}
       >
-        <SiteSider
-          siteTitle={title}
-          location={location}
-          collapse={() => setCollapseSider(true)}
-        />
+        <SiteSider siteTitle={title} location={location} />
       </Sider>
       <Layout>
         <Header theme="light">
-          <SiteHeader pageTitle={pageTitle} />
+          <SiteHeader pageTitle={pageTitle} location={location} />
         </Header>
         <Content className={styles.content}>
           <Row className={'full-height'}>
