@@ -40,7 +40,8 @@ exports.createPages = async ({ graphql, actions }) => {
       context: {
         // Data passed to context is available
         // in page queries as GraphQL variables.
-        id: node.id
+        id: node.id,
+        title: node.name
       }
     })
   )
@@ -54,25 +55,27 @@ exports.createPages = async ({ graphql, actions }) => {
           node {
             frontmatter {
               path
+              title
             }
           }
         }
       }
     }
   `)
-  console.log('markdown')
+
   // Handle errors
   if (markdownQuery.errors) {
     reporter.panicOnBuild(`Error while running GraphQL query.`)
     return
   }
-  console.log('no error')
+
   markdownQuery.data.allMarkdownRemark.edges.forEach(({ node }) => {
-    console.log('path', node.frontmatter.path)
     createPage({
       path: node.frontmatter.path,
       component: markdownTemplate,
-      context: {} // additional data can be passed via context
+      context: {
+        title: node.frontmatter.title
+      } // additional data can be passed via context
     })
   })
 }

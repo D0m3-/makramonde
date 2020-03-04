@@ -3,11 +3,11 @@ import { CartProvider } from './cart/cart'
 import Layout from './layout/layout'
 import { hot } from 'react-hot-loader/root'
 
-const PageWrapper = ({ children, data, location }) => {
+const PageWrapper = ({ children, pageContext, location }) => {
   return (
     <CartProvider>
       <Layout
-        pageTitle={data && data.stripeProduct && data.stripeProduct.name}
+        pageTitle={pageContext.title || getPageTitle(location.pathname)}
         location={location}
       >
         {children}
@@ -16,12 +16,15 @@ const PageWrapper = ({ children, data, location }) => {
   )
 }
 
-export const query = graphql`
-  query($id: String) {
-    stripeProduct(id: { eq: $id }) {
-      name
-    }
+const getPageTitle = pathname => {
+  switch (pathname.replace(/\/$/, ``)) {
+    case '/success':
+      return 'Commandé !'
+    case '':
+      return 'Accueil'
+    default:
+      return 'Oups !'
   }
-`
+}
 
 export default hot(PageWrapper)

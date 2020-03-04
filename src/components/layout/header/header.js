@@ -5,6 +5,7 @@ import styles from './header.module.less'
 import { MenuOutlined } from '@ant-design/icons'
 import { Modal } from 'antd'
 import SiteMenu from '../menu/menu'
+import Logo from '../../logo'
 
 const SiteHeader = ({ pageTitle, location }) => {
   const [isMenuOpen, setMenuOpen] = useState()
@@ -17,6 +18,7 @@ const SiteHeader = ({ pageTitle, location }) => {
           onCancel={() => setMenuOpen(false)}
           footer={null}
         >
+          <Logo />
           <SiteMenu location={location} onSelect={() => setMenuOpen(false)} />
         </Modal>
       </div>
