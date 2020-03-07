@@ -5,17 +5,17 @@
 }
 
 .sider {
-  &:global(.ant-layout-sider-below) {
-    position: absolute;
-    z-index: 100;
-  }
-  :global(.ant-layout-sider-zero-width-trigger) {
-    top: 7px;
-  }
+  display: none;
 }
 
 .footer {
   width: 100%;
   text-align: center;
   font-size: 10px;
+}
+
+@media (min-width: @screen-md-min) {
+  .sider {
+    display: block;
+  }
 }

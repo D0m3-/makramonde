@@ -112,9 +112,11 @@ const SiteMenu = ({ location, onSelect }) => (
                 ))}
             </SubMenu>
           )}
-          <Menu.Item key="2">
-            <MessageOutlined />
-            <span>Contact</span>
+          <Menu.Item key="/contact">
+            <SwipeLink direction="left" to={'/contact'}>
+              <MessageOutlined />
+              Contact
+            </SwipeLink>
           </Menu.Item>
           <Menu.Item key="/legal">
             <SwipeLink direction="left" to={'/legal'}>
