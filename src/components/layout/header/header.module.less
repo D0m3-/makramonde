@@ -1,0 +1,29 @@
+@import '~antd/dist/antd.less';
+
+.container {
+  position: relative;
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
+.title {
+  flex: 1 1 auto;
+  margin: 0;
+  text-align: center;
+}
+
+.menu {
+  position: absolute;
+}
+
+.cart {
+  position: absolute;
+  right: 0;
+}
+
+@media (min-width: @screen-md-min) {
+  .menu {
+    display: none;
+  }
+}

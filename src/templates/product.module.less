@@ -1,0 +1,57 @@
+@import '~antd/dist/antd.less';
+
+.arrowContainer {
+  display: block;
+  height: 100%;
+  text-align: center;
+}
+
+.arrow {
+  height: 100%;
+  background-color: @primary-7;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 0 @padding-md;
+}
+
+.images {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  min-height: 0px;
+}
+
+.imageCommon {
+  width: 100%;
+}
+
+.image {
+  .imageCommon();
+  cursor: pointer;
+}
+
+.imageModal {
+  .imageCommon();
+}
+
+.buy {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.price {
+  margin-bottom: @padding-md;
+}
+
+.buttons {
+  margin-bottom: @padding-lg;
+}
+
+.marginLeft {
+  margin-left: @padding-md;
+}

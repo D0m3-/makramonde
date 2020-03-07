@@ -1,5 +1,5 @@
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
-const Shipping = require("./constants/shipping")
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+const Shipping = require('./constants/shipping')
 
 exports.handler = async function(event, context, callback) {
   const { origin, referer } = event.headers
@@ -20,22 +20,31 @@ const respond = fulfillmentText => {
     statusCode: 200,
     body: JSON.stringify(fulfillmentText),
     headers: {
-      "Content-Type": "application/json",
-    },
+      'Content-Type': 'application/json'
+    }
   }
 }
 
 async function getSkus({ skuIds }) {
-  return await Promise.all(skuIds.map(async id => stripe.skus.retrieve(id)))
+  return await Promise.all(
+    skuIds.map(async id => {
+      const sku = await stripe.skus.retrieve(id)
+      const product = await stripe.products.retrieve(sku.product)
+      return {
+        ...sku,
+        product
+      }
+    })
+  )
 }
 
 async function createCheckout({ skus, origin, referer, shippingId }) {
   const items = skus.map(sku => ({
-    name: sku.attributes.name,
+    name: sku.product.name,
     amount: sku.price,
     currency: sku.currency,
     quantity: 1,
-    ...(sku.image && { images: [sku.image] }),
+    ...(sku.image && { images: [sku.image] })
   }))
 
   // Add shipping line
@@ -46,14 +55,14 @@ async function createCheckout({ skus, origin, referer, shippingId }) {
     name: (isDiscount && shipping.descriptionDiscount) || shipping.description,
     amount: (isDiscount && 1) || shipping.amount,
     currency: shipping.currency,
-    quantity: 1,
+    quantity: 1
   })
   // create a session
   const session = await stripe.checkout.sessions.create({
     success_url: `${origin}/success/`,
     cancel_url: referer,
-    payment_method_types: ["card"],
-    line_items: items,
+    payment_method_types: ['card'],
+    line_items: items
   })
   return session
 }

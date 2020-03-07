@@ -1,9 +1,30 @@
-import React from "react"
-import { CartProvider } from "./cart/cart"
-import Layout from "./layout"
+import React from 'react'
+import { CartProvider } from './cart/cart'
+import Layout from './layout/layout'
+import { hot } from 'react-hot-loader/root'
 
-const PageWrapper = ({ children }) => {
-  return <CartProvider>{children}</CartProvider>
+const PageWrapper = ({ children, pageContext, location }) => {
+  return (
+    <CartProvider>
+      <Layout
+        pageTitle={pageContext.title || getPageTitle(location.pathname)}
+        location={location}
+      >
+        {children}
+      </Layout>
+    </CartProvider>
+  )
 }
 
-export default PageWrapper
+const getPageTitle = pathname => {
+  switch (pathname.replace(/\/$/, ``)) {
+    case '/success':
+      return 'Commandé !'
+    case '':
+      return 'Accueil'
+    default:
+      return 'Oups !'
+  }
+}
+
+export default hot(PageWrapper)

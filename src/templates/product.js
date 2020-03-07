@@ -1,14 +1,40 @@
-import React, { useContext } from "react"
-import { graphql } from "gatsby"
+import React, { useContext, useState } from 'react'
+import { graphql } from 'gatsby'
+import {
+  PlusCircleOutlined,
+  ShoppingOutlined,
+  RightOutlined,
+  LeftOutlined
+} from '@ant-design/icons'
 
-import { formatPrice } from "../util/price"
-import { CartContext } from "../components/cart/cart"
-import { checkout } from "../stripe/checkout"
-import { getProductUrl } from "../util/link"
-import Layout from "../components/layout"
-import SwipeLink from "../components/animation/swipe"
+import { formatPrice } from '../util/price'
+import { CartContext } from '../components/cart/cart'
+import { checkout } from '../stripe/checkout'
+import { getProductUrl } from '../util/link'
+import SwipeLink from '../components/animation/swipe'
+import { Row, Col, Button, Modal } from 'antd'
+import styles from './product.module.less'
+import SEO from '../components/seo'
+
+const Arrow = ({ node, icon, direction }) => (
+  <SwipeLink
+    className={styles.arrowContainer}
+    direction={direction === 'right' ? 'left' : 'right'}
+    to={node && getProductUrl(node)}
+  >
+    <Button
+      type="primary"
+      ghost
+      icon={direction === 'right' ? <RightOutlined /> : <LeftOutlined />}
+      disabled={!node}
+      block
+      className={styles.arrow}
+    ></Button>
+  </SwipeLink>
+)
 
 const Product = ({ data }) => {
+  const [image, setImage] = useState()
   const product = data.stripeProduct
   const sku = data.stripeSku
   const { next, previous } = data.allStripeProduct.edges.find(
@@ -16,30 +42,64 @@ const Product = ({ data }) => {
   )
   const { addItem } = useContext(CartContext) || { addItem: () => {} }
   return (
-    <Layout>
-      <h1>{product.name}</h1>
-      <p>{product.caption}</p>
-      <p>{product.description}</p>
-      <p>Price: {formatPrice(sku.price, sku.currency)}</p>
-      {product.images.map(url => (
-        <div key={url}>
-          <img src={url} />
+    <Row type="flex" align="middle" className={'full-height'}>
+      <Col span={2}>
+        <Arrow node={previous} direction="left" />
+      </Col>
+      <Col span={20}>
+        <SEO title={product.name} description={product.description} />
+        <div className={styles.content}>
+          <p>{product.description}</p>
+          <div className={styles.buy}>
+            <div className={styles.price}>
+              <strong>Prix :</strong>
+              <span className={styles.marginLeft}>
+                {formatPrice(sku.price, sku.currency)}
+              </span>
+            </div>
+            <div className={styles.buttons}>
+              <Button
+                type="default"
+                icon={<PlusCircleOutlined />}
+                onClick={() => addItem(sku)}
+              >
+                panier
+              </Button>
+              <Button
+                className={styles.marginLeft}
+                type="primary"
+                icon={<ShoppingOutlined />}
+                onClick={() => checkout([sku])}
+              >
+                acheter
+              </Button>
+            </div>
+          </div>
+          <div className={styles.images}>
+            {product.images.map(url => (
+              <div key={url}>
+                <img
+                  src={url}
+                  onClick={() => setImage(url)}
+                  className={styles.image}
+                />
+              </div>
+            ))}
+          </div>
         </div>
-      ))}
-      <button onClick={() => addItem(sku)}>Ajouter au panier</button>
-      <button onClick={() => checkout([sku])}>Acheter immediatement</button>
-      <br></br>
-      {previous && (
-        <SwipeLink direction="right" to={getProductUrl(previous)}>
-          {"<"}
-        </SwipeLink>
-      )}
-      {next && (
-        <SwipeLink direction="left" to={getProductUrl(next)}>
-          {">"}
-        </SwipeLink>
-      )}
-    </Layout>
+      </Col>
+      <Col span={2}>
+        <Arrow node={next} direction="right" />
+      </Col>
+      <Modal
+        visible={image}
+        onCancel={() => setImage()}
+        footer={null}
+        width="80%"
+      >
+        <img src={image} className={styles.imageModal} />
+      </Modal>
+    </Row>
   )
 }
 
