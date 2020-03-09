@@ -7,18 +7,18 @@ import {
   SHIPPING,
   FRANCE_METRO
 } from '../../functions/createCheckout/constants/shipping'
-import StandImage from '../components/imageStand'
 import AtelierDarkImage from '../components/imageAtelierDark'
+import MakramondeBijouImage from '../components/imageMakramondeBijou'
 
 const IndexPage = ({ data }) => {
   const firstProduct = data.allStripeProduct.edges[0].node
   return (
     <>
       <SEO title="Accueil" lang="fr" description="Bijoux uniques en macramé" />
-      <h1>Bienvenue dans ma boutique de bijoux uniques en macramé</h1>
       <p>
-        <StandImage />
+        <MakramondeBijouImage />
       </p>
+      <h1>Bienvenue dans ma boutique de bijoux uniques en macramé !</h1>
       <p>
         Tous les bijoux sont fabriqués à la main dans mon atelier en Ardèche.
       </p>
