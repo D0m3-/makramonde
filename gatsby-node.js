@@ -7,6 +7,35 @@
 const path = require('path')
 const { getProductUrl } = require('./src/util/link')
 
+exports.sourceNodes = ({ actions }) => {
+  actions.createTypes(
+    `type StripeProduct implements Node { 
+      id: ID!, 
+      active: Boolean, 
+      shippable: Boolean, 
+      name: String, 
+      created: Int, 
+      metadata:Metadata, 
+      images: [String], 
+      description: String 
+    }
+    type Metadata implements Node {
+      category: String
+    }
+    type StripeSku implements Node {
+      id: ID!,
+      currency: String,
+      price: Int,
+      attributes: Attributes,
+      product: StripeProduct
+    }
+    type Attributes implements Node{
+      name: String
+    }
+    `
+  )
+}
+
 exports.createPages = async ({ graphql, actions }) => {
   // **Note:** The graphql function call returns a Promise
   // see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise for more info
@@ -33,18 +62,19 @@ exports.createPages = async ({ graphql, actions }) => {
     }
   `)
 
-  productsQuery.data.allStripeProduct.edges.forEach(({ node }) =>
-    createPage({
-      path: getProductUrl(node),
-      component: path.resolve(`./src/templates/product.js`),
-      context: {
-        // Data passed to context is available
-        // in page queries as GraphQL variables.
-        id: node.id,
-        title: node.name
-      }
-    })
-  )
+  productsQuery.data &&
+    productsQuery.data.allStripeProduct.edges.forEach(({ node }) =>
+      createPage({
+        path: getProductUrl(node),
+        component: path.resolve(`./src/templates/product.js`),
+        context: {
+          // Data passed to context is available
+          // in page queries as GraphQL variables.
+          id: node.id,
+          title: node.name
+        }
+      })
+    )
 
   // Markdown pages
   const markdownTemplate = path.resolve(`src/templates/markdownTemplate.js`)

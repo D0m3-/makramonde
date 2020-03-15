@@ -7,7 +7,7 @@ import { Modal, Tag, Tooltip } from 'antd'
 import SiteMenu from '../menu/menu'
 import Logo from '../../logo'
 
-const isTest = process.env.STRIPE_ENV === 'test'
+const isTest = process.env.GATSBY_STRIPE_ENV === 'test'
 
 const SiteHeader = ({ pageTitle, location }) => {
   const [isMenuOpen, setMenuOpen] = useState()
