@@ -111,7 +111,6 @@ export const query = graphql`
       id
       images
       description
-      caption
       name
       images
     }

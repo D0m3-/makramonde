@@ -3,6 +3,16 @@ path: '/legal'
 title: 'Légal'
 ---
 
+# Données personnelles
+
+Ce site n'utilise aucun cookie et n'enregistre aucune de vos données personnelles.
+
+J'utilise [Stripe](stripe.com) pour le paiement. Stripe est un service de paiement international et est conforme à la législation européenne.
+
+Votre adresse de livraison vous sera demandée par email suite à votre paiement.
+
+
+
 # Conditions générales de vente des produits et services vendus sur ce site
 
 Oriane Bernard micro entreprise

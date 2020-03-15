@@ -7,18 +7,19 @@ import {
   SHIPPING,
   FRANCE_METRO
 } from '../../functions/createCheckout/constants/shipping'
-import StandImage from '../components/imageStand'
 import AtelierDarkImage from '../components/imageAtelierDark'
+import MakramondeBijouImage from '../components/imageMakramondeBijou'
 
 const IndexPage = ({ data }) => {
-  const firstProduct = data.allStripeProduct.edges[0].node
+  const firstProduct =
+    data.allStripeProduct.edges.length && data.allStripeProduct.edges[0].node
   return (
     <>
       <SEO title="Accueil" lang="fr" description="Bijoux uniques en macramé" />
-      <h1>Bienvenue dans ma boutique de bijoux uniques en macramé</h1>
       <p>
-        <StandImage />
+        <MakramondeBijouImage />
       </p>
+      <h1>Bienvenue dans ma boutique de bijoux uniques en macramé !</h1>
       <p>
         Tous les bijoux sont fabriqués à la main dans mon atelier en Ardèche.
       </p>
@@ -32,11 +33,19 @@ const IndexPage = ({ data }) => {
         {SHIPPING[FRANCE_METRO].discountFrom / 100}€, en France Metropolitaine
         uniquement.
       </p>
-      <p>
-        <SwipeLink direction="left" to={getProductUrl(firstProduct)}>
-          Cliquez ici pour voir mes dernières créations !
-        </SwipeLink>
-      </p>
+      {!!firstProduct && (
+        <p>
+          <SwipeLink direction="left" to={getProductUrl(firstProduct)}>
+            Cliquez ici pour voir mes dernières créations !
+          </SwipeLink>
+        </p>
+      )}
+      {!firstProduct && (
+        <p>
+          Je n'ai actuellement aucune création à vous proposer en ligne. Revenez
+          bientôt pour voir mes nouvelles créations !
+        </p>
+      )}
       <p>
         <AtelierDarkImage />
       </p>
