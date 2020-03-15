@@ -3,9 +3,11 @@ import React, { useState } from 'react'
 import CartButton from '../../cart/cartButton'
 import styles from './header.module.less'
 import { MenuOutlined } from '@ant-design/icons'
-import { Modal } from 'antd'
+import { Modal, Tag, Tooltip } from 'antd'
 import SiteMenu from '../menu/menu'
 import Logo from '../../logo'
+
+const isTest = process.env.STRIPE_ENV === 'test'
 
 const SiteHeader = ({ pageTitle, location }) => {
   const [isMenuOpen, setMenuOpen] = useState()
@@ -22,7 +24,18 @@ const SiteHeader = ({ pageTitle, location }) => {
           <SiteMenu location={location} onSelect={() => setMenuOpen(false)} />
         </Modal>
       </div>
-      <h1 className={styles.title}>{pageTitle}</h1>
+
+      <h1 className={styles.title}>
+        {isTest && (
+          <Tooltip
+            title="Site de test ! Les produits et le paiement ne sont pas réels !"
+            trigger={['hover', 'focus', 'click']}
+          >
+            <Tag color="warning">Test</Tag>
+          </Tooltip>
+        )}
+        {pageTitle}
+      </h1>
       <div className={styles.cart}>
         <CartButton />
       </div>
