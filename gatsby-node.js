@@ -7,9 +7,14 @@
 const path = require('path')
 const { getProductUrl } = require('./src/util/link')
 
-exports.sourceNodes = ({ actions }) => {
-  actions.createTypes(
-    `type StripeProduct implements Node { 
+exports.sourceNodes = ({ actions, getNodes }) => {
+  const hasProduct = getNodes().filter(
+    node => node.object && node.object === 'product'
+  ).length
+  if (!hasProduct) {
+    console.log('No Product found, need to define types manually')
+    actions.createTypes(
+      `type StripeProduct implements Node { 
       id: ID!, 
       active: Boolean, 
       shippable: Boolean, 
@@ -33,7 +38,8 @@ exports.sourceNodes = ({ actions }) => {
       name: String
     }
     `
-  )
+    )
+  }
 }
 
 exports.createPages = async ({ graphql, actions }) => {
