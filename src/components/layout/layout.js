@@ -14,10 +14,11 @@ import './layout.less'
 import styles from './layout.module.less'
 import SiteHeader from './header/header'
 import SiteSider from './sider/sider'
+import Arrows from '../products/arrows'
 
 const { Header, Content, Footer, Sider } = Layout
 
-const SiteLayout = ({ children, pageTitle, location }) => {
+const SiteLayout = ({ children, pageTitle, location, productId }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -56,7 +57,14 @@ const SiteLayout = ({ children, pageTitle, location }) => {
         </Header>
         <Content className={styles.content}>
           <Row className={'full-height'}>
-            <Col {...DEFAULT_COL_PROPS}>{children}</Col>
+            <Col {...DEFAULT_COL_PROPS}>
+              {children}
+              {productId !== undefined && (
+                <div className={styles.arrows}>
+                  <Arrows productId={productId} />
+                </div>
+              )}
+            </Col>
           </Row>
         </Content>
         <Footer>

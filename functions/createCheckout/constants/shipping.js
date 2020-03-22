@@ -6,8 +6,8 @@ exports.SHIPPING = {
     amount: 1500,
     discountFrom: 10000,
     currency: "eur",
-    description: "Livraison en France Metropolitaine",
-    descriptionDiscount: "Livraison en France Metropolitaine PROMO",
+    description: "Livraison",
+    descriptionDiscount: "Livraison PROMO",
   },
   [this.OTHER]: {
     amount: 3000,

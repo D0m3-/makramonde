@@ -9,6 +9,7 @@ const PageWrapper = ({ children, pageContext, location }) => {
       <Layout
         pageTitle={pageContext.title || getPageTitle(location.pathname)}
         location={location}
+        productId={pageContext.id}
       >
         {children}
       </Layout>

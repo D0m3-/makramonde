@@ -62,7 +62,10 @@ async function createCheckout({ skus, origin, referer, shippingId }) {
     success_url: `${origin}/success/`,
     cancel_url: referer,
     payment_method_types: ['card'],
-    line_items: items
+    line_items: items,
+    shipping_address_collection: {
+      allowed_countries: ['FR']
+    }
   })
   return session
 }

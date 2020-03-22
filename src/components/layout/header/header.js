@@ -14,7 +14,7 @@ const SiteHeader = ({ pageTitle, location }) => {
   return (
     <div className={styles.container}>
       <div className={styles.menu}>
-        <MenuOutlined onClick={() => setMenuOpen(true)} />
+        <MenuOutlined className={styles.menuIcon} onClick={() => setMenuOpen(true)} />
         <Modal
           visible={isMenuOpen}
           onCancel={() => setMenuOpen(false)}

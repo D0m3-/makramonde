@@ -1,53 +1,27 @@
 import React, { useContext, useState } from 'react'
-import { graphql } from 'gatsby'
+import { graphql, Link } from 'gatsby'
 import {
   PlusCircleOutlined,
   ShoppingOutlined,
-  RightOutlined,
-  LeftOutlined
+  RightCircleFilled,
+  LeftCircleFilled
 } from '@ant-design/icons'
 
 import { formatPrice } from '../util/price'
 import { CartContext } from '../components/cart/cart'
 import { checkout } from '../stripe/checkout'
 import { getProductUrl } from '../util/link'
-import SwipeLink from '../components/animation/swipe'
 import { Row, Col, Button, Modal } from 'antd'
 import styles from './product.module.less'
 import SEO from '../components/seo'
-
-const Arrow = ({ node, icon, direction }) => (
-  <SwipeLink
-    className={styles.arrowContainer}
-    direction={direction === 'right' ? 'left' : 'right'}
-    to={node && getProductUrl(node)}
-  >
-    <Button
-      type="primary"
-      ghost
-      icon={direction === 'right' ? <RightOutlined /> : <LeftOutlined />}
-      disabled={!node}
-      block
-      className={styles.arrow}
-    ></Button>
-  </SwipeLink>
-)
 
 const Product = ({ data }) => {
   const [image, setImage] = useState()
   const product = data.stripeProduct
   const sku = data.stripeSku
-  const { next, previous } = data.allStripeProduct.edges.find(
-    edge => edge.node.id == product.id
-  )
   const { addItem } = useContext(CartContext) || { addItem: () => {} }
   return (
     <div className={styles.container}>
-      <div className={styles.arrowLeft}>
-        <div className={styles.arrowFloater}>
-          <Arrow node={previous} direction="left" />
-        </div>
-      </div>
       <SEO title={product.name} description={product.description} />
       <div className={styles.content}>
         <p>{product.description}</p>
@@ -88,11 +62,6 @@ const Product = ({ data }) => {
           ))}
         </div>
       </div>
-      <div className={styles.arrowRight}>
-        <div className={styles.arrowFloater}>
-          <Arrow node={next} direction="right" />
-        </div>
-      </div>
       <Modal
         visible={image}
         onCancel={() => setImage()}
@@ -120,23 +89,6 @@ export const query = graphql`
       price
       id
       currency
-    }
-    allStripeProduct(
-      filter: { active: { eq: true }, shippable: { eq: true } }
-    ) {
-      edges {
-        next {
-          name
-          created
-        }
-        previous {
-          name
-          created
-        }
-        node {
-          id
-        }
-      }
     }
   }
 `
