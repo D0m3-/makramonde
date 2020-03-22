@@ -42,55 +42,57 @@ const Product = ({ data }) => {
   )
   const { addItem } = useContext(CartContext) || { addItem: () => {} }
   return (
-    <Row type="flex" align="middle" className={'full-height'}>
-      <Col span={2}>
-        <Arrow node={previous} direction="left" />
-      </Col>
-      <Col span={20}>
-        <SEO title={product.name} description={product.description} />
-        <div className={styles.content}>
-          <p>{product.description}</p>
-          <div className={styles.buy}>
-            <div className={styles.price}>
-              <strong>Prix :</strong>
-              <span className={styles.marginLeft}>
-                {formatPrice(sku.price, sku.currency)}
-              </span>
-            </div>
-            <div className={styles.buttons}>
-              <Button
-                type="default"
-                icon={<PlusCircleOutlined />}
-                onClick={() => addItem(sku)}
-              >
-                panier
-              </Button>
-              <Button
-                className={styles.marginLeft}
-                type="primary"
-                icon={<ShoppingOutlined />}
-                onClick={() => checkout([sku])}
-              >
-                acheter
-              </Button>
-            </div>
+    <div className={styles.container}>
+      <div className={styles.arrowLeft}>
+        <div className={styles.arrowFloater}>
+          <Arrow node={previous} direction="left" />
+        </div>
+      </div>
+      <SEO title={product.name} description={product.description} />
+      <div className={styles.content}>
+        <p>{product.description}</p>
+        <div className={styles.buy}>
+          <div className={styles.price}>
+            <strong>Prix :</strong>
+            <span className={styles.marginLeft}>
+              {formatPrice(sku.price, sku.currency)}
+            </span>
           </div>
-          <div className={styles.images}>
-            {product.images.map(url => (
-              <div key={url}>
-                <img
-                  src={url}
-                  onClick={() => setImage(url)}
-                  className={styles.image}
-                />
-              </div>
-            ))}
+          <div className={styles.buttons}>
+            <Button
+              type="default"
+              icon={<PlusCircleOutlined />}
+              onClick={() => addItem(sku)}
+            >
+              panier
+            </Button>
+            <Button
+              className={styles.marginLeft}
+              type="primary"
+              icon={<ShoppingOutlined />}
+              onClick={() => checkout([sku])}
+            >
+              acheter
+            </Button>
           </div>
         </div>
-      </Col>
-      <Col span={2}>
-        <Arrow node={next} direction="right" />
-      </Col>
+        <div className={styles.images}>
+          {product.images.map(url => (
+            <div key={url}>
+              <img
+                src={url}
+                onClick={() => setImage(url)}
+                className={styles.image}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className={styles.arrowRight}>
+        <div className={styles.arrowFloater}>
+          <Arrow node={next} direction="right" />
+        </div>
+      </div>
       <Modal
         visible={image}
         onCancel={() => setImage()}
@@ -99,7 +101,7 @@ const Product = ({ data }) => {
       >
         <img src={image} className={styles.imageModal} />
       </Modal>
-    </Row>
+    </div>
   )
 }
 

@@ -25,7 +25,7 @@ const SiteHeader = ({ pageTitle, location }) => {
         </Modal>
       </div>
 
-      <h1 className={styles.title}>
+      <div className={styles.titleContainer}>
         {isTest && (
           <Tooltip
             title="Site de test ! Les produits et le paiement ne sont pas réels !"
@@ -34,8 +34,8 @@ const SiteHeader = ({ pageTitle, location }) => {
             <Tag color="warning">Test</Tag>
           </Tooltip>
         )}
-        {pageTitle}
-      </h1>
+        <h1 className={styles.title}>{pageTitle}</h1>
+      </div>
       <div className={styles.cart}>
         <CartButton />
       </div>

@@ -1,9 +1,35 @@
 @import '~antd/dist/antd.less';
 
-.arrowContainer {
+@arrow-width: 30px;
+@arrow-height: 60px;
+.container {
+  margin: 0 @arrow-width + 6px;
+}
+
+@media (min-width: @screen-sm-min) {
+  .container {
+    margin: 0 @arrow-width + @padding-sm;
+  }
+}
+
+.arrowLeft {
+  position: absolute;
+  left: 0;
+}
+
+.arrowRight {
+  position: absolute;
+  right: @arrow-width;
+}
+
+.arrowFloater {
   display: block;
-  height: 100%;
+  position: fixed;
+  top: 50%;
+  transform: translate(0, -50%);
   text-align: center;
+  width: @arrow-width;
+  height: @arrow-height;
 }
 
 .arrow {
@@ -15,7 +41,6 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  margin: 0 @padding-md;
 }
 
 .images {
