@@ -13,6 +13,9 @@ export const checkout = async skus => {
   })
   const data = await response.json()
   return stripe.redirectToCheckout({
-    sessionId: data.id
+    sessionId: data.id,
+    shippingAddressCollection: {
+      allowedCountries: ['FR']
+    }
   })
 }
