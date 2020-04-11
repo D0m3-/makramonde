@@ -3,21 +3,14 @@ path: '/legal'
 title: 'Légal'
 ---
 
-# Données personnelles
-
-Ce site n'utilise aucun cookie et n'enregistre aucune de vos données personnelles.
-
-J'utilise [Stripe](stripe.com) pour le paiement. Stripe est un service de paiement international et est conforme à la législation européenne.
-
-Votre adresse de livraison vous sera demandée par email suite à votre paiement.
-
-
-
 # Conditions générales de vente des produits et services vendus sur ce site
 
 Oriane Bernard micro entreprise
+
 Siège social : 65 rue jean louis soulavie / 07110 largentière
+
 Adresse électronique : makramonde@gmail.com
+
 SIREN : 80342682400022 / RCS :
 
 ## Article 1 – Objet
@@ -27,37 +20,50 @@ Les présentes conditions régissent les ventes par la société Oriane Bernard 
 ## Article 2 – Prix
 
 Les prix de nos produits sont indiqués en euros toutes taxes comprises (TVA et autres taxes applicables au jour de la commande), sauf indication contraire et hors éventuels frais de traitement et d'expédition.
-En cas de commande vers un pays autre que la France métropolitaine, vous êtes l'importateur du ou des produits concernés. Des droits de douane ou autres taxes locales ou droits d'importation ou taxes d'état sont susceptibles d'être exigibles. Ces droits et sommes ne relèvent pas du ressort de la société Oriane Bernard. Ils seront à votre charge et relèvent de votre entière responsabilité, tant en termes de déclarations que de paiements aux autorités et organismes compétents de votre pays. Nous vous conseillons de vous renseigner sur ces aspects auprès de vos autorités locales.
+
 Toutes les commandes quelle que soit leur origine sont payables en euros.
+
 La société Oriane Bernard se réserve le droit de modifier ses prix à tout moment, mais le produit sera facturé sur la base du tarif en vigueur au moment de la validation de la commande et sous réserve de disponibilité.
+
 Les produits demeurent la propriété de la société Oriane Bernard jusqu'au paiement complet du prix.
+
 Attention : dès que vous prenez possession physiquement des produits commandés, les risques de perte ou d'endommagement des produits vous sont transférés.
 
 ## Article 3 – Commandes
 
-Vous pouvez passer commande sur le site internet
+Vous pouvez passer commande sur le site internet.
+
 Les informations contractuelles sont présentées en langue française et feront l'objet d'une confirmation au plus tard au moment de la validation de votre commande par la société Oriane Bernard.
+
 La société Oriane Bernard se réserve le droit de ne pas enregistrer un paiement, et de ne pas confirmer une commande pour quelque raison que ce soit, et plus particulièrement en cas de problème d'approvisionnement, ou en cas de difficulté concernant la commande reçue.
 
 ## Article 4 - Validation de votre commande
 
 Toute commande figurant sur le site Internet suppose l'adhésion aux présentes Conditions Générales. Toute confirmation de commande entraîne votre adhésion pleine et entière aux présentes conditions générales de vente, sans exception ni réserve.
+
 L'ensemble des données fournies et la confirmation enregistrée vaudront preuve de la transaction.
 Vous déclarez en avoir parfaite connaissance.
+
 La confirmation de commande vaudra signature et acceptation des opérations effectuées.
+
 Un récapitulatif des informations de votre commande vous sera communiqué via l'adresse e-mail de confirmation de votre commande.
 
 ## Article 5 – Paiement
 
 Le fait de confirmer votre commande implique pour vous l'obligation de payer le prix indiqué.
-Le règlement de vos achats s'effectue par carte bancaire grâce au système sécurisé HiPay.
+
+Le règlement de vos achats s'effectue par carte bancaire grâce au système sécurisé [Stripe](stripe.com). Stripe est un service de paiement international et est conforme à la législation européenne. Stripe collecte vos données pour le paiement.
+
 Le débit de la carte n'est effectué qu'au moment de la validation de la commande par la société Oriane Bernard.
 
 ## Article 6 – Rétractation
 
 Conformément aux dispositions de l'article L.121-21 du Code de la Consommation, vous disposez d'un délai de rétractation de 14 jours à compter de la réception de vos produits pour exercer votre droit de rétraction sans avoir à justifier de motifs ni à payer de pénalité.
+
 Les retours sont à effectuer dans leur état d'origine et complets (emballage, accessoires, notice). Dans ce cadre, votre responsabilité est engagée. Tout dommage subi par le produit à cette occasion peut être de nature à faire échec au droit de rétractation.
+
 Les frais de retour sont à votre charge.
+
 En cas d'exercice du droit de rétractation, la société Oriane Bernard procédera au remboursement des sommes versées, dans un délai de 14 jours suivant la notification de votre demande et via le même moyen de paiement que celui utilisé lors de la commande.
 
 ### EXCEPTIONS AU DROIT DE RETRACTATION
@@ -79,18 +85,22 @@ Conformément aux dispositions de l'article L.121-21-8 du Code de la Consommatio
 ## Article 7- Disponibilité
 
 Nos produits sont proposés tant qu'ils sont visibles sur le site et dans la limite des stocks disponibles. Pour les produits non stockés, nos offres sont valables sous réserve de disponibilité chez nos fournisseurs.
+
 En cas d'indisponibilité de produit après passation de votre commande, nous vous en informerons par mail. Votre commande sera automatiquement annulée et aucun débit bancaire ne sera effectué.
 
 ## Article 8 – Livraison
 
 Les produits sont livrés à l'adresse de livraison indiquée au cours du processus de commande, dans le délai indiqué sur la page de validation de la commande.
 Conformément aux dispositions légales, en cas de retard de livraison, vous bénéficiez de la possibilité d'annuler la commande dans les conditions et modalités définies à l'article L 138-2 du Code de la Consommation. Si entre temps vous recevez le produit, nous procéderons à son remboursement et aux frais d'acheminement dans les conditions de l'article L 138-3 du Code de la Consommation.
+
 En cas de livraison par un transporteur, la société Oriane Bernard ne peut être tenue pour responsable de retard de livraison dû exclusivement à une indisponibilité du client après plusieurs propositions de rendez-vous.
 
 ## Article 9 – Responsabilité
 
-Les produits proposés sont conformes à la législation française en vigueur. La responsabilité de la société Oriane Bernard ne saurait être engagée en cas de non-respect de la législation du pays où le produit est livré. Il vous appartient de vérifier auprès des autorités locales les possibilités d'importation ou d'utilisation des produits ou services que vous envisagez de commander.
+Les produits proposés sont conformes à la législation française en vigueur.
+
 Par ailleurs, la société Oriane Bernard ne saurait être tenue pour responsable des dommages résultant d'une mauvaise utilisation du produit acheté.
+
 Enfin la responsabilité de la société Oriane Bernard ne saurait être engagée pour tous les inconvénients ou dommages inhérents à l'utilisation du réseau Internet, notamment une rupture de service, une intrusion extérieure ou la présence de virus informatiques.
 
 ## Article 10 - Propriété intellectuelle

@@ -9,6 +9,7 @@ import {
 } from '../../functions/createCheckout/constants/shipping'
 import AtelierDarkImage from '../components/imageAtelierDark'
 import MakramondeBijouImage from '../components/imageMakramondeBijou'
+import AssemblageImage from '../components/imageAssemblage'
 
 const IndexPage = ({ data }) => {
   const firstProduct =
@@ -19,14 +20,10 @@ const IndexPage = ({ data }) => {
       <p>
         <MakramondeBijouImage />
       </p>
-      <h1>Bienvenue dans ma boutique de bijoux uniques en macramé !</h1>
+      <h1>Des bijoux artisanaux aux influences ethniques et antiques d'autour du monde </h1>
       <p>
-        Tous les bijoux sont fabriqués à la main dans mon atelier en Ardèche.
-      </p>
-      <p>
-        Les matériaux utilisés sont de qualité ; argent 925 (poinçonné), laiton
-        et cuivre pour les métaux (pas de nickel), fil ciré résistant à l'eau
-        pour le macramé.
+      Tous les bijoux sont fabriqués entièrement à la main dans mon atelier en Haute-Savoie, à Annecy. <br/>
+Les matériaux utilisés sont de qualités ; argent 925 poinçonné de mon poinçon de maître, laiton et cuivre pour les autres métaux (exempts de nickel), fil ciré résistant à l'eau pour le macramé.
       </p>
       <p>
         Livraison à 1 centime à partir de{' '}
@@ -43,11 +40,11 @@ const IndexPage = ({ data }) => {
       {!firstProduct && (
         <p>
           Je n'ai actuellement aucune création à vous proposer en ligne. Revenez
-          bientôt pour voir mes nouvelles créations !
+          bientôt pour voir mes nouveautés !
         </p>
       )}
       <p>
-        <AtelierDarkImage />
+        <AssemblageImage />
       </p>
     </>
   )

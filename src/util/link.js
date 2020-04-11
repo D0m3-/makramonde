@@ -1,4 +1,4 @@
-const slug = require("slug")
+const slugify = require('slugify')
 
 exports.getProductUrl = ({ name, created }) =>
-  `/products/${slug(name)}-${created}`
+  `/products/${slugify(name)}-${created}`

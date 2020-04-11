@@ -1,7 +1,11 @@
-@import '~antd/dist/antd.less';
+@import '../../makramonde.less';
 
 .content {
   padding: @padding-lg 0;
+}
+
+.header {
+  
 }
 
 .sider {
@@ -12,6 +16,11 @@
   width: 100%;
   text-align: center;
   font-size: 10px;
+}
+
+.arrows{
+  position: relative;
+  z-index: 2; //antd weird overlay
 }
 
 @media (min-width: @screen-md-min) {

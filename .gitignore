@@ -70,6 +70,7 @@ yarn-error.log
 
 # VS code
 .history
+.vscode
 
 # Netlify
 .netlify

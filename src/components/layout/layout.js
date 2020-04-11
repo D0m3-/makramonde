@@ -14,10 +14,11 @@ import './layout.less'
 import styles from './layout.module.less'
 import SiteHeader from './header/header'
 import SiteSider from './sider/sider'
+import Arrows from '../products/arrows'
 
 const { Header, Content, Footer, Sider } = Layout
 
-const SiteLayout = ({ children, pageTitle, location }) => {
+const SiteLayout = ({ children, pageTitle, location, productId }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -31,7 +32,7 @@ const SiteLayout = ({ children, pageTitle, location }) => {
   const title = data.site.siteMetadata.title
 
   const DEFAULT_COL_PROPS = {
-    xs: { span: 20, offset: 2 },
+    xs: { span: 22, offset: 1 },
     sm: { span: 20, offset: 2 },
     md: { span: 16, offset: 4 },
     lg: { span: 14, offset: 5 },
@@ -51,18 +52,25 @@ const SiteLayout = ({ children, pageTitle, location }) => {
         <SiteSider siteTitle={title} location={location} />
       </Sider>
       <Layout>
-        <Header theme="light">
+        <Header theme="light" className={styles.header}>
           <SiteHeader pageTitle={pageTitle} location={location} />
         </Header>
         <Content className={styles.content}>
           <Row className={'full-height'}>
-            <Col {...DEFAULT_COL_PROPS}>{children}</Col>
+            <Col {...DEFAULT_COL_PROPS}>
+              {children}
+              {productId !== undefined && (
+                <div className={styles.arrows}>
+                  <Arrows productId={productId} />
+                </div>
+              )}
+            </Col>
           </Row>
         </Content>
         <Footer>
-          <span className={styles.footer}>
+          <div className={styles.footer}>
             © Oriane Bernard {new Date().getFullYear()}. Tous droits réservés.
-          </span>
+          </div>
         </Footer>
       </Layout>
     </Layout>

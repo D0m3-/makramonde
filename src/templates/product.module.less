@@ -1,21 +1,22 @@
-@import '~antd/dist/antd.less';
+@import '../makramonde.less';
 
-.arrowContainer {
-  display: block;
-  height: 100%;
-  text-align: center;
+@arrow-width: 30px;
+@arrow-height: 60px;
+.container {
+  margin: 0 @arrow-width + 6px;
 }
 
-.arrow {
-  height: 100%;
-  background-color: @primary-7;
+@media (min-width: @screen-sm-min) {
+  .container {
+    margin: 0 @arrow-width + @padding-sm;
+  }
 }
+
 
 .content {
   display: flex;
   flex-direction: column;
   height: 100%;
-  margin: 0 @padding-md;
 }
 
 .images {
@@ -54,4 +55,14 @@
 
 .marginLeft {
   margin-left: @padding-md;
+}
+
+.modal{
+  max-width: 100%;
+}
+
+@media (min-width: @screen-md-min) {
+  .modal{
+    max-width: 80%;
+  }
 }
