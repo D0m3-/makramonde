@@ -4,7 +4,7 @@ exports.OTHER = "other"
 exports.SHIPPING = {
   [this.FRANCE_METRO]: {
     amount: 1500,
-    discountFrom: 10000,
+    discountFrom: 5000,
     currency: "eur",
     description: "Livraison",
     descriptionDiscount: "Livraison PROMO",
