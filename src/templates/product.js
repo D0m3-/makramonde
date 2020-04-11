@@ -1,22 +1,17 @@
 import React, { useContext, useState } from 'react'
-import { graphql, Link } from 'gatsby'
-import {
-  PlusCircleOutlined,
-  ShoppingOutlined,
-  RightCircleFilled,
-  LeftCircleFilled
-} from '@ant-design/icons'
+import { graphql } from 'gatsby'
+import { PlusCircleOutlined, ShoppingOutlined } from '@ant-design/icons'
 
 import { formatPrice } from '../util/price'
 import { CartContext } from '../components/cart/cart'
 import { checkout } from '../stripe/checkout'
-import { getProductUrl } from '../util/link'
-import { Row, Col, Button, Modal } from 'antd'
+import { Button, Modal } from 'antd'
 import styles from './product.module.less'
 import SEO from '../components/seo'
 
 const Product = ({ data }) => {
   const [image, setImage] = useState()
+  const [loading, setLoading] = useState(false)
   const product = data.stripeProduct
   const sku = data.stripeSku
   const { addItem } = useContext(CartContext) || { addItem: () => {} }
@@ -43,8 +38,13 @@ const Product = ({ data }) => {
             <Button
               className={styles.marginLeft}
               type="primary"
+              loading={loading}
               icon={<ShoppingOutlined />}
-              onClick={() => checkout([sku])}
+              onClick={async () => {
+                setLoading(true)
+                await checkout([sku])
+                setLoading(false)
+              }}
             >
               acheter
             </Button>
@@ -63,10 +63,11 @@ const Product = ({ data }) => {
         </div>
       </div>
       <Modal
+        className={styles.modal}
         visible={image}
         onCancel={() => setImage()}
         footer={null}
-        width="80%"
+        width="100%"
       >
         <img src={image} className={styles.imageModal} />
       </Modal>

@@ -9,6 +9,7 @@ import {
 } from '../../functions/createCheckout/constants/shipping'
 import AtelierDarkImage from '../components/imageAtelierDark'
 import MakramondeBijouImage from '../components/imageMakramondeBijou'
+import AssemblageImage from '../components/imageAssemblage'
 
 const IndexPage = ({ data }) => {
   const firstProduct =
@@ -19,7 +20,7 @@ const IndexPage = ({ data }) => {
       <p>
         <MakramondeBijouImage />
       </p>
-      <p>Des bijoux artisanaux aux influences ethniques et antiques d'autour du monde </p>
+      <h1>Des bijoux artisanaux aux influences ethniques et antiques d'autour du monde </h1>
       <p>
       Tous les bijoux sont fabriqués entièrement à la main dans mon atelier en Haute-Savoie, à Annecy. <br/>
 Les matériaux utilisés sont de qualités ; argent 925 poinçonné de mon poinçon de maître, laiton et cuivre pour les autres métaux (exempts de nickel), fil ciré résistant à l'eau pour le macramé.
@@ -43,7 +44,7 @@ Les matériaux utilisés sont de qualités ; argent 925 poinçonné de mon poin�
         </p>
       )}
       <p>
-        <AtelierDarkImage />
+        <AssemblageImage />
       </p>
     </>
   )
