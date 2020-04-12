@@ -10,6 +10,7 @@ import {
 import AtelierDarkImage from '../components/imageAtelierDark'
 import MakramondeBijouImage from '../components/imageMakramondeBijou'
 import AssemblageImage from '../components/imageAssemblage'
+import { Button } from 'antd'
 
 const IndexPage = ({ data }) => {
   const firstProduct =
@@ -20,10 +21,16 @@ const IndexPage = ({ data }) => {
       <p>
         <MakramondeBijouImage />
       </p>
-      <h1>Des bijoux artisanaux aux influences ethniques et antiques d'autour du monde </h1>
+      <h1>
+        Des bijoux artisanaux aux influences ethniques et antiques d'autour du
+        monde{' '}
+      </h1>
       <p>
-      Tous les bijoux sont fabriqués entièrement à la main dans mon atelier en Haute-Savoie, à Annecy. <br/>
-Les matériaux utilisés sont de qualités ; argent 925 poinçonné de mon poinçon de maître, laiton et cuivre pour les autres métaux (exempts de nickel), fil ciré résistant à l'eau pour le macramé.
+        Tous les bijoux sont fabriqués entièrement à la main dans mon atelier en
+        Haute-Savoie, à Annecy. <br />
+        Les matériaux utilisés sont de qualités ; argent 925 poinçonné de mon
+        poinçon de maître, laiton et cuivre pour les autres métaux (exempts de
+        nickel), fil ciré résistant à l'eau pour le macramé.
       </p>
       <p>
         Livraison à 1 centime à partir de{' '}
@@ -31,11 +38,16 @@ Les matériaux utilisés sont de qualités ; argent 925 poinçonné de mon poin�
         uniquement.
       </p>
       {!!firstProduct && (
-        <p>
-          <SwipeLink direction="left" to={getProductUrl(firstProduct)}>
-            Cliquez ici pour voir mes dernières créations !
-          </SwipeLink>
-        </p>
+        <>
+          <p>Pour voir mes dernières créations, c'est par ici :</p>
+          <p style={{ textAlign: 'center' }}>
+            <SwipeLink direction="left" to={getProductUrl(firstProduct)}>
+              <Button type="primary" size="large">
+                Explorer
+              </Button>
+            </SwipeLink>
+          </p>
+        </>
       )}
       {!firstProduct && (
         <p>
