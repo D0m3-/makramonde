@@ -16,6 +16,9 @@ import SiteHeader from './header/header'
 import SiteSider from './sider/sider'
 import Arrows from '../products/arrows'
 
+import { useSpring, animated } from 'react-spring'
+import { useDrag } from 'react-use-gesture'
+
 const { Header, Content, Footer, Sider } = Layout
 
 const SiteLayout = ({ children, pageTitle, location, productId }) => {
@@ -60,17 +63,17 @@ const SiteLayout = ({ children, pageTitle, location, productId }) => {
             <Col {...DEFAULT_COL_PROPS}>
               {children}
               {productId !== undefined && (
-                <div className={styles.arrows}>
-                  <Arrows productId={productId} />
-                </div>
+                <>
+                  <div className={styles.arrows}>
+                    <Arrows productId={productId} />
+                  </div>
+                </>
               )}
             </Col>
           </Row>
         </Content>
-        <Footer>
-          <div className={styles.footer}>
-            © Oriane Bernard {new Date().getFullYear()}. Tous droits réservés.
-          </div>
+        <Footer className={styles.footer}>
+          © Oriane Bernard {new Date().getFullYear()}. Tous droits réservés.
         </Footer>
       </Layout>
     </Layout>

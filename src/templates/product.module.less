@@ -12,6 +12,19 @@
   }
 }
 
+.nextContainer {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 100%;
+}
+
+.previousContainer {
+  position: absolute;
+  top: 0;
+  right: 100%;
+  width: 100%;
+}
 
 .content {
   display: flex;
@@ -57,12 +70,12 @@
   margin-left: @padding-md;
 }
 
-.modal{
+.modal {
   max-width: 100%;
 }
 
 @media (min-width: @screen-md-min) {
-  .modal{
+  .modal {
     max-width: 80%;
   }
 }
