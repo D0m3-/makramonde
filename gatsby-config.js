@@ -46,9 +46,9 @@ const plugins = [
     }
   },
   {
-    resolve: 'gatsby-plugin-layout',
+    resolve: 'gatsby-plugin-transition-link',
     options: {
-      component: require.resolve(`./src/components/pageWrapper.js`)
+      layout: require.resolve(`./src/components/pageWrapper.js`)
     }
   },
   {

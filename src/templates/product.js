@@ -13,6 +13,7 @@ import { useSpring, animated } from 'react-spring'
 import { useDrag } from 'react-use-gesture'
 import { navigate } from 'gatsby'
 import { getProductUrl } from '../util/link'
+import SwipeLink, { SwipeSpring } from '../components/animation/swipe'
 
 const THRESHOLD = 20
 const NO_DRAG_THRESHOLD = 2 * THRESHOLD
@@ -96,40 +97,42 @@ const Product = ({
 
   return (
     <div
+      ref={ref}
       style={{
         overflow: 'hidden'
       }}
     >
-      <animated.div
-        ref={ref}
-        {...bind()}
-        style={{
-          position: 'relative',
-          left: x
-        }}
-      >
-        {previousProduct && (
-          <div
-            className={styles.previousContainer}
-            style={{
-              top: topOffset
-            }}
-          >
-            <ProductRaw product={previousProduct} sku={previousSku} />
-          </div>
-        )}
-        <ProductRaw product={currentProduct} sku={currentSku} />
-        {nextProduct && (
-          <div
-            className={styles.nextContainer}
-            style={{
-              top: topOffset
-            }}
-          >
-            <ProductRaw product={nextProduct} sku={nextSku} />
-          </div>
-        )}
-      </animated.div>
+      <SwipeSpring>
+        <animated.div
+          {...bind()}
+          style={{
+            position: 'relative',
+            left: x
+          }}
+        >
+          {previousProduct && (
+            <div
+              className={styles.previousContainer}
+              style={{
+                top: topOffset
+              }}
+            >
+              <ProductRaw product={previousProduct} sku={previousSku} />
+            </div>
+          )}
+          <ProductRaw product={currentProduct} sku={currentSku} />
+          {nextProduct && (
+            <div
+              className={styles.nextContainer}
+              style={{
+                top: topOffset
+              }}
+            >
+              <ProductRaw product={nextProduct} sku={nextSku} />
+            </div>
+          )}
+        </animated.div>
+      </SwipeSpring>
     </div>
   )
 }

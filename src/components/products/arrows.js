@@ -25,7 +25,7 @@ const Arrow = ({ node, direction }) => (
   </SwipeLink>
 )
 
-const Arrows = ({productId}) => {
+const Arrows = ({ productId }) => {
   return (
     <StaticQuery
       query={graphql`
@@ -49,10 +49,10 @@ const Arrows = ({productId}) => {
           }
         }
       `}
-      render={(data) => {
-        const { next, previous } = data.allStripeProduct.edges.find(
-          edge => edge.node.id == productId
-        ) || {}
+      render={data => {
+        const { next, previous } =
+          data.allStripeProduct.edges.find(edge => edge.node.id == productId) ||
+          {}
         return (
           <>
             <div className={styles.arrowLeft}>
