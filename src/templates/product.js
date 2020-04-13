@@ -18,6 +18,16 @@ import SwipeLink, { SwipeSpring } from '../components/animation/swipe'
 const THRESHOLD = 20
 const NO_DRAG_THRESHOLD = 2 * THRESHOLD
 
+const SwipableProduct = props => {
+  return (
+    <SwipeSpring>
+      {({ transitioning }) => (
+        <Product {...props} transitioning={transitioning} />
+      )}
+    </SwipeSpring>
+  )
+}
+
 const Product = ({
   data: {
     currentProduct,
@@ -26,7 +36,8 @@ const Product = ({
     nextSku,
     previousProduct,
     previousSku
-  }
+  },
+  transitioning
 }) => {
   /**
    * @constant
@@ -45,7 +56,7 @@ const Product = ({
 
   useEffect(() => {
     initialOffsetTop.current = ref.current.getBoundingClientRect().top
-  }, [])
+  }, [transitioning])
 
   useEffect(() => {
     let ticking = false
@@ -102,41 +113,37 @@ const Product = ({
         overflow: 'hidden'
       }}
     >
-      <SwipeSpring>
-        {({ transitioning }) => (
-          <animated.div
-            {...bind()}
+      <animated.div
+        {...bind()}
+        style={{
+          position: 'relative',
+          left: x
+        }}
+      >
+        {!transitioning && previousProduct && (
+          <div
+            className={styles.previousContainer}
             style={{
-              position: 'relative',
-              left: x
+              top: topOffset
             }}
           >
-            {!transitioning && previousProduct && (
-              <div
-                className={styles.previousContainer}
-                style={{
-                  top: topOffset
-                }}
-              >
-                <ProductRaw product={previousProduct} sku={previousSku} />
-              </div>
-            )}
-            <div className={styles.currentContainer}>
-              <ProductRaw product={currentProduct} sku={currentSku} />
-            </div>
-            {!transitioning && nextProduct && (
-              <div
-                className={styles.nextContainer}
-                style={{
-                  top: topOffset
-                }}
-              >
-                <ProductRaw product={nextProduct} sku={nextSku} />
-              </div>
-            )}
-          </animated.div>
+            <ProductRaw product={previousProduct} sku={previousSku} />
+          </div>
         )}
-      </SwipeSpring>
+        <div className={styles.currentContainer}>
+          <ProductRaw product={currentProduct} sku={currentSku} />
+        </div>
+        {!transitioning && nextProduct && (
+          <div
+            className={styles.nextContainer}
+            style={{
+              top: topOffset
+            }}
+          >
+            <ProductRaw product={nextProduct} sku={nextSku} />
+          </div>
+        )}
+      </animated.div>
     </div>
   )
 }
@@ -204,7 +211,7 @@ const ProductRaw = ({ product, sku }) => {
   )
 }
 
-export default Product
+export default SwipableProduct
 
 export const query = graphql`
   query($id: String!, $nextId: String, $previousId: String) {

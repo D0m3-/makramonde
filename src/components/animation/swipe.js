@@ -55,13 +55,13 @@ const getSpringProps = ({ transitionStatus, current }) => {
             left: '0%'
           },
           to: {
-            left: '-100%'
+            left: '-105%'
           }
         }
       case 'entering':
         return {
           from: {
-            left: '100%'
+            left: '105%'
           },
           to: {
             left: '0%'
@@ -76,13 +76,13 @@ const getSpringProps = ({ transitionStatus, current }) => {
           left: '0%'
         },
         to: {
-          left: '100%'
+          left: '105%'
         }
       }
     case 'entering':
       return {
         from: {
-          left: '-100%'
+          left: '-105%'
         },
         to: {
           left: '0%'
