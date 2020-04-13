@@ -20,11 +20,17 @@ const NO_DRAG_THRESHOLD = 2 * THRESHOLD
 
 const SwipableProduct = props => {
   return (
-    <SwipeSpring>
-      {({ transitioning }) => (
-        <Product {...props} transitioning={transitioning} />
-      )}
-    </SwipeSpring>
+    <div
+      style={{
+        overflow: 'hidden'
+      }}
+    >
+      <SwipeSpring>
+        {({ transitioning }) => (
+          <Product {...props} transitioning={transitioning} />
+        )}
+      </SwipeSpring>
+    </div>
   )
 }
 
@@ -107,44 +113,38 @@ const Product = ({
   )
 
   return (
-    <div
+    <animated.div
+      {...bind()}
       ref={ref}
       style={{
-        overflow: 'hidden'
+        position: 'relative',
+        left: x
       }}
     >
-      <animated.div
-        {...bind()}
-        style={{
-          position: 'relative',
-          left: x
-        }}
-      >
-        {!transitioning && previousProduct && (
-          <div
-            className={styles.previousContainer}
-            style={{
-              top: topOffset
-            }}
-          >
-            <ProductRaw product={previousProduct} sku={previousSku} />
-          </div>
-        )}
-        <div className={styles.currentContainer}>
-          <ProductRaw product={currentProduct} sku={currentSku} />
+      {!transitioning && previousProduct && (
+        <div
+          className={styles.previousContainer}
+          style={{
+            top: topOffset
+          }}
+        >
+          <ProductRaw product={previousProduct} sku={previousSku} />
         </div>
-        {!transitioning && nextProduct && (
-          <div
-            className={styles.nextContainer}
-            style={{
-              top: topOffset
-            }}
-          >
-            <ProductRaw product={nextProduct} sku={nextSku} />
-          </div>
-        )}
-      </animated.div>
-    </div>
+      )}
+      <div className={styles.currentContainer}>
+        <ProductRaw product={currentProduct} sku={currentSku} />
+      </div>
+      {!transitioning && nextProduct && (
+        <div
+          className={styles.nextContainer}
+          style={{
+            top: topOffset
+          }}
+        >
+          <ProductRaw product={nextProduct} sku={nextSku} />
+        </div>
+      )}
+    </animated.div>
   )
 }
 
