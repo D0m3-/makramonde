@@ -91,7 +91,7 @@ const Product = ({
 
       set({ x: down ? mx : 0 })
     },
-    { threshold: THRESHOLD }
+    { threshold: THRESHOLD, swipeVelocity: 0.1 }
   )
 
   return (
