@@ -3,10 +3,10 @@
 @arrow-width: 30px;
 @arrow-height: 60px;
 .container {
-  margin: 0 @arrow-width + 6px;
+  margin: 0;
 }
 
-@media (min-width: @screen-sm-min) {
+@media (min-width: @screen-md-min) {
   .container {
     margin: 0 @arrow-width + @padding-sm;
   }
@@ -49,19 +49,9 @@
   .imageCommon();
 }
 
-.buy {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  flex-wrap: wrap;
-}
-
-.price {
-  margin-bottom: @padding-md;
-}
-
 .buttons {
-  margin-bottom: @padding-lg;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .marginLeft {

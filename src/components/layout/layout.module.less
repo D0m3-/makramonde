@@ -22,12 +22,16 @@
 }
 
 .arrows {
+  display: none;
   position: relative;
   z-index: 2; //antd weird overlay
 }
 
 @media (min-width: @screen-md-min) {
   .sider {
+    display: block;
+  }
+  .arrows {
     display: block;
   }
 }

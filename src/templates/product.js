@@ -144,36 +144,34 @@ const ProductRaw = ({ product, sku }) => {
       <SEO title={product.name} description={product.description} />
       <div className={styles.content}>
         <p>{product.description}</p>
-        <div className={styles.buy}>
-          <div className={styles.price}>
-            <strong>Prix :</strong>
-            <span className={styles.marginLeft}>
-              {formatPrice(sku.price, sku.currency)}
-            </span>
-          </div>
-          <div className={styles.buttons}>
-            <Button
-              type="default"
-              icon={<PlusCircleOutlined />}
-              onClick={() => addItem(sku)}
-            >
-              panier
-            </Button>
-            <Button
-              className={styles.marginLeft}
-              type="primary"
-              loading={loading}
-              icon={<ShoppingOutlined />}
-              onClick={async () => {
-                setLoading(true)
-                await checkout([sku])
-                setLoading(false)
-              }}
-            >
-              acheter
-            </Button>
-          </div>
-        </div>
+        <p>
+          <strong>Prix :</strong>
+          <span className={styles.marginLeft}>
+            {formatPrice(sku.price, sku.currency)}
+          </span>
+        </p>
+        <p className={styles.buttons}>
+          <Button
+            type="default"
+            icon={<PlusCircleOutlined />}
+            onClick={() => addItem(sku)}
+          >
+            panier
+          </Button>
+          <Button
+            className={styles.marginLeft}
+            type="primary"
+            loading={loading}
+            icon={<ShoppingOutlined />}
+            onClick={async () => {
+              setLoading(true)
+              await checkout([sku])
+              setLoading(false)
+            }}
+          >
+            acheter
+          </Button>
+        </p>
         <div className={styles.images}>
           {product.images.map(url => (
             <div key={url}>
