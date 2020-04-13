@@ -46,9 +46,9 @@ const plugins = [
     }
   },
   {
-    resolve: 'gatsby-plugin-transition-link',
+    resolve: 'gatsby-plugin-layout',
     options: {
-      layout: require.resolve(`./src/components/pageWrapper.js`)
+      component: require.resolve(`./src/components/pageWrapper.js`)
     }
   },
   {
@@ -63,21 +63,20 @@ const plugins = [
       javascriptEnabled: true,
       modifyVars: lessToJs(fs.readFileSync('./src/makramonde.less', 'utf8')) //still needed to override variables properly
     }
-  },
+  }
   // this (optional) plugin enables Progressive Web App + Offline functionality
   // To learn more, visit: https://gatsby.dev/offline
   // `gatsby-plugin-offline`,
 ]
 
-if(process.env.NODE_ENV !== "production"){
+if (process.env.NODE_ENV !== 'production') {
   plugins.push({
-    resolve: "gatsby-plugin-webpack-bundle-analyser-v2",
+    resolve: 'gatsby-plugin-webpack-bundle-analyser-v2',
     options: {
-      devMode: true,
-    },
-  },)
+      devMode: true
+    }
+  })
 }
-
 
 module.exports = {
   siteMetadata: {

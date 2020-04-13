@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from 'react'
+import React, { useContext, useState, useRef, useEffect } from 'react'
 import { graphql } from 'gatsby'
 import { PlusCircleOutlined, ShoppingOutlined } from '@ant-design/icons'
 
@@ -28,11 +28,41 @@ const Product = ({
   }
 }) => {
   /**
-   * @constant MutableRefObject<HTMLDivElement>
+   * @constant
+   * @type React.MutableRefObject<HTMLDivElement>
    */
   const ref = useRef()
+  /**
+   * @constant
+   * @type React.MutableRefObject<number>
+   */
+  const initialOffsetTop = useRef()
   const [{ x }, set] = useSpring(() => ({ x: 0 }))
-  const isSwiping = useRef()
+  const isSwiping = useRef(false)
+
+  const [topOffset, setTopOffset] = useState(0)
+
+  useEffect(() => {
+    initialOffsetTop.current = ref.current.getBoundingClientRect().top
+  }, [])
+
+  useEffect(() => {
+    let ticking = false
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(function() {
+          setTopOffset(
+            initialOffsetTop.current - ref.current.getBoundingClientRect().top
+          )
+          ticking = false
+        })
+
+        ticking = true
+      }
+    }
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   // Set the drag hook and define component movement based on gesture data
   const bind = useDrag(
@@ -65,26 +95,42 @@ const Product = ({
   )
 
   return (
-    <animated.div
-      ref={ref}
-      {...bind()}
+    <div
       style={{
-        position: 'relative',
-        left: x
+        overflow: 'hidden'
       }}
     >
-      {previousProduct && (
-        <div className={styles.previousContainer}>
-          <ProductRaw product={previousProduct} sku={previousSku} />
-        </div>
-      )}
-      <ProductRaw product={currentProduct} sku={currentSku} />
-      {nextProduct && (
-        <div className={styles.nextContainer}>
-          <ProductRaw product={nextProduct} sku={nextSku} />
-        </div>
-      )}
-    </animated.div>
+      <animated.div
+        ref={ref}
+        {...bind()}
+        style={{
+          position: 'relative',
+          left: x
+        }}
+      >
+        {previousProduct && (
+          <div
+            className={styles.previousContainer}
+            style={{
+              top: topOffset
+            }}
+          >
+            <ProductRaw product={previousProduct} sku={previousSku} />
+          </div>
+        )}
+        <ProductRaw product={currentProduct} sku={currentSku} />
+        {nextProduct && (
+          <div
+            className={styles.nextContainer}
+            style={{
+              top: topOffset
+            }}
+          >
+            <ProductRaw product={nextProduct} sku={nextSku} />
+          </div>
+        )}
+      </animated.div>
+    </div>
   )
 }
 

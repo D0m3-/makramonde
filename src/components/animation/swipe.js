@@ -1,10 +1,6 @@
 import React from 'react'
-import AniLink from 'gatsby-plugin-transition-link/AniLink'
+import { Link } from 'gatsby'
 
-const SwipeLink = ({ children, ...props }) => (
-  <AniLink swipe entryOffset={100} {...props}>
-    {children}
-  </AniLink>
-)
+const SwipeLink = ({ children, ...props }) => <Link {...props}>{children}</Link>
 
 export default SwipeLink
