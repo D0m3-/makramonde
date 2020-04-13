@@ -103,35 +103,39 @@ const Product = ({
       }}
     >
       <SwipeSpring>
-        <animated.div
-          {...bind()}
-          style={{
-            position: 'relative',
-            left: x
-          }}
-        >
-          {previousProduct && (
-            <div
-              className={styles.previousContainer}
-              style={{
-                top: topOffset
-              }}
-            >
-              <ProductRaw product={previousProduct} sku={previousSku} />
+        {({ transitioning }) => (
+          <animated.div
+            {...bind()}
+            style={{
+              position: 'relative',
+              left: x
+            }}
+          >
+            {!transitioning && previousProduct && (
+              <div
+                className={styles.previousContainer}
+                style={{
+                  top: topOffset
+                }}
+              >
+                <ProductRaw product={previousProduct} sku={previousSku} />
+              </div>
+            )}
+            <div className={styles.currentContainer}>
+              <ProductRaw product={currentProduct} sku={currentSku} />
             </div>
-          )}
-          <ProductRaw product={currentProduct} sku={currentSku} />
-          {nextProduct && (
-            <div
-              className={styles.nextContainer}
-              style={{
-                top: topOffset
-              }}
-            >
-              <ProductRaw product={nextProduct} sku={nextSku} />
-            </div>
-          )}
-        </animated.div>
+            {!transitioning && nextProduct && (
+              <div
+                className={styles.nextContainer}
+                style={{
+                  top: topOffset
+                }}
+              >
+                <ProductRaw product={nextProduct} sku={nextSku} />
+              </div>
+            )}
+          </animated.div>
+        )}
       </SwipeSpring>
     </div>
   )

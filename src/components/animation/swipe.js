@@ -21,9 +21,8 @@ export const SwipeSpring = ({ children }) => {
           return children
         }
         const springProps = getSpringProps(context)
-        console.log(context)
         if (!springProps) {
-          return children
+          return children({ transitionning: false })
         }
         return (
           <Spring
@@ -34,7 +33,7 @@ export const SwipeSpring = ({ children }) => {
           >
             {props => (
               <animated.div style={{ position: 'relative', ...props }}>
-                {children}
+                {children({ transitioning: true })}
               </animated.div>
             )}
           </Spring>
@@ -45,6 +44,9 @@ export const SwipeSpring = ({ children }) => {
 }
 
 const getSpringProps = ({ transitionStatus, current }) => {
+  if (!current.length) {
+    return
+  }
   if (current.state === 'left') {
     switch (transitionStatus) {
       case 'exiting':

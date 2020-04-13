@@ -11,7 +11,7 @@ export default function Template({
     <>
       <SEO title={frontmatter.title} />
       <SwipeSpring>
-        <div dangerouslySetInnerHTML={{ __html: html }} />
+        {() => <div dangerouslySetInnerHTML={{ __html: html }} />}
       </SwipeSpring>
     </>
   )

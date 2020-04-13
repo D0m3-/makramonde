@@ -19,46 +19,50 @@ const IndexPage = ({ data }) => {
     <>
       <SEO title="Accueil" lang="fr" description="Bijoux uniques en macramé" />
       <SwipeSpring>
-        <p>
-          <MakramondeBijouImage />
-        </p>
-        <h1>
-          Des bijoux artisanaux aux influences ethniques et antiques d'autour du
-          monde{' '}
-        </h1>
-        <p>
-          Tous les bijoux sont fabriqués entièrement à la main dans mon atelier
-          en Haute-Savoie, à Annecy. <br />
-          Les matériaux utilisés sont de qualités ; argent 925 poinçonné de mon
-          poinçon de maître, laiton et cuivre pour les autres métaux (exempts de
-          nickel), fil ciré résistant à l'eau pour le macramé.
-        </p>
-        <p>
-          Livraison à 1 centime à partir de{' '}
-          {SHIPPING[FRANCE_METRO].discountFrom / 100}€, en France Metropolitaine
-          uniquement.
-        </p>
-        {!!firstProduct && (
+        {() => (
           <>
-            <p>Pour voir mes dernières créations, c'est par ici :</p>
-            <p style={{ textAlign: 'center' }}>
-              <SwipeLink direction="left" to={getProductUrl(firstProduct)}>
-                <Button type="primary" size="large">
-                  Explorer
-                </Button>
-              </SwipeLink>
+            <p>
+              <MakramondeBijouImage />
+            </p>
+            <h1>
+              Des bijoux artisanaux aux influences ethniques et antiques
+              d'autour du monde{' '}
+            </h1>
+            <p>
+              Tous les bijoux sont fabriqués entièrement à la main dans mon
+              atelier en Haute-Savoie, à Annecy. <br />
+              Les matériaux utilisés sont de qualités ; argent 925 poinçonné de
+              mon poinçon de maître, laiton et cuivre pour les autres métaux
+              (exempts de nickel), fil ciré résistant à l'eau pour le macramé.
+            </p>
+            <p>
+              Livraison à 1 centime à partir de{' '}
+              {SHIPPING[FRANCE_METRO].discountFrom / 100}€, en France
+              Metropolitaine uniquement.
+            </p>
+            {!!firstProduct && (
+              <>
+                <p>Pour voir mes dernières créations, c'est par ici :</p>
+                <p style={{ textAlign: 'center' }}>
+                  <SwipeLink direction="left" to={getProductUrl(firstProduct)}>
+                    <Button type="primary" size="large">
+                      Explorer
+                    </Button>
+                  </SwipeLink>
+                </p>
+              </>
+            )}
+            {!firstProduct && (
+              <p>
+                Je n'ai actuellement aucune création à vous proposer en ligne.
+                Revenez bientôt pour voir mes nouveautés !
+              </p>
+            )}
+            <p>
+              <AssemblageImage />
             </p>
           </>
         )}
-        {!firstProduct && (
-          <p>
-            Je n'ai actuellement aucune création à vous proposer en ligne.
-            Revenez bientôt pour voir mes nouveautés !
-          </p>
-        )}
-        <p>
-          <AssemblageImage />
-        </p>
       </SwipeSpring>
     </>
   )
