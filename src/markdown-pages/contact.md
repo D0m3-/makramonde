@@ -1,6 +1,6 @@
 ---
 path: '/contact'
-title: 'Contact'
+title: 'À propos'
 ---
 
 ## Macramé autour du monde

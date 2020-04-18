@@ -129,8 +129,7 @@ const InnerMenu = ({ data, location, onSelect }) => {
         )}
         <Menu.Item key="/contact">
           <SwipeLink direction="left" to={'/contact'}>
-            <MessageOutlined />
-            Contact
+            <MessageOutlined />À propos
           </SwipeLink>
         </Menu.Item>
         <Menu.Item key="/legal">
