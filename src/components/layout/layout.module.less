@@ -5,7 +5,8 @@
 }
 
 .header {
-  
+  position: relative;
+  z-index: 3;
 }
 
 .sider {
@@ -13,18 +14,24 @@
 }
 
 .footer {
+  position: relative;
+  z-index: 3;
   width: 100%;
   text-align: center;
   font-size: 10px;
 }
 
-.arrows{
+.arrows {
+  display: none;
   position: relative;
   z-index: 2; //antd weird overlay
 }
 
 @media (min-width: @screen-md-min) {
   .sider {
+    display: block;
+  }
+  .arrows {
     display: block;
   }
 }

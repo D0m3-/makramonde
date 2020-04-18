@@ -55,6 +55,12 @@ exports.createPages = async ({ graphql, actions }) => {
         filter: { active: { eq: true }, shippable: { eq: true } }
       ) {
         edges {
+          next {
+            id
+          }
+          previous {
+            id
+          }
           node {
             id
             name
@@ -69,17 +75,20 @@ exports.createPages = async ({ graphql, actions }) => {
   `)
 
   productsQuery.data &&
-    productsQuery.data.allStripeProduct.edges.forEach(({ node }) =>
-      createPage({
-        path: getProductUrl(node),
-        component: path.resolve(`./src/templates/product.js`),
-        context: {
-          // Data passed to context is available
-          // in page queries as GraphQL variables.
-          id: node.id,
-          title: node.name,
-        }
-      })
+    productsQuery.data.allStripeProduct.edges.forEach(
+      ({ node, next, previous }) =>
+        createPage({
+          path: getProductUrl(node),
+          component: path.resolve(`./src/templates/product.js`),
+          context: {
+            // Data passed to context is available
+            // in page queries as GraphQL variables.
+            id: node.id,
+            title: node.name,
+            nextId: next && next.id,
+            previousId: previous && previous.id
+          }
+        })
     )
 
   // Markdown pages

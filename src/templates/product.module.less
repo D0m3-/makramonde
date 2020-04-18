@@ -3,15 +3,29 @@
 @arrow-width: 30px;
 @arrow-height: 60px;
 .container {
-  margin: 0 @arrow-width + 6px;
+  margin: 0;
 }
 
-@media (min-width: @screen-sm-min) {
+@media (min-width: @screen-md-min) {
   .container {
     margin: 0 @arrow-width + @padding-sm;
   }
 }
 
+.nextContainer {
+  position: absolute;
+  left: 100%;
+  width: 100%;
+}
+
+.previousContainer {
+  position: absolute;
+  right: 100%;
+  width: 100%;
+}
+
+.currentContainer {
+}
 
 .content {
   display: flex;
@@ -38,31 +52,21 @@
   .imageCommon();
 }
 
-.buy {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  flex-wrap: wrap;
-}
-
-.price {
-  margin-bottom: @padding-md;
-}
-
 .buttons {
-  margin-bottom: @padding-lg;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .marginLeft {
   margin-left: @padding-md;
 }
 
-.modal{
+.modal {
   max-width: 100%;
 }
 
 @media (min-width: @screen-md-min) {
-  .modal{
+  .modal {
     max-width: 80%;
   }
 }
