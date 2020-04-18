@@ -24,18 +24,7 @@ const plugins = [
   `gatsby-transformer-remark`,
   `gatsby-transformer-sharp`,
   `gatsby-plugin-sharp`,
-  {
-    resolve: `gatsby-plugin-manifest`,
-    options: {
-      name: `gatsby-starter-default`,
-      short_name: `starter`,
-      start_url: `/`,
-      background_color: `#663399`,
-      theme_color: `#663399`,
-      display: `minimal-ui`,
-      icon: `src/images/makramonde-transparent.png` // This path is relative to the root of the site.
-    }
-  },
+
   `gatsby-plugin-stripe`,
   {
     resolve: `gatsby-source-stripe`,
@@ -63,10 +52,28 @@ const plugins = [
       javascriptEnabled: true,
       modifyVars: lessToJs(fs.readFileSync('./src/makramonde.less', 'utf8')) //still needed to override variables properly
     }
+  },
+  {
+    resolve: `gatsby-plugin-manifest`,
+    options: {
+      name: `Makramonde ecommerce`,
+      short_name: `Makramonde`,
+      start_url: `/`,
+      background_color: `#1890ff`,
+      theme_color: `#1890ff`,
+      display: `minimal-ui`,
+      icon: `src/images/makramonde-transparent.png`, // This path is relative to the root of the site.
+      cache_busting_mode: 'none'
+    }
+  },
+  {
+    resolve: 'gatsby-plugin-offline', //should be after gatsby-plugin-manifest
+    options: {
+      workboxConfig: {
+        globPatterns: ['**/*']
+      }
+    }
   }
-  // this (optional) plugin enables Progressive Web App + Offline functionality
-  // To learn more, visit: https://gatsby.dev/offline
-  // `gatsby-plugin-offline`,
 ]
 
 if (process.env.NODE_ENV !== 'production') {
