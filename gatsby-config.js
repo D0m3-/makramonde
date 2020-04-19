@@ -104,7 +104,7 @@ module.exports = {
   siteMetadata: {
     title: `Makramonde`,
     description: `Bijoux uniques en macramé`,
-    author: `@d0m3-`
+    author: `Oriane`
   },
   plugins
 }

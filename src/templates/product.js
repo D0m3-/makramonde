@@ -155,7 +155,11 @@ const ProductRaw = ({ product, sku }) => {
   const { addItem } = useContext(CartContext) || { addItem: () => {} }
   return (
     <div className={styles.container}>
-      <SEO title={product.name} description={product.description} />
+      <SEO
+        title={product.name}
+        description={product.description}
+        image={product.images && product.images.length && product.images[0]}
+      />
       <div className={styles.content}>
         <p>{product.description}</p>
         <p>

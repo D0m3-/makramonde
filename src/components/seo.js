@@ -5,13 +5,22 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import React from "react"
-import PropTypes from "prop-types"
-import Helmet from "react-helmet"
-import { useStaticQuery, graphql } from "gatsby"
+import React from 'react'
+import PropTypes from 'prop-types'
+import Helmet from 'react-helmet'
+import { useStaticQuery, graphql } from 'gatsby'
 
-function SEO({ description, lang, meta, title }) {
-  const { site } = useStaticQuery(
+/**
+ *
+ * @param {Object} param
+ * @param {string} [param.description]
+ * @param {string} param.lang
+ * @param {Object[]} [param.meta]
+ * @param {string} param.title
+ * @param {string} [param.image]
+ */
+function SEO({ description, lang, meta, title, image }) {
+  const { site, defaultImage } = useStaticQuery(
     graphql`
       query {
         site {
@@ -21,52 +30,64 @@ function SEO({ description, lang, meta, title }) {
             author
           }
         }
+        defaultImage: file(relativePath: { eq: "makramonde-bijou.png" }) {
+          childImageSharp {
+            fixed(width: 400) {
+              ...GatsbyImageSharpFixed
+            }
+          }
+        }
       }
     `
   )
 
   const metaDescription = description || site.siteMetadata.description
+  const metaImage = image || defaultImage.childImageSharp.fixed.src
 
   return (
     <Helmet
       htmlAttributes={{
-        lang,
+        lang
       }}
       title={title}
       titleTemplate={`%s | ${site.siteMetadata.title}`}
       meta={[
         {
           name: `description`,
-          content: metaDescription,
+          content: metaDescription
         },
         {
           property: `og:title`,
-          content: title,
+          content: title
         },
         {
           property: `og:description`,
-          content: metaDescription,
+          content: metaDescription
+        },
+        {
+          property: `og:image`,
+          content: metaImage
         },
         {
           property: `og:type`,
-          content: `website`,
+          content: `website`
         },
         {
           name: `twitter:card`,
-          content: `summary`,
+          content: `summary`
         },
         {
           name: `twitter:creator`,
-          content: site.siteMetadata.author,
+          content: site.siteMetadata.author
         },
         {
           name: `twitter:title`,
-          content: title,
+          content: title
         },
         {
           name: `twitter:description`,
-          content: metaDescription,
-        },
+          content: metaDescription
+        }
       ].concat(meta)}
     />
   )
@@ -75,14 +96,14 @@ function SEO({ description, lang, meta, title }) {
 SEO.defaultProps = {
   lang: `en`,
   meta: [],
-  description: ``,
+  description: ``
 }
 
 SEO.propTypes = {
   description: PropTypes.string,
   lang: PropTypes.string,
   meta: PropTypes.arrayOf(PropTypes.object),
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired
 }
 
 export default SEO
