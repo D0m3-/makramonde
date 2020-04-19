@@ -42,7 +42,10 @@ const InnerMenu = ({ data, location, onSelect }) => {
   const categories = data.allStripeProduct.edges.reduce(
     (categories, { node }) => {
       const category = node.metadata && node.metadata.category
-      if (search.length && !node.name.includes(search)) {
+      if (
+        search.length &&
+        !node.name.toLowerCase().includes(search.toLowerCase())
+      ) {
         return categories
       }
       if (!category) {
