@@ -92,6 +92,10 @@ const Product = ({
         isSwiping.current = true
         set({
           x: swipeX * ref.current.offsetWidth,
+          config: {
+            tension: 250,
+            clamp: true
+          },
           onRest: () => {
             navigate(
               getProductUrl(swipeX === 1 ? previousProduct : nextProduct)

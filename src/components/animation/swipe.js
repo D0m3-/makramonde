@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useCallback, useMemo } from 'react'
 import { animated } from 'react-spring'
 import { Spring } from 'react-spring/renderprops'
 import TransitionLink, { TransitionState } from 'gatsby-plugin-transition-link'
@@ -18,28 +18,41 @@ export const SwipeSpring = ({ children }) => {
     <TransitionState>
       {context => {
         if (!context) {
-          return children
+          return children({ transitioning: false })
         }
         const springProps = getSpringProps(context)
         if (!springProps) {
-          return children({ transitionning: false })
+          return children({ transitioning: false })
         }
         return (
           <Spring
             {...springProps}
             config={{
-              duration: 1000
+              duration: 1000,
+              easing: easeInOutCubic
             }}
           >
             {props => (
-              <animated.div style={{ position: 'relative', ...props }}>
-                {children({ transitioning: true })}
-              </animated.div>
+              <AnimatedContainer animatedProps={props}>
+                {children}
+              </AnimatedContainer>
             )}
           </Spring>
         )
       }}
     </TransitionState>
+  )
+}
+
+const AnimatedContainer = ({ animatedProps, children }) => {
+  const memoChildren = useMemo(
+    () => children({ transitioning: true }),
+    children
+  )
+  return (
+    <animated.div style={{ position: 'relative', ...animatedProps }}>
+      {memoChildren}
+    </animated.div>
   )
 }
 
@@ -89,6 +102,10 @@ const getSpringProps = ({ transitionStatus, current }) => {
         }
       }
   }
+}
+
+function easeInOutCubic(x) {
+  return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2
 }
 
 export default SwipeLink
