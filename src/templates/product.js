@@ -132,6 +132,15 @@ const Product = ({
         </div>
       )}
       <div className={styles.currentContainer}>
+        <SEO
+          title={currentProduct.name}
+          description={currentProduct.description}
+          image={
+            currentProduct.images &&
+            currentProduct.images.length &&
+            currentProduct.images[0]
+          }
+        />
         <ProductRaw product={currentProduct} sku={currentSku} />
       </div>
       {!transitioning && nextProduct && (
@@ -155,11 +164,6 @@ const ProductRaw = ({ product, sku }) => {
   const { addItem } = useContext(CartContext) || { addItem: () => {} }
   return (
     <div className={styles.container}>
-      <SEO
-        title={product.name}
-        description={product.description}
-        image={product.images && product.images.length && product.images[0]}
-      />
       <div className={styles.content}>
         <p>{product.description}</p>
         <p>

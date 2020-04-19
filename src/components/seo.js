@@ -32,8 +32,8 @@ function SEO({ description, lang, meta, title, image }) {
         }
         defaultImage: file(relativePath: { eq: "makramonde-bijou.png" }) {
           childImageSharp {
-            fixed(width: 400) {
-              ...GatsbyImageSharpFixed
+            resize(width: 600, height: 400, cropFocus: NORTH) {
+              src
             }
           }
         }
@@ -42,7 +42,7 @@ function SEO({ description, lang, meta, title, image }) {
   )
 
   const metaDescription = description || site.siteMetadata.description
-  const metaImage = image || defaultImage.childImageSharp.fixed.src
+  const metaImage = image || defaultImage.childImageSharp.resize.src
 
   return (
     <Helmet
