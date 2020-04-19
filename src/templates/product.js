@@ -92,6 +92,10 @@ const Product = ({
         isSwiping.current = true
         set({
           x: swipeX * ref.current.offsetWidth,
+          config: {
+            tension: 250,
+            clamp: true
+          },
           onRest: () => {
             navigate(
               getProductUrl(swipeX === 1 ? previousProduct : nextProduct)
@@ -132,6 +136,15 @@ const Product = ({
         </div>
       )}
       <div className={styles.currentContainer}>
+        <SEO
+          title={currentProduct.name}
+          description={currentProduct.description}
+          image={
+            currentProduct.images &&
+            currentProduct.images.length &&
+            currentProduct.images[0]
+          }
+        />
         <ProductRaw product={currentProduct} sku={currentSku} />
       </div>
       {!transitioning && nextProduct && (
@@ -155,7 +168,6 @@ const ProductRaw = ({ product, sku }) => {
   const { addItem } = useContext(CartContext) || { addItem: () => {} }
   return (
     <div className={styles.container}>
-      <SEO title={product.name} description={product.description} />
       <div className={styles.content}>
         <p>{product.description}</p>
         <p>

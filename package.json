@@ -60,11 +60,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+    "url": "https://github.com/D0m3-/makramonde"
   },
   "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
+    "url": "https://github.com/D0m3-/makramonde/issues"
   },
+  "homepage": "https://makramonde.netlify.com",
   "prettier": {
     "singleQuote": true,
     "semi": false
