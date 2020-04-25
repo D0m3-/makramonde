@@ -11,13 +11,14 @@ import AtelierDarkImage from '../components/imageAtelierDark'
 import MakramondeBijouImage from '../components/imageMakramondeBijou'
 import AssemblageImage from '../components/imageAssemblage'
 import { Button } from 'antd'
+import styles from './index.module.less'
 
-const IndexPage = ({ data }) => {
+const IndexPage = ({ data, location }) => {
   const firstProduct =
     data.allStripeProduct.edges.length && data.allStripeProduct.edges[0].node
   return (
     <>
-      <SEO title="Accueil" lang="fr" description="Bijoux uniques en macramé" />
+      <SEO lang="fr" location={location} />
       <SwipeSpring>
         {() => (
           <>
@@ -26,7 +27,7 @@ const IndexPage = ({ data }) => {
             </p>
             <h1>
               Des bijoux artisanaux aux influences ethniques et antiques
-              d'autour du monde{' '}
+              d'autour du monde
             </h1>
             <p>
               Tous les bijoux sont fabriqués entièrement à la main dans mon
@@ -43,7 +44,7 @@ const IndexPage = ({ data }) => {
             {!!firstProduct && (
               <>
                 <p>Pour voir mes dernières créations, c'est par ici :</p>
-                <p style={{ textAlign: 'center' }}>
+                <p className={styles.explore}>
                   <SwipeLink direction="left" to={getProductUrl(firstProduct)}>
                     <Button type="primary" size="large">
                       Explorer
