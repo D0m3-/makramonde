@@ -65,7 +65,7 @@ function SEO({ description, lang, meta, title, image, location }) {
         },
         {
           property: `og:title`,
-          content: title
+          content: pageTitle
         },
         {
           property: `og:description`,
