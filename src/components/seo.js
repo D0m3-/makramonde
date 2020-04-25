@@ -29,7 +29,7 @@ function SEO({ description, lang, meta, title, image, location }) {
             title
             description
             author
-            origin
+            siteUrl
           }
         }
         defaultImage: file(relativePath: { eq: "makramonde-bijou.png" }) {
@@ -61,7 +61,7 @@ function SEO({ description, lang, meta, title, image, location }) {
         },
         {
           property: `og:url`,
-          content: `${site.siteMetadata.origin}${location.pathname}`
+          content: `${site.siteMetadata.siteUrl}${location.pathname}`
         },
         {
           property: `og:title`,
@@ -99,7 +99,7 @@ function SEO({ description, lang, meta, title, image, location }) {
     >
       <link
         rel="canonical"
-        href={`${site.siteMetadata.origin}${location.pathname}`}
+        href={`${site.siteMetadata.siteUrl}${location.pathname}`}
       />
     </Helmet>
   )
