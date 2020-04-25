@@ -73,7 +73,7 @@ function SEO({ description, lang, meta, title, image, location }) {
         },
         {
           property: `og:image`,
-          content: metaImage
+          content: `${site.siteMetadata.siteUrl}${metaImage}`
         },
         {
           property: `og:type`,
