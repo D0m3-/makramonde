@@ -46,7 +46,9 @@ function SEO({ description, lang, meta, title, image, location }) {
   const pageTitle =
     (title && `${title} | Makramonde`) || site.siteMetadata.title
   const metaDescription = description || site.siteMetadata.description
-  const metaImage = image || defaultImage.childImageSharp.resize.src
+  const metaImage =
+    image ||
+    `${site.siteMetadata.siteUrl}${defaultImage.childImageSharp.resize.src}`
 
   return (
     <Helmet
@@ -73,7 +75,7 @@ function SEO({ description, lang, meta, title, image, location }) {
         },
         {
           property: `og:image`,
-          content: `${site.siteMetadata.siteUrl}${metaImage}`
+          content: metaImage
         },
         {
           property: `og:type`,
