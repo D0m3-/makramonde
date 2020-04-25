@@ -1,17 +1,52 @@
-import React, { useRef, useCallback, useMemo } from 'react'
-import { animated } from 'react-spring'
-import { Spring } from 'react-spring/renderprops'
+import React, { useRef, useCallback, useMemo, useState } from 'react'
+import { animated, useSpring, useChain } from 'react-spring'
 import TransitionLink, { TransitionState } from 'gatsby-plugin-transition-link'
+import { Link } from 'gatsby'
 
-const SwipeLink = ({ children, direction, ...props }) => (
-  <TransitionLink
-    exit={{ state: direction, length: 1 }}
-    entry={{ state: direction, length: 1 }}
-    {...props}
-  >
-    {children}
-  </TransitionLink>
-)
+const SwipeLink = ({ children, direction, ...props }) => {
+  const [triggered, setTriggered] = useState(false)
+  const [ready, setReady] = useState(false)
+  if (!ready) {
+    return (
+      <>
+        <Link
+          onClick={e => {
+            setTriggered(true)
+            e.preventDefault()
+          }}
+        >
+          {children}
+        </Link>
+        {triggered && <Scroller onDone={() => setReady(true)}></Scroller>}
+      </>
+    )
+  }
+  return (
+    <TransitionLink
+      ref={ref => ref && ref.click()}
+      exit={{ state: direction, length: 1, delay: 0.25 }}
+      entry={{ state: direction, length: 1, delay: 0.25 }}
+      {...props}
+    >
+      {children}
+    </TransitionLink>
+  )
+}
+
+const Scroller = ({ onDone }) => {
+  useSpring({
+    y: 0,
+    reset: true,
+    from: { y: window.scrollY },
+    config: {
+      tension: 200,
+      clamp: true
+    },
+    onFrame: props => window.scroll(0, props.y),
+    onRest: onDone
+  })
+  return null
+}
 
 export const SwipeSpring = ({ children }) => {
   return (
@@ -24,24 +59,21 @@ export const SwipeSpring = ({ children }) => {
         if (!springProps) {
           return children({ transitioning: false })
         }
-        return (
-          <Spring
-            {...springProps}
-            config={{
-              duration: 1000,
-              easing: easeInOutCubic
-            }}
-          >
-            {props => (
-              <AnimatedContainer animatedProps={props}>
-                {children}
-              </AnimatedContainer>
-            )}
-          </Spring>
-        )
+        return <Animator springProps={springProps}>{children}</Animator>
       }}
     </TransitionState>
   )
+}
+
+const Animator = ({ springProps, children }) => {
+  const props = useSpring({
+    ...springProps,
+    config: {
+      duration: 1000,
+      easing: easeInOutCubic
+    }
+  })
+  return <AnimatedContainer animatedProps={props}>{children}</AnimatedContainer>
 }
 
 const AnimatedContainer = ({ animatedProps, children }) => {

@@ -43,7 +43,8 @@ const Product = ({
     previousProduct,
     previousSku
   },
-  transitioning
+  transitioning,
+  location
 }) => {
   /**
    * @constant
@@ -144,6 +145,7 @@ const Product = ({
             currentProduct.images.length &&
             currentProduct.images[0]
           }
+          location={location}
         />
         <ProductRaw product={currentProduct} sku={currentSku} />
       </div>

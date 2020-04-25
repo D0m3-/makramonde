@@ -26,7 +26,12 @@ const MakramondeBijouImage = () => {
     }
   `)
 
-  return <Img fluid={data.placeholderImage.childImageSharp.fluid} />
+  return (
+    <Img
+      alt={'Logo Makramonde'}
+      fluid={data.placeholderImage.childImageSharp.fluid}
+    />
+  )
 }
 
 export default MakramondeBijouImage

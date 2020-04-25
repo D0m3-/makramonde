@@ -16,10 +16,11 @@ import { useStaticQuery, graphql } from 'gatsby'
  * @param {string} [param.description]
  * @param {string} param.lang
  * @param {Object[]} [param.meta]
- * @param {string} param.title
+ * @param {string} [param.title]
  * @param {string} [param.image]
+ * @param {Object} param.location
  */
-function SEO({ description, lang, meta, title, image }) {
+function SEO({ description, lang, meta, title, image, location }) {
   const { site, defaultImage } = useStaticQuery(
     graphql`
       query {
@@ -28,11 +29,12 @@ function SEO({ description, lang, meta, title, image }) {
             title
             description
             author
+            siteUrl
           }
         }
         defaultImage: file(relativePath: { eq: "makramonde-bijou.png" }) {
           childImageSharp {
-            resize(width: 600, height: 400, cropFocus: NORTH) {
+            resize(width: 600, height: 350, cropFocus: NORTH) {
               src
             }
           }
@@ -41,24 +43,31 @@ function SEO({ description, lang, meta, title, image }) {
     `
   )
 
+  const pageTitle =
+    (title && `${title} | Makramonde`) || site.siteMetadata.title
   const metaDescription = description || site.siteMetadata.description
-  const metaImage = image || defaultImage.childImageSharp.resize.src
+  const metaImage =
+    image ||
+    `${site.siteMetadata.siteUrl}${defaultImage.childImageSharp.resize.src}`
 
   return (
     <Helmet
       htmlAttributes={{
         lang
       }}
-      title={title}
-      titleTemplate={`%s | ${site.siteMetadata.title}`}
+      title={pageTitle}
       meta={[
         {
           name: `description`,
           content: metaDescription
         },
         {
+          property: `og:url`,
+          content: `${site.siteMetadata.siteUrl}${location.pathname}`
+        },
+        {
           property: `og:title`,
-          content: title
+          content: pageTitle
         },
         {
           property: `og:description`,
@@ -89,7 +98,12 @@ function SEO({ description, lang, meta, title, image }) {
           content: metaDescription
         }
       ].concat(meta)}
-    />
+    >
+      <link
+        rel="canonical"
+        href={`${site.siteMetadata.siteUrl}${location.pathname}`}
+      />
+    </Helmet>
   )
 }
 

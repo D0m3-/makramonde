@@ -1,11 +1,11 @@
-import React from "react"
-import { Link } from "gatsby"
+import React from 'react'
+import { Link } from 'gatsby'
 
-import SEO from "../components/seo"
+import SEO from '../components/seo'
 
-const SuccessPage = () => (
+const SuccessPage = ({ location }) => (
   <>
-    <SEO title="Page two" />
+    <SEO title="Achat finalisé" location={location} />
     <h1>Merci pour votre achat!</h1>
     <p>Vous allez bientôt recevoir un email de confirmation.</p>
     <Link to="/">Retour au site</Link>
