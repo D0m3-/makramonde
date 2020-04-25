@@ -42,7 +42,7 @@ const IndexPage = ({ data, location }) => {
         {!!firstProduct && (
           <>
             <p>Pour voir mes dernières créations, c'est par ici :</p>
-            <p className={styles.explore}>
+            <p key={'explore'} className={styles.explore}>
               <SwipeLink direction="left" to={getProductUrl(firstProduct)}>
                 <Button type="primary" size="large">
                   Explorer
