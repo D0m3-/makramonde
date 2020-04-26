@@ -107,7 +107,7 @@ module.exports = {
     title: `Makramonde | Bijoux uniques en macramé`,
     description: `Dans mon atelier j’associe aux couleurs du macramé l’élégance du métal et des matières naturelles comme les pierres fines afin de créer des bijoux uniques.`,
     author: `Oriane`,
-    siteUrl: process.env.URL || 'localhost'
+    siteUrl: process.env.URL || 'http://localhost'
   },
   plugins
 }
