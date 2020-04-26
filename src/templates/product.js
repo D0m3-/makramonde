@@ -201,10 +201,11 @@ const ProductRaw = ({ product, sku }) => {
           </Button>
         </p>
         <div className={styles.images}>
-          {product.images.map(url => (
+          {product.images.map((url, index) => (
             <div key={url}>
               <img
                 src={url}
+                alt={`Photo produit ${index}`}
                 onClick={() => setImage(url)}
                 className={styles.image}
               />
