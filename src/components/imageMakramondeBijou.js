@@ -28,7 +28,7 @@ const MakramondeBijouImage = () => {
 
   return (
     <Img
-      alt={'Logo Makramonde'}
+      alt={'Logo Makramonde avec bijou'}
       fluid={data.placeholderImage.childImageSharp.fluid}
     />
   )

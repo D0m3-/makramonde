@@ -27,7 +27,12 @@ const Logo = () => {
     }
   `)
 
-  return <Img fixed={data.placeholderImage.childImageSharp.fixed} />
+  return (
+    <Img
+      alt={'Bannière Makramonde'}
+      fixed={data.placeholderImage.childImageSharp.fixed}
+    />
+  )
 }
 
 export default Logo
