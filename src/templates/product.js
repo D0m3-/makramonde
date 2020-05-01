@@ -139,7 +139,10 @@ const Product = ({
       <div className={styles.currentContainer}>
         <SEO
           title={currentProduct.name}
-          description={currentProduct.description}
+          description={`${currentProduct.description} - Prix : ${formatPrice(
+            currentSku.price,
+            currentSku.currency
+          )}`}
           image={
             currentProduct.images &&
             currentProduct.images.length &&
@@ -205,7 +208,7 @@ const ProductRaw = ({ product, sku }) => {
             <div key={url}>
               <img
                 src={url}
-                alt={`Photo produit ${index}`}
+                alt={`${product.name} - Photo ${index}`}
                 onClick={() => setImage(url)}
                 className={styles.image}
               />

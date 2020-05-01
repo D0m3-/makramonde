@@ -105,7 +105,7 @@ if (process.env.NODE_ENV !== 'production') {
 module.exports = {
   siteMetadata: {
     title: `Makramonde | Bijoux uniques en macramé`,
-    description: `Aux couleurs du macramé, j'allie l’élégance du métal et de pierres fines. Venez découvrir les dernières créations issues mon atelier.`,
+    description: `Aux couleurs du macramé, j'allie l’élégance du métal et de pierres fines. Venez découvrir les dernières créations issues de mon atelier "Makramonde".`,
     author: `Oriane`,
     siteUrl: process.env.URL || 'http://localhost'
   },

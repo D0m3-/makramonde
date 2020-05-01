@@ -66,6 +66,10 @@ function SEO({ description, lang, meta, title, image, location }) {
           content: `${site.siteMetadata.siteUrl}${location.pathname}`
         },
         {
+          property: `og:site_name`,
+          content: pageTitle
+        },
+        {
           property: `og:title`,
           content: pageTitle
         },
@@ -75,8 +79,15 @@ function SEO({ description, lang, meta, title, image, location }) {
         },
         {
           property: `og:image`,
-          content: metaImage
+          content: metaImage,
+          itemprop: 'image'
         },
+        metaImage &&
+          metaImage.startsWith('https') && {
+            property: `og:image:secure_url`,
+            content: metaImage,
+            itemprop: 'image'
+          },
         {
           property: `og:type`,
           content: `website`
