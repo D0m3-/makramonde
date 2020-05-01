@@ -36,6 +36,7 @@ const SwipableProduct = props => {
 
 const Product = ({
   data: {
+    site,
     currentProduct,
     currentSku,
     nextProduct,
@@ -117,6 +118,11 @@ const Product = ({
     { threshold: THRESHOLD, swipeVelocity: 0.1 }
   )
 
+  const currentImage =
+    currentProduct.images &&
+    currentProduct.images.length &&
+    currentProduct.images[0]
+
   return (
     <animated.div
       {...bind()}
@@ -143,13 +149,34 @@ const Product = ({
             currentSku.price,
             currentSku.currency
           )}`}
-          image={
-            currentProduct.images &&
-            currentProduct.images.length &&
-            currentProduct.images[0]
-          }
+          image={currentImage}
           location={location}
-        />
+          jsonld={{
+            '@type': 'Product',
+            name: currentProduct.name,
+            image: [currentImage],
+            description: currentProduct.description,
+            sku: currentSku.id,
+            brand: {
+              '@type': 'Brand',
+              name: 'Makramonde'
+            },
+            manufacturer: {
+              name: 'Makramonde'
+            },
+            offers: {
+              '@type': 'Offer',
+              url: `${site.siteMetadata.siteUrl}${location.pathname}`,
+              priceCurrency: currentSku.currency,
+              price: currentSku.price / 100,
+              itemCondition: 'https://schema.org/NewCondition',
+              availability: 'https://schema.org/OnlineOnly',
+              priceValidUntil: new Date(
+                new Date().setFullYear(new Date().getFullYear() + 1)
+              ).toISOString()
+            }
+          }}
+        ></SEO>
         <ProductRaw product={currentProduct} sku={currentSku} />
       </div>
       {!transitioning && nextProduct && (
@@ -233,6 +260,11 @@ export default SwipableProduct
 
 export const query = graphql`
   query($id: String!, $nextId: String, $previousId: String) {
+    site {
+      siteMetadata {
+        siteUrl
+      }
+    }
     currentProduct: stripeProduct(id: { eq: $id }) {
       id
       images

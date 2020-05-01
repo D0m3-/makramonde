@@ -19,8 +19,9 @@ import { useStaticQuery, graphql } from 'gatsby'
  * @param {string} [param.title]
  * @param {string} [param.image]
  * @param {Object} param.location
+ * @param {Object} [param.jsonld]
  */
-function SEO({ description, lang, meta, title, image, location }) {
+function SEO({ description, lang, meta, title, image, location, jsonld }) {
   const { site, defaultImage } = useStaticQuery(
     graphql`
       query {
@@ -114,6 +115,14 @@ function SEO({ description, lang, meta, title, image, location }) {
         rel="canonical"
         href={`${site.siteMetadata.siteUrl}${location.pathname}`}
       />
+      {jsonld && (
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'http://schema.org',
+            ...jsonld
+          })}
+        </script>
+      )}
     </Helmet>
   )
 }

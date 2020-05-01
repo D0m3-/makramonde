@@ -69,7 +69,21 @@ const IndexPage = ({ data, location }) => {
   ])
   return (
     <>
-      <SEO lang="fr" location={location} />
+      <SEO
+        lang="fr"
+        location={location}
+        jsonld={{
+          '@type': 'WebSite',
+          url: data.site.siteMetadata.siteUrl,
+          inLanguage: 'fr',
+          keywords:
+            'macramé, ecommerce, bijou, unique, métal, art, pierres, création, atelier, makramonde',
+          description: data.site.siteMetadata.description,
+          image: `${data.site.siteMetadata.siteUrl}${data.defaultImage.childImageSharp.resize.src}`,
+          name: data.site.siteMetadata.title,
+          alternateName: `Makramonde | Ecommerce macramé`
+        }}
+      />
       {swipe}
     </>
   )
@@ -79,6 +93,14 @@ export default IndexPage
 
 export const query = graphql`
   query {
+    site {
+      siteMetadata {
+        title
+        description
+        author
+        siteUrl
+      }
+    }
     allStripeProduct(
       limit: 1
       filter: { active: { eq: true }, shippable: { eq: true } }
@@ -88,6 +110,13 @@ export const query = graphql`
           id
           name
           created
+        }
+      }
+    }
+    defaultImage: file(relativePath: { eq: "makramonde-bijou.png" }) {
+      childImageSharp {
+        resize(width: 600, height: 350, cropFocus: NORTH) {
+          src
         }
       }
     }
