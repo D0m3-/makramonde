@@ -23,6 +23,7 @@ const SiteMenu = props => (
           edges {
             node {
               name
+              description
               created
               metadata {
                 category
@@ -44,7 +45,11 @@ const InnerMenu = ({ data, location, onSelect }) => {
       const category = node.metadata && node.metadata.category
       if (
         search.length &&
-        !node.name.toLowerCase().includes(search.toLowerCase())
+        !node.name.toLowerCase().includes(search.toLowerCase()) &&
+        !(
+          node.description &&
+          node.description.toLowerCase().includes(search.toLowerCase())
+        )
       ) {
         return categories
       }
