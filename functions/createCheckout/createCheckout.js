@@ -44,7 +44,7 @@ async function createCheckout({ skus, origin, referer, shippingId }) {
     amount: sku.price,
     currency: sku.currency,
     quantity: 1,
-    ...(sku.image && { images: [sku.image] })
+    ...(sku.image && { images: [sku.image] }) //TODO fix image for checkout
   }))
 
   // Add shipping line

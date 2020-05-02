@@ -1,6 +1,7 @@
 import React, { useContext, useState, useRef, useEffect } from 'react'
 import { graphql } from 'gatsby'
 import { PlusCircleOutlined, ShoppingOutlined } from '@ant-design/icons'
+import Img from 'gatsby-image'
 
 import { formatPrice } from '../util/price'
 import { CartContext } from '../components/cart/cart'
@@ -13,7 +14,7 @@ import { useSpring, animated } from 'react-spring'
 import { useDrag } from 'react-use-gesture'
 import { navigate } from 'gatsby'
 import { getProductUrl } from '../util/link'
-import SwipeLink, { SwipeSpring } from '../components/animation/swipe'
+import { SwipeSpring } from '../components/animation/swipe'
 
 const THRESHOLD = 20
 const NO_DRAG_THRESHOLD = 2 * THRESHOLD
@@ -119,9 +120,9 @@ const Product = ({
   )
 
   const currentImage =
-    currentProduct.images &&
-    currentProduct.images.length &&
-    currentProduct.images[0]
+    currentProduct.localImages &&
+    currentProduct.localImages.length &&
+    currentProduct.localImages[0]
 
   return (
     <animated.div
@@ -149,12 +150,20 @@ const Product = ({
             currentSku.price,
             currentSku.currency
           )}`}
-          image={currentImage}
+          image={
+            currentImage &&
+            `${site.siteMetadata.siteUrl}${currentImage.childImageSharp.fluid.src}`
+          }
           location={location}
           jsonld={{
             '@type': 'Product',
             name: currentProduct.name,
-            image: [currentImage],
+            image:
+              currentImage &&
+              currentImage.childImageSharp.fluid.srcSet
+                .split(/ \d*w(,\n)?/)
+                .filter(url => url && url.startsWith('/'))
+                .map(url => `${site.siteMetadata.siteUrl}${url}`),
             description: currentProduct.description,
             sku: currentSku.id,
             brand: {
@@ -231,26 +240,35 @@ const ProductRaw = ({ product, sku }) => {
           </Button>
         </p>
         <div className={styles.images}>
-          {product.images.map((url, index) => (
-            <div key={url}>
-              <img
-                src={url}
-                alt={`${product.name} - Photo ${index}`}
-                onClick={() => setImage(url)}
-                className={styles.image}
-              />
-            </div>
-          ))}
+          {product.localImages &&
+            product.localImages.map(({ childImageSharp, id }, index) => (
+              <div
+                key={childImageSharp.id}
+                onClick={() => setImage({ childImageSharp, id })}
+              >
+                <Img
+                  alt={`${product.name} - ${0}`}
+                  fluid={childImageSharp.fluid}
+                  className={styles.image}
+                />
+              </div>
+            ))}
         </div>
       </div>
       <Modal
         className={styles.modal}
-        visible={image}
-        onCancel={() => setImage()}
+        visible={!!image}
+        onCancel={() => setImage(null)}
         footer={null}
         width="100%"
       >
-        <img src={image} className={styles.imageModal} />
+        {image && (
+          <Img
+            alt={`${product.name} - Plein écran`}
+            fluid={image.childImageSharp.fullscreen}
+            className={styles.imageModal}
+          />
+        )}
       </Modal>
     </div>
   )
@@ -267,10 +285,18 @@ export const query = graphql`
     }
     currentProduct: stripeProduct(id: { eq: $id }) {
       id
-      images
       description
       name
-      images
+      localImages {
+        childImageSharp {
+          fluid(maxWidth: 800) {
+            ...GatsbyImageSharpFluid
+          }
+          fullscreen: fluid(maxWidth: 2000) {
+            ...GatsbyImageSharpFluid
+          }
+        }
+      }
     }
     currentSku: stripeSku(product: { id: { eq: $id } }) {
       price
@@ -279,11 +305,16 @@ export const query = graphql`
     }
     nextProduct: stripeProduct(id: { eq: $nextId }) {
       id
-      images
       description
       name
-      images
       created
+      localImages {
+        childImageSharp {
+          fluid(maxWidth: 800) {
+            ...GatsbyImageSharpFluid
+          }
+        }
+      }
     }
     nextSku: stripeSku(product: { id: { eq: $nextId } }) {
       price
@@ -292,11 +323,16 @@ export const query = graphql`
     }
     previousProduct: stripeProduct(id: { eq: $previousId }) {
       id
-      images
       description
       name
-      images
       created
+      localImages {
+        childImageSharp {
+          fluid(maxWidth: 800) {
+            ...GatsbyImageSharpFluid
+          }
+        }
+      }
     }
     previousSku: stripeSku(product: { id: { eq: $previousId } }) {
       price
