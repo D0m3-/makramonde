@@ -1,7 +1,6 @@
-import React, { useRef, useCallback, useMemo, useState } from 'react'
-import { animated, useSpring, useChain } from 'react-spring'
+import React, { useMemo, useState } from 'react'
+import { animated, useSpring } from 'react-spring'
 import TransitionLink, { TransitionState } from 'gatsby-plugin-transition-link'
-import { Link } from 'gatsby'
 
 const SwipeLink = ({ children, direction, ...props }) => {
   const [triggered, setTriggered] = useState(false)
@@ -9,14 +8,15 @@ const SwipeLink = ({ children, direction, ...props }) => {
   if (!ready) {
     return (
       <>
-        <Link
+        <a
+          href={props.to}
           onClick={e => {
             setTriggered(true)
             e.preventDefault()
           }}
         >
           {children}
-        </Link>
+        </a>
         {triggered && <Scroller onDone={() => setReady(true)}></Scroller>}
       </>
     )
@@ -77,10 +77,9 @@ const Animator = ({ springProps, children }) => {
 }
 
 const AnimatedContainer = ({ animatedProps, children }) => {
-  const memoChildren = useMemo(
-    () => children({ transitioning: true }),
+  const memoChildren = useMemo(() => children({ transitioning: true }), [
     children
-  )
+  ])
   return (
     <animated.div style={{ position: 'relative', ...animatedProps }}>
       {memoChildren}
