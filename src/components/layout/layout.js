@@ -5,7 +5,7 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { useStaticQuery, graphql } from 'gatsby'
 import { Layout, Row, Col } from 'antd'
@@ -15,9 +15,6 @@ import styles from './layout.module.less'
 import SiteHeader from './header/header'
 import SiteSider from './sider/sider'
 import Arrows from '../products/arrows'
-
-import { useSpring, animated } from 'react-spring'
-import { useDrag } from 'react-use-gesture'
 
 const { Header, Content, Footer, Sider } = Layout
 

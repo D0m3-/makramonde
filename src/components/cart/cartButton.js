@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { checkout } from '../../stripe/checkout'
 import { CartContext } from './cart'
 import { ShoppingCartOutlined, DeleteOutlined } from '@ant-design/icons'
-import { Badge, Button, Spin } from 'antd'
+import { Badge, Spin } from 'antd'
 import styles from './cartButton.module.less'
 import cx from 'classnames'
 
@@ -19,12 +19,13 @@ const CartButton = () => {
           <ShoppingCartOutlined
             className={styles.cart}
             onClick={
-              items.length &&
-              (async () => {
-                setLoading(true)
-                await checkout(items)
-                setLoading(false)
-              })
+              items.length
+                ? async () => {
+                    setLoading(true)
+                    await checkout(items)
+                    setLoading(false)
+                  }
+                : undefined
             }
             type="shopping-cart"
           />

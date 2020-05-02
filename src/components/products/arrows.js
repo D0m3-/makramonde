@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react'
-import { graphql, Link, StaticQuery } from 'gatsby'
+import React from 'react'
+import { graphql, StaticQuery } from 'gatsby'
 import { RightCircleFilled, LeftCircleFilled } from '@ant-design/icons'
 
 import { getProductUrl } from '../../util/link'
@@ -51,8 +51,9 @@ const Arrows = ({ productId }) => {
       `}
       render={data => {
         const { next, previous } =
-          data.allStripeProduct.edges.find(edge => edge.node.id == productId) ||
-          {}
+          data.allStripeProduct.edges.find(
+            edge => edge.node.id === productId
+          ) || {}
         return (
           <>
             <div className={styles.arrowLeft}>

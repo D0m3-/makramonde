@@ -4,7 +4,6 @@ import styles from './sider.module.less'
 import Logo from '../../logo'
 import SwipeLink from '../../animation/swipe'
 
-import { Menu } from 'antd'
 import SiteMenu from '../menu/menu'
 
 const SiteSider = ({ siteTitle, location }) => {

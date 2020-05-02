@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useMemo } from 'react'
 
 import SEO from '../components/seo'
 import { getProductUrl } from '../util/link'
@@ -7,7 +7,6 @@ import {
   SHIPPING,
   FRANCE_METRO
 } from '../../functions/createCheckout/constants/shipping'
-import AtelierDarkImage from '../components/imageAtelierDark'
 import MakramondeBijouImage from '../components/imageMakramondeBijou'
 import AssemblageImage from '../components/imageAssemblage'
 import { Button } from 'antd'
@@ -20,9 +19,9 @@ const IndexPage = ({ data, location }) => {
   const content = useMemo(
     () => (
       <>
-        <p>
+        <h2>
           <MakramondeBijouImage />
-        </p>
+        </h2>
         <h1>
           Des bijoux artisanaux aux influences ethniques et antiques d'autour du
           monde
@@ -42,13 +41,13 @@ const IndexPage = ({ data, location }) => {
         {!!firstProduct && (
           <>
             <p>Pour voir mes dernières créations, c'est par ici :</p>
-            <p key={'explore'} className={styles.explore}>
-              <SwipeLink direction="left" to={getProductUrl(firstProduct)}>
-                <Button type="primary" size="large">
+            <div className={styles.explore}>
+              <Button type="primary" size="large">
+                <SwipeLink direction="left" to={getProductUrl(firstProduct)}>
                   Explorer
-                </Button>
-              </SwipeLink>
-            </p>
+                </SwipeLink>
+              </Button>
+            </div>
           </>
         )}
         {!firstProduct && (
@@ -57,15 +56,15 @@ const IndexPage = ({ data, location }) => {
             Revenez bientôt pour voir mes nouveautés !
           </p>
         )}
-        <p>
+        <h2>
           <AssemblageImage />
-        </p>
+        </h2>
       </>
     ),
     [firstProduct]
   )
   const swipe = useMemo(() => <SwipeSpring>{() => content}</SwipeSpring>, [
-    firstProduct
+    content
   ])
   return (
     <>

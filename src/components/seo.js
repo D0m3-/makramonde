@@ -83,12 +83,13 @@ function SEO({ description, lang, meta, title, image, location, jsonld }) {
           content: metaImage,
           itemprop: 'image'
         },
-        metaImage &&
-          metaImage.startsWith('https') && {
-            property: `og:image:secure_url`,
-            content: metaImage,
-            itemprop: 'image'
-          },
+        metaImage && metaImage.startsWith('https')
+          ? {
+              property: `og:image:secure_url`,
+              content: metaImage,
+              itemprop: 'image'
+            }
+          : {},
         {
           property: `og:type`,
           content: `website`
@@ -109,7 +110,7 @@ function SEO({ description, lang, meta, title, image, location, jsonld }) {
           name: `twitter:description`,
           content: metaDescription
         }
-      ].concat(meta)}
+      ].concat(meta || [])}
     >
       <link
         rel="canonical"
@@ -125,19 +126,6 @@ function SEO({ description, lang, meta, title, image, location, jsonld }) {
       )}
     </Helmet>
   )
-}
-
-SEO.defaultProps = {
-  lang: `en`,
-  meta: [],
-  description: ``
-}
-
-SEO.propTypes = {
-  description: PropTypes.string,
-  lang: PropTypes.string,
-  meta: PropTypes.arrayOf(PropTypes.object),
-  title: PropTypes.string.isRequired
 }
 
 export default SEO

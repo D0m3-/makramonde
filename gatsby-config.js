@@ -21,6 +21,27 @@ const plugins = [
       path: `${__dirname}/src/images`
     }
   },
+  {
+    resolve: `gatsby-plugin-remote-images-d0m3`,
+    options: {
+      // The node type that has the images you want to grab.
+      // This is generally the camelcased version of the word
+      // after the 'all' in GraphQL ie. allMyImages type is myImages
+      nodeType: 'StripeProduct',
+      // For simple object traversal, this is the string path to the image you
+      // want to use, relative to the node.
+      // This uses lodash .get, see [docs for accepted formats here](https://lodash.com/docs/4.17.11#get).
+      // For traversing objects with arrays at given depths, see [how to handle arrays below](#traversing-objects-with-arrays)
+      imagePath: 'images',
+      name: 'localImages',
+      type: 'array',
+      // Allows modification of the URL per image if needed. Expects a function
+      // taking the original URL as a parameter and returning the desired URL.
+      prepareUrl: ({ url, node, index }) => {
+        return url
+      }
+    }
+  },
   `gatsby-transformer-remark`,
   `gatsby-transformer-sharp`,
   `gatsby-plugin-sharp`,
