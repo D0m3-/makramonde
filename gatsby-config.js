@@ -90,7 +90,60 @@ const plugins = [
     }
   },
   'gatsby-plugin-robots-txt',
-  `gatsby-plugin-sitemap`,
+  {
+    resolve: `gatsby-plugin-sitemap`,
+    options: {
+      exclude: [`/success`],
+      query: `
+        {
+          site {
+            siteMetadata {
+              siteUrl
+            }
+          }
+
+          allSitePage {
+            nodes {
+              path
+              context {
+                id
+              }
+            }
+          }
+
+          allStripeProduct {
+            nodes {
+              id
+              localImages {
+                publicURL
+              }
+            }
+          }
+          
+      }`,
+      serialize: ({ site, allSitePage, allStripeProduct }) =>
+        allSitePage.nodes.map(node => {
+          const sitemap = {
+            url: `${site.siteMetadata.siteUrl}${node.path}`
+          }
+          if (!node.context.id) {
+            return sitemap
+          }
+          const product = allStripeProduct.nodes.find(
+            ({ id }) => node.context.id === id
+          )
+          if (!product) {
+            return sitemap
+          }
+          return {
+            ...sitemap,
+            img: product.localImages.map(({ publicURL }) => ({
+              url: publicURL
+            }))
+          }
+        })
+    }
+  },
   {
     resolve: `gatsby-plugin-manifest`,
     options: {
