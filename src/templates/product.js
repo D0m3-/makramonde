@@ -159,11 +159,15 @@ const Product = ({
             '@type': 'Product',
             name: currentProduct.name,
             image:
-              currentImage &&
-              currentImage.childImageSharp.fluid.srcSet
-                .split(/ \d*w(,\n)?/)
-                .filter(url => url && url.startsWith('/'))
-                .map(url => `${site.siteMetadata.siteUrl}${url}`),
+              currentProduct.localImages &&
+              currentProduct.localImages.reduce((images, image) => {
+                const imageSet = image.childImageSharp.fluid.srcSet
+                  .split(/ \d*w(,\n)?/)
+                  .filter(url => url && url.startsWith('/'))
+                  .map(url => `${site.siteMetadata.siteUrl}${url}`)
+
+                return images.concat(imageSet)
+              }, []),
             description: currentProduct.description,
             sku: currentSku.id,
             brand: {

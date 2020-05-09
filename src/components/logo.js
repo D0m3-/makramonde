@@ -31,6 +31,7 @@ const Logo = () => {
     <Img
       alt={'Bannière Makramonde'}
       fixed={data.placeholderImage.childImageSharp.fixed}
+      loading={'eager'}
     />
   )
 }

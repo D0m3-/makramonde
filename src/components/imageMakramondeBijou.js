@@ -30,6 +30,7 @@ const MakramondeBijouImage = () => {
     <Img
       alt={'Logo Makramonde avec bijou'}
       fluid={data.placeholderImage.childImageSharp.fluid}
+      loading={'eager'}
     />
   )
 }
