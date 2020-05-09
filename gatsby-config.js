@@ -138,7 +138,7 @@ const plugins = [
           return {
             ...sitemap,
             img: product.localImages.map(({ publicURL }) => ({
-              url: publicURL
+              url: `${site.siteMetadata.siteUrl}${publicURL}`
             }))
           }
         })
