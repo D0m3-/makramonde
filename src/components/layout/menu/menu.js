@@ -84,6 +84,7 @@ const InnerMenu = ({ data, location, onSelect }) => {
         mode="inline"
         className={styles.menu}
         onClick={onSelect}
+        forceSubMenuRender
       >
         <Menu.Item key="/">
           <SwipeLink direction="right" to={'/'}>
