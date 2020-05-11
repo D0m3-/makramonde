@@ -1,3 +1,4 @@
+
 ---
 path: '/legal'
 title: 'Légal'
@@ -5,21 +6,25 @@ title: 'Légal'
 
 # Conditions générales de vente des produits et services vendus sur ce site
 
-Oriane Bernard micro entreprise
++ Oriane Bernard entrepreneur individuel TVA non applicable : article 293 B du CGI.
 
-Siège social : 65 rue jean louis soulavie / 07110 largentière
++ Adresse électronique de contact et numéro de téléphone non surtaxé : makramonde@gmail.com / 06.95.04.96.44
 
-Adresse électronique : makramonde@gmail.com
++ Numéro d'immatriculation au répertoire des métiers (RM) : 80342682400030 RM 74
 
-SIREN : 80342682400022 / RCS :
++ Hébergeur du site de vente en ligne :netlify-2325 3rd Street, Suite 215, San Francisco, California 94107, États-Unis 
+
++ Création du site web par Oriane BERNARD
+
 
 ## Article 1 – Objet
 
-Les présentes conditions régissent les ventes par la société Oriane Bernard des produits commercialisés sur son site Internet Makramonde.
+Les présentes conditions régissent les ventes par la société Oriane Bernard des produits commercialisés sur son site Internet "makramonde.netlify.app".
 
 ## Article 2 – Prix
 
-Les prix de nos produits sont indiqués en euros toutes taxes comprises (TVA et autres taxes applicables au jour de la commande), sauf indication contraire et hors éventuels frais de traitement et d'expédition.
+Les prix de nos produits sont indiqués en euros Hors Taxe car la TVA n'est pas applicable selon l'article 293 B du CGI.
+ et hors éventuels d'expédition.
 
 Toutes les commandes quelle que soit leur origine sont payables en euros.
 
@@ -84,16 +89,24 @@ Conformément aux dispositions de l'article L.121-21-8 du Code de la Consommatio
 
 ## Article 7- Disponibilité
 
-Nos produits sont proposés tant qu'ils sont visibles sur le site et dans la limite des stocks disponibles. Pour les produits non stockés, nos offres sont valables sous réserve de disponibilité chez nos fournisseurs.
+Nos produits sont proposés tant qu'ils sont visibles sur le site et dans la limite des stocks disponibles. 
 
-En cas d'indisponibilité de produit après passation de votre commande, nous vous en informerons par mail. Votre commande sera automatiquement annulée et aucun débit bancaire ne sera effectué.
+En cas d'indisponibilité de produit après passation de votre commande, nous vous en informerons par mail. Votre commande sera automatiquement annulée et aucun débit bancaire ne sera effectué.Les produits proposés sont fabriqués de manière artisanale, ce qui explique les stocks limités. N'hésitez pas à me contacter pour savoir si un produit en rupture peut être à nouveau disponible sur commande.
 
 ## Article 8 – Livraison
 
 Les produits sont livrés à l'adresse de livraison indiquée au cours du processus de commande, dans le délai indiqué sur la page de validation de la commande.
-Conformément aux dispositions légales, en cas de retard de livraison, vous bénéficiez de la possibilité d'annuler la commande dans les conditions et modalités définies à l'article L 138-2 du Code de la Consommation. Si entre temps vous recevez le produit, nous procéderons à son remboursement et aux frais d'acheminement dans les conditions de l'article L 138-3 du Code de la Consommation.
+Conformément aux dispositions légales, en cas de retard de livraison, vous bénéficiez de la possibilité d'annuler la commande dans les conditions et modalités définies à l'article L 138-2 du Code de la Consommation. 
 
-En cas de livraison par un transporteur, la société Oriane Bernard ne peut être tenue pour responsable de retard de livraison dû exclusivement à une indisponibilité du client après plusieurs propositions de rendez-vous.
+Le mode d'expédition national standard est la lettre suivie, remise sans signature. Si vous souhaitez une remise avec signature, un coût supplémentaire s'applique, merci de me contacter au préalable. Quel que soit le mode d'expédition choisi, nous vous fournirons dès que possible un lien qui vous permettra de suivre en ligne la livraison de votre colis.
+
+Les frais d'expédition comprennent l'emballage, la manutention et les frais postaux. Nous vous conseillons de regrouper vos achats en une unique commande pour éviter des frais trop élevés. Nous ne pouvons pas grouper deux commandes distinctes et vous devrez vous acquitter des frais de port pour chacune d'entre elles. Votre colis est expédié à vos propres risques, un soin particulier est apporté au colis contenant des produits fragiles, mais nous ne saurions être tenus pour responsables de toute dégradation survenue au cours du transport, après dépôt par nos soins du colis à la Poste.
+
+Sauf disposition contraire, la livraison est faite à l'adresse indiquée par l'acheteur lors de la commande. En cas d'erreur de la part de l'acheteur dans le libellé des coordonnées du destinataire, Oriane BERNARD ne saurait être tenu responsable de l'impossibilité de livrer le produit à bonne destination.
+
+En cas de dommage durant le transport, une réclamation doit être formulée auprès de La Poste dès réception de l'envoi. Oriane BERNARD ne saurait être tenu pour responsable de toute dégradation, de perte ou de vol de colis par le transporteur.
+
+Les envois se font généralement dans un délai maximum de deux semaines à partir de la réception du paiement et de la validation de la commande.En cas de livraison par un transporteur, la société Oriane Bernard ne peut être tenue pour responsable de retard de livraison dû exclusivement à une indisponibilité du client après plusieurs propositions de rendez-vous.
 
 ## Article 9 – Responsabilité
 
@@ -105,14 +118,14 @@ Enfin la responsabilité de la société Oriane Bernard ne saurait être engagé
 
 ## Article 10 - Propriété intellectuelle
 
+Les créations proposées sur le site « makramonde.netlify.app » sont des créations artisanales personnelles. De ce fait, chacunes d'entre elles sont uniques, et le produit commandé peut légèrement différer de la photographie présentée sur le site. Toute reproduction est interdite.
+Les photographies n'entrent pas dans le champ contractuel. La responsabilité de la société Oriane BERNARD ne peut être engagée si des erreurs s'y sont introduites. 
 Tous les éléments du site Makramonde sont et restent la propriété intellectuelle et exclusive de la société Oriane Bernard. Nul n'est autorisé à reproduire, exploiter, rediffuser, ou utiliser à quelque titre que ce soit, même partiellement, des éléments du site qu'ils soient logiciels, visuels ou sonores. Tout lien simple ou par hypertexte est strictement interdit sans un accord écrit exprès de la société Oriane Bernard.
 
 ## Article 11 - Données personnelles
 
-La société Oriane Bernard se réserve le droit de collecter les informations nominatives et les données personnelles vous concernant. Elles sont nécessaires à la gestion de votre commande, ainsi qu'à l'amélioration des services et des informations que nous vous adressons.
-Elles peuvent aussi être transmises aux sociétés qui contribuent à ces relations, telles que celles chargées de l'exécution des services et commandes pour leur gestion, exécution, traitement et paiement.
-Ces informations et données sont également conservées à des fins de sécurité, afin de respecter les obligations légales et réglementaires.
-Conformément à la loi du 6 janvier 1978, vous disposez d'un droit d'accès, de rectification et d'opposition aux informations nominatives et aux données personnelles vous concernant, directement sur le site Internet.
+Toutes les informations et données personnelles collectées sur le site sont nécessaires à la facturation et à la livraison des achats mais restent strictement confidentielles. Oriane BERNARD s'engage à ne pas communiquer, gratuitement ou avec contrepartie, les coordonnées de ses acheteurs à un tiers, excepté si il y est contraint par une autorité judiciaire ou par la loi. L'acheteur dispose d'un droit d'accès, de modification et de suppression des données qui le concernent (Article 34 de la loi "Informatique et Libertés") qu'il peut exercer. Pour se faire, il suffit d'en faire la demande par email à  makramonde@gmail.com.
+Le refus de l'acheteur de fournir des données nécessaires à sa commande aura pour conséquence l'impossibilité de procéder à la livraison des produits qu'il souhaiterait acheter.
 
 ## Article 12- Archivage Preuve
 
@@ -122,3 +135,4 @@ Les registres informatisés de la société Oriane Bernard seront considérés p
 ## Article 13 - Droit applicable en cas de litiges
 
 La langue du présent contrat est en langue française. Les présentes conditions de vente sont soumises à la loi française. En cas de litige, les tribunaux français seront les seuls compétents.
+
