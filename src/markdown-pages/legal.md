@@ -1,3 +1,8 @@
+---
+path: '/legal'
+Title: 'legal'
+---
+
 # Conditions générales de vente des produits et services vendus sur ce site
 
 + Oriane Bernard entrepreneur individuel TVA non applicable : article 293 B du CGI.
