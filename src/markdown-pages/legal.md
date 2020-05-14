@@ -1,6 +1,6 @@
 ---
 path: '/legal'
-Title: 'legal'
+title: 'Légal'
 ---
 
 # Conditions générales de vente des produits et services vendus sur ce site
