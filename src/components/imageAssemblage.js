@@ -18,8 +18,8 @@ const AssemblageImage = () => {
     query {
       placeholderImage: file(relativePath: { eq: "assemblage.jpg" }) {
         childImageSharp {
-          fluid(maxWidth: 800) {
-            ...GatsbyImageSharpFluid
+          fluid {
+            ...GatsbyImageSharpFluid_withWebp_tracedSVG
           }
         }
       }

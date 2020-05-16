@@ -155,7 +155,7 @@ const Product = ({
           )}`}
           image={
             currentImage &&
-            `${site.siteMetadata.siteUrl}${currentImage.childImageSharp.fluid.src}`
+            `${site.siteMetadata.siteUrl}${currentImage.publicURL}`
           }
           location={location}
           jsonld={{
@@ -163,14 +163,9 @@ const Product = ({
             name: currentProduct.name,
             image:
               currentProduct.localImages &&
-              currentProduct.localImages.reduce((images, image) => {
-                const imageSet = image.childImageSharp.fluid.srcSet
-                  .split(/ \d*w(,\n)?/)
-                  .filter(url => url && url.startsWith('/'))
-                  .map(url => `${site.siteMetadata.siteUrl}${url}`)
-
-                return images.concat(imageSet)
-              }, []),
+              currentProduct.localImages.map(
+                ({ publicURL }) => `${site.siteMetadata.siteUrl}${publicURL}`
+              ),
             description: currentProduct.description,
             sku: currentSku.id,
             brand: {
@@ -270,9 +265,9 @@ const ProductRaw = ({ product, sku }) => {
         width="100%"
       >
         {image && (
-          <Img
+          <img
             alt={`${product.name} - Plein écran`}
-            fluid={image.childImageSharp.fullscreen}
+            src={image.publicURL}
             className={styles.imageModal}
           />
         )}
@@ -296,13 +291,11 @@ export const query = graphql`
       name
       localImages {
         childImageSharp {
-          fluid(maxWidth: 800) {
-            ...GatsbyImageSharpFluid
-          }
-          fullscreen: fluid(maxWidth: 2000) {
-            ...GatsbyImageSharpFluid
+          fluid {
+            ...GatsbyImageSharpFluid_withWebp_tracedSVG
           }
         }
+        publicURL
       }
     }
     currentSku: stripeSku(product: { id: { eq: $id } }) {
@@ -317,8 +310,8 @@ export const query = graphql`
       created
       localImages {
         childImageSharp {
-          fluid(maxWidth: 800) {
-            ...GatsbyImageSharpFluid
+          fluid {
+            ...GatsbyImageSharpFluid_withWebp
           }
         }
       }
@@ -335,8 +328,8 @@ export const query = graphql`
       created
       localImages {
         childImageSharp {
-          fluid(maxWidth: 800) {
-            ...GatsbyImageSharpFluid
+          fluid {
+            ...GatsbyImageSharpFluid_withWebp
           }
         }
       }

@@ -18,8 +18,8 @@ const MakramondeBijouImage = () => {
     query {
       placeholderImage: file(relativePath: { eq: "makramonde-bijou.png" }) {
         childImageSharp {
-          fluid(maxWidth: 800) {
-            ...GatsbyImageSharpFluid
+          fluid {
+            ...GatsbyImageSharpFluid_withWebp_tracedSVG
           }
         }
       }

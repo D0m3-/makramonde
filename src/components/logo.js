@@ -19,8 +19,7 @@ const Logo = () => {
       placeholderImage: file(relativePath: { eq: "MAKRA22.png" }) {
         childImageSharp {
           fixed(width: 200) {
-            # Choose either the fragment including a small base64ed image, a traced placeholder SVG, or one without.
-            ...GatsbyImageSharpFixed
+            ...GatsbyImageSharpFixed_tracedSVG
           }
         }
       }
