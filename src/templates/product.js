@@ -243,18 +243,20 @@ const ProductRaw = ({ product, sku }) => {
         </p>
         <div className={styles.images}>
           {product.localImages &&
-            product.localImages.map(({ childImageSharp, id }, index) => (
-              <div
-                key={childImageSharp.id}
-                onClick={() => setImage({ childImageSharp, id })}
-              >
-                <Img
-                  alt={`${product.name} - ${0}`}
-                  fluid={childImageSharp.fluid}
-                  className={styles.image}
-                />
-              </div>
-            ))}
+            product.localImages.map(
+              ({ childImageSharp, id, publicURL }, index) => (
+                <div
+                  key={childImageSharp.id}
+                  onClick={() => setImage({ childImageSharp, id, publicURL })}
+                >
+                  <Img
+                    alt={`${product.name} - ${0}`}
+                    fluid={childImageSharp.fluid}
+                    className={styles.image}
+                  />
+                </div>
+              )
+            )}
         </div>
       </div>
       <Modal
