@@ -7,6 +7,7 @@
   "dependencies": {
     "antd": "^4.0.0",
     "classnames": "^2.2.6",
+    "cross-env": "^7.0.2",
     "gatsby": "^2.21.21",
     "gatsby-image": "^2.2.39",
     "gatsby-plugin-antd": "^2.1.0",
@@ -51,7 +52,8 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "cd functions/createCheckout && npm i && cd ../.. && gatsby build",
+    "build": "npm run install:functions && cross-env GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES=true gatsby build --log-pages",
+    "install:functions": "cd functions/createCheckout && npm i",
     "develop": "gatsby develop -H 0.0.0.0",
     "develop:trace": "gatsby develop -H 0.0.0.0 --open-tracing-config-file node_modules/gatsby/dist/utils/tracer/zipkin-local.js",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",

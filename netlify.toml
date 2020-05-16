@@ -1,2 +1,5 @@
 [build] # Make sure you don't have a duplicate [build] context!
   functions = "functions/"
+
+[[plugins]]
+  package = "netlify-plugin-gatsby-cache"
