@@ -59,7 +59,8 @@ const Product = ({
    */
   const initialOffsetTop = useRef()
   const [{ x }, set] = useSpring(() => ({ x: 0 }))
-  const isSwiping = useRef(false)
+  const isSwipingFired = useRef(false)
+  const [hasSwipeOffset, setHasSwipeOffset] = useState(false)
 
   const [topOffset, setTopOffset] = useState(0)
 
@@ -88,11 +89,13 @@ const Product = ({
   // Set the drag hook and define component movement based on gesture data
   const bind = useDrag(
     ({ down, movement: [mx], swipe: [swipeX], cancel }) => {
-      if (isSwiping.current) {
+      setHasSwipeOffset(mx !== 0)
+      if (isSwipingFired.current) {
         return
       }
+
       if (swipeX) {
-        isSwiping.current = true
+        isSwipingFired.current = true
         set({
           x: swipeX * ref.current.offsetWidth,
           config: {
@@ -133,17 +136,17 @@ const Product = ({
         left: x
       }}
     >
-      {!transitioning && previousProduct && (
-        <div
+      {previousProduct && hasSwipeOffset && (
+        <aside
           className={styles.previousContainer}
           style={{
             top: topOffset
           }}
         >
           <ProductRaw product={previousProduct} sku={previousSku} />
-        </div>
+        </aside>
       )}
-      <div className={styles.currentContainer}>
+      <main className={styles.currentContainer}>
         <SEO
           title={currentProduct.name}
           description={`${currentProduct.description} - Prix : ${formatPrice(
@@ -191,16 +194,16 @@ const Product = ({
           }}
         ></SEO>
         <ProductRaw product={currentProduct} sku={currentSku} />
-      </div>
-      {!transitioning && nextProduct && (
-        <div
+      </main>
+      {nextProduct && hasSwipeOffset && (
+        <aside
           className={styles.nextContainer}
           style={{
             top: topOffset
           }}
         >
           <ProductRaw product={nextProduct} sku={nextSku} />
-        </div>
+        </aside>
       )}
     </animated.div>
   )
