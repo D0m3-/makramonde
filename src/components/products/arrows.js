@@ -31,6 +31,7 @@ const Arrows = ({ productId }) => {
       query={graphql`
         query {
           allStripeProduct(
+            sort: { order: DESC, fields: updated }
             filter: { active: { eq: true }, shippable: { eq: true } }
           ) {
             edges {
