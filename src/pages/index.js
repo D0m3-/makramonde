@@ -103,6 +103,7 @@ export const query = graphql`
     allStripeProduct(
       limit: 1
       filter: { active: { eq: true }, shippable: { eq: true } }
+      sort: { order: DESC, fields: updated }
     ) {
       edges {
         node {

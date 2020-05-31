@@ -53,6 +53,7 @@ exports.createPages = async ({ graphql, actions }) => {
     query {
       allStripeProduct(
         filter: { active: { eq: true }, shippable: { eq: true } }
+        sort: { order: DESC, fields: updated }
       ) {
         edges {
           next {
