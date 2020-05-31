@@ -8,7 +8,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useStaticQuery, graphql } from 'gatsby'
-import { Layout, Row, Col } from 'antd'
+import { Layout, Row, Col, Alert } from 'antd'
 
 import './layout.less'
 import styles from './layout.module.less'
@@ -55,6 +55,12 @@ const SiteLayout = ({ children, pageTitle, location, productId }) => {
         <Header theme="light" className={styles.header}>
           <SiteHeader pageTitle={pageTitle} location={location} />
         </Header>
+        <Alert
+          className={styles.alert}
+          type="info"
+          message={'Livraison PROMO à 1 centime pour la fête des mères !'}
+          closable
+        ></Alert>
         <Content className={styles.content}>
           <Row className={'full-height'}>
             <Col {...DEFAULT_COL_PROPS}>
