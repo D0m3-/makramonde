@@ -18,6 +18,8 @@ import Arrows from '../products/arrows'
 
 const { Header, Content, Footer, Sider } = Layout
 
+const PROMO_MESSAGE = ''
+
 const SiteLayout = ({ children, pageTitle, location, productId }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
@@ -55,12 +57,14 @@ const SiteLayout = ({ children, pageTitle, location, productId }) => {
         <Header theme="light" className={styles.header}>
           <SiteHeader pageTitle={pageTitle} location={location} />
         </Header>
-        <Alert
-          className={styles.alert}
-          type="info"
-          message={'Livraison PROMO à 1 centime pour la fête des mères !'}
-          closable
-        ></Alert>
+        {PROMO_MESSAGE && (
+          <Alert
+            className={styles.alert}
+            type="info"
+            message={PROMO_MESSAGE}
+            closable
+          ></Alert>
+        )}
         <Content className={styles.content}>
           <Row className={'full-height'}>
             <Col {...DEFAULT_COL_PROPS}>
