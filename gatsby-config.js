@@ -56,6 +56,16 @@ const plugins = [
     }
   },
   {
+    resolve: `gatsby-source-contentful`,
+    options: {
+      spaceId: `lqbvqzcpaex7`,
+      // Learn about environment variables: https://gatsby.dev/env-vars
+      accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+      environment: process.env.NODE_ENV === 'production' ? 'master' : 'test',
+      downloadLocal: true
+    }
+  },
+  {
     resolve: 'gatsby-plugin-transition-link',
     options: {
       layout: require.resolve(`./src/components/pageWrapper.js`)
