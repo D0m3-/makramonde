@@ -6,6 +6,7 @@
 
 const path = require('path')
 const { getProductUrl } = require('./src/util/link')
+const { getProducts } = require('./src/util/product')
 
 exports.sourceNodes = ({ actions, getNodes }) => {
   const hasProduct = getNodes().filter(
@@ -53,21 +54,51 @@ exports.createPages = async ({ graphql, actions }) => {
     query {
       allStripeProduct(
         filter: { active: { eq: true }, shippable: { eq: true } }
-        sort: { order: DESC, fields: updated }
       ) {
-        edges {
-          next {
+        nodes {
+          id
+          name
+          description
+          created
+          updated
+          metadata {
+            category
+          }
+          localImages {
+            childImageSharp {
+              fluid {
+                ...GatsbyImageSharpFluid_withWebp_tracedSVG
+              }
+            }
+            publicURL
+          }
+        }
+      }
+      allStripeSku {
+        nodes {
+          id
+          price
+          currency
+          product {
             id
           }
-          previous {
-            id
-          }
-          node {
-            id
-            name
-            created
-            metadata {
-              category
+        }
+      }
+      allContentfulUniqueProduct {
+        nodes {
+          id
+          title
+          createdAt
+          updatedAt
+          categories
+          images {
+            localFile {
+              childImageSharp {
+                fluid {
+                  ...GatsbyImageSharpFluid_withWebp_tracedSVG
+                }
+              }
+              publicURL
             }
           }
         }
@@ -75,22 +106,22 @@ exports.createPages = async ({ graphql, actions }) => {
     }
   `)
 
-  productsQuery.data &&
-    productsQuery.data.allStripeProduct.edges.forEach(
-      ({ node, next, previous }) =>
-        createPage({
-          path: getProductUrl(node),
-          component: path.resolve(`./src/templates/product.js`),
-          context: {
-            // Data passed to context is available
-            // in page queries as GraphQL variables.
-            id: node.id,
-            title: node.name,
-            nextId: next && next.id,
-            previousId: previous && previous.id
-          }
-        })
+  if (productsQuery.data) {
+    const products = getProducts(productsQuery.data)
+    products.forEach((node, index) =>
+      createPage({
+        path: getProductUrl(node),
+        component: path.resolve(`./src/templates/product.js`),
+        context: {
+          // Data passed to context is available
+          // in page queries as GraphQL variables.
+          current: node,
+          previous: index > 0 && products[index - 1],
+          next: index < products.length - 1 && products[index + 1]
+        }
+      })
     )
+  }
 
   // Markdown pages
   const markdownTemplate = path.resolve(`src/templates/markdownTemplate.js`)

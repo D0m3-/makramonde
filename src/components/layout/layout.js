@@ -20,7 +20,14 @@ const { Header, Content, Footer, Sider } = Layout
 
 const PROMO_MESSAGE = ''
 
-const SiteLayout = ({ children, pageTitle, location, productId }) => {
+const SiteLayout = ({
+  children,
+  pageTitle,
+  location,
+  currentProduct,
+  previousProduct,
+  nextProduct
+}) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -69,10 +76,13 @@ const SiteLayout = ({ children, pageTitle, location, productId }) => {
           <Row className={'full-height'}>
             <Col {...DEFAULT_COL_PROPS}>
               {children}
-              {productId !== undefined && (
+              {currentProduct?.id !== undefined && (
                 <>
                   <div className={styles.arrows}>
-                    <Arrows productId={productId} />
+                    <Arrows
+                      nextProduct={nextProduct}
+                      previousProduct={previousProduct}
+                    />
                   </div>
                 </>
               )}
