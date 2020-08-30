@@ -2,7 +2,7 @@
   "name": "makramonde",
   "private": true,
   "description": "makramonde ecommerce site",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "author": "Florian Bernard <florian.bernard.0@gmail.com>",
   "dependencies": {
     "antd": "^4.0.0",
