@@ -110,7 +110,9 @@ const plugins = [
             nodes {
               path
               context {
-                id
+                current{
+                  id
+                }
               }
             }
           }
