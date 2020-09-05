@@ -7,9 +7,11 @@ const PageWrapper = ({ children, pageContext, location }) => {
   return (
     <CartProvider>
       <Layout
-        pageTitle={pageContext.title || getPageTitle(location.pathname)}
+        pageTitle={pageContext.current?.name || getPageTitle(location.pathname)}
         location={location}
-        productId={pageContext.id}
+        currentProduct={pageContext.current}
+        previousProduct={pageContext.previous}
+        nextProduct={pageContext.next}
       >
         {children}
       </Layout>

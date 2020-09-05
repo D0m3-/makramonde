@@ -4,6 +4,7 @@ require('dotenv').config({
 
 const fs = require('fs')
 const lessToJs = require('less-vars-to-js')
+const { getProducts } = require('./src/util/product')
 
 const plugins = [
   `gatsby-plugin-react-helmet`,
@@ -22,7 +23,7 @@ const plugins = [
     }
   },
   {
-    resolve: `gatsby-plugin-remote-images-d0m3`,
+    resolve: `gatsby-plugin-remote-images`,
     options: {
       // The node type that has the images you want to grab.
       // This is generally the camelcased version of the word
@@ -34,18 +35,12 @@ const plugins = [
       // For traversing objects with arrays at given depths, see [how to handle arrays below](#traversing-objects-with-arrays)
       imagePath: 'images',
       name: 'localImages',
-      type: 'array',
-      // Allows modification of the URL per image if needed. Expects a function
-      // taking the original URL as a parameter and returning the desired URL.
-      prepareUrl: ({ url, node, index }) => {
-        return url
-      }
+      type: 'array'
     }
   },
   `gatsby-transformer-remark`,
   `gatsby-transformer-sharp`,
   `gatsby-plugin-sharp`,
-
   `gatsby-plugin-stripe`,
   {
     resolve: `gatsby-source-stripe`,
@@ -53,6 +48,15 @@ const plugins = [
       objects: ['Sku', 'Product'],
       secretKey: process.env.STRIPE_SECRET_KEY,
       downloadFiles: true
+    }
+  },
+  {
+    resolve: `gatsby-source-contentful`,
+    options: {
+      spaceId: `lqbvqzcpaex7`,
+      accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+      environment: process.env.GATSBY_STRIPE_ENV === 'test' ? 'test' : 'master',
+      downloadLocal: true
     }
   },
   {
@@ -119,9 +123,25 @@ const plugins = [
               }
             }
           }
+
+          allContentfulUniqueProduct{
+            nodes {
+              id,
+              images {
+                localFile{
+                  publicURL
+                }
+              }
+            }
+          }
           
       }`,
-      serialize: ({ site, allSitePage, allStripeProduct }) =>
+      serialize: ({
+        site,
+        allSitePage,
+        allStripeProduct,
+        allContentfulUniqueProduct
+      }) =>
         allSitePage.nodes.map(node => {
           const sitemap = {
             url: `${site.siteMetadata.siteUrl}${node.path}`
@@ -129,9 +149,11 @@ const plugins = [
           if (!node.context.id) {
             return sitemap
           }
-          const product = allStripeProduct.nodes.find(
-            ({ id }) => node.context.id === id
-          )
+          const product = getProducts({
+            allStripeProduct,
+            allContentfulUniqueProduct
+          }).find(({ id }) => node.context.id === id)
+
           if (!product) {
             return sitemap
           }

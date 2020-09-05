@@ -10,6 +10,7 @@ import {
 import { StaticQuery } from 'gatsby'
 import { getProductUrl } from '../../../util/link'
 import styles from './menu.module.less'
+import { getProducts } from '../../../util/product'
 
 const { SubMenu } = Menu
 
@@ -20,14 +21,25 @@ const SiteMenu = props => (
         allStripeProduct(
           filter: { active: { eq: true }, shippable: { eq: true } }
         ) {
-          edges {
-            node {
+          nodes {
+            name
+            description
+            created
+            metadata {
+              category
+            }
+          }
+        }
+
+        allContentfulUniqueProduct {
+          nodes {
+            title
+            description {
+              json
+            }
+            createdAt
+            categories {
               name
-              description
-              created
-              metadata {
-                category
-              }
             }
           }
         }
@@ -40,33 +52,29 @@ const SiteMenu = props => (
 const InnerMenu = ({ data, location, onSelect }) => {
   const [search, setSearch] = useState('')
   const autres = []
-  const categories = data.allStripeProduct.edges.reduce(
-    (categories, { node }) => {
-      const category = node.metadata && node.metadata.category
-      if (
-        search.length &&
-        !node.name.toLowerCase().includes(search.toLowerCase()) &&
-        !(
-          node.description &&
-          node.description.toLowerCase().includes(search.toLowerCase())
-        )
-      ) {
-        return categories
+  const categories = getProducts(data).reduce((categories, product) => {
+    if (
+      search.length &&
+      !product.name.toLowerCase().includes(search.toLowerCase()) &&
+      !(
+        product.description &&
+        product.description.toLowerCase().includes(search.toLowerCase())
+      )
+    ) {
+      return categories
+    }
+    if (!product.categories?.length) {
+      autres[product.name] = getProductUrl(product)
+      return categories
+    }
+    product.categories.forEach(category => {
+      categories[category] = {
+        ...categories[category],
+        [product.name]: getProductUrl(product)
       }
-      if (!category) {
-        autres[node.name] = getProductUrl(node)
-        return categories
-      }
-      return {
-        ...categories,
-        [category]: {
-          ...categories[category],
-          [node.name]: getProductUrl(node)
-        }
-      }
-    },
-    {}
-  )
+    })
+    return categories
+  }, {})
   const onChange = e => {
     setSearch(e.target.value)
   }

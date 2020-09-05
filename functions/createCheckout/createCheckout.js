@@ -1,12 +1,19 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+const contentful = require('contentful')
 const Shipping = require('./constants/shipping')
+
+const contentfulClient = contentful.createClient({
+  space: `lqbvqzcpaex7`,
+  accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+  environment: process.env.GATSBY_STRIPE_ENV === 'test' ? 'test' : 'master'
+})
 
 exports.handler = async function(event, context, callback) {
   const { origin, referer } = event.headers
   const incoming = JSON.parse(event.body)
-  const { skuIds } = incoming
+  const { products } = incoming
   try {
-    const skus = await getSkus({ skuIds })
+    const skus = await getProducts({ products })
     const data = await createCheckout({ skus, origin, referer })
     return respond({ id: data.id })
   } catch (err) {
@@ -25,14 +32,25 @@ const respond = fulfillmentText => {
   }
 }
 
-async function getSkus({ skuIds }) {
+async function getProducts({ products }) {
   return await Promise.all(
-    skuIds.map(async id => {
-      const sku = await stripe.skus.retrieve(id)
-      const product = await stripe.products.retrieve(sku.product)
-      return {
-        ...sku,
-        product
+    products.map(async ({ id, from }) => {
+      if (from === 'stripe') {
+        const sku = await stripe.skus.retrieve(id)
+        const product = await stripe.products.retrieve(sku.product)
+        return {
+          name: product.name,
+          amount: sku.price,
+          currency: sku.currency,
+          ...(sku.image && { images: [sku.image] }) //TODO fix image for checkout
+        }
+      } else if (from === 'contentful') {
+        const product = await contentfulClient.getEntry(id)
+        return {
+          name: product.fields.title,
+          amount: product.fields.price * 100,
+          currency: 'EUR'
+        }
       }
     })
   )
@@ -40,11 +58,8 @@ async function getSkus({ skuIds }) {
 
 async function createCheckout({ skus, origin, referer, shippingId }) {
   const items = skus.map(sku => ({
-    name: sku.product.name,
-    amount: sku.price,
-    currency: sku.currency,
-    quantity: 1,
-    ...(sku.image && { images: [sku.image] }) //TODO fix image for checkout
+    ...sku,
+    quantity: 1
   }))
 
   // Add shipping line
