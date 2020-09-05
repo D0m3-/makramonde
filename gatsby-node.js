@@ -49,8 +49,21 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const { createPage } = actions
 
+  const GatsbyImageSharpFluid_withWebp_tracedSVG = `
+    fragment GatsbyImageSharpFluid_withWebp_tracedSVG on ImageSharpFluid {
+      tracedSVG
+      aspectRatio
+      src
+      srcSet
+      srcWebp
+      srcSetWebp
+      sizes
+    }
+  `
+
   // Product pages
   const productsQuery = await graphql(`
+    ${GatsbyImageSharpFluid_withWebp_tracedSVG}
     query {
       allStripeProduct(
         filter: { active: { eq: true }, shippable: { eq: true } }
@@ -86,11 +99,17 @@ exports.createPages = async ({ graphql, actions }) => {
       }
       allContentfulUniqueProduct {
         nodes {
-          id
+          contentful_id
           title
           createdAt
           updatedAt
-          categories
+          price
+          categories {
+            name
+          }
+          description {
+            json
+          }
           images {
             localFile {
               childImageSharp {
@@ -116,8 +135,8 @@ exports.createPages = async ({ graphql, actions }) => {
           // Data passed to context is available
           // in page queries as GraphQL variables.
           current: node,
-          previous: index > 0 && products[index - 1],
-          next: index < products.length - 1 && products[index + 1]
+          previous: index > 0 ? products[index - 1] : undefined,
+          next: index < products.length - 1 ? products[index + 1] : undefined
         }
       })
     )

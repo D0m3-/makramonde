@@ -23,7 +23,7 @@ const getProducts = ({
     .concat(
       allContentfulUniqueProduct.nodes.map(
         ({
-          id,
+          contentful_id,
           title,
           description,
           createdAt,
@@ -32,15 +32,15 @@ const getProducts = ({
           images,
           price
         }) => ({
-          id,
+          id: contentful_id,
           name: title,
           created: new Date(createdAt).getTime(),
           updated: new Date(updatedAt).getTime(),
-          categories,
+          categories: categories ? categories.map(({ name }) => name) : [],
           localImages: images && images.map(({ localFile }) => localFile),
-          price,
+          price: price * 100,
           currency: 'EUR',
-          description,
+          richDescription: description ? description.json : undefined,
           from: 'contentful'
         })
       )

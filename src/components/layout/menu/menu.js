@@ -38,7 +38,9 @@ const SiteMenu = props => (
               json
             }
             createdAt
-            categories
+            categories {
+              name
+            }
           }
         }
       }

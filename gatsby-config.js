@@ -55,7 +55,7 @@ const plugins = [
     options: {
       spaceId: `lqbvqzcpaex7`,
       accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
-      environment: process.env.NODE_ENV === 'production' ? 'master' : 'test',
+      environment: process.env.GATSBY_STRIPE_ENV === 'test' ? 'test' : 'master',
       downloadLocal: true
     }
   },

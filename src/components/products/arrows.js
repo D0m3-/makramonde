@@ -1,10 +1,8 @@
+import { LeftCircleFilled, RightCircleFilled } from '@ant-design/icons'
+import { Button } from 'antd'
 import React from 'react'
-import { graphql, StaticQuery } from 'gatsby'
-import { RightCircleFilled, LeftCircleFilled } from '@ant-design/icons'
-
 import { getProductUrl } from '../../util/link'
 import SwipeLink from '../animation/swipe'
-import { Button } from 'antd'
 import styles from './arrows.module.less'
 
 const Arrow = ({ name, created, direction }) => (

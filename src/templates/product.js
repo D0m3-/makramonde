@@ -1,20 +1,18 @@
-import React, { useContext, useState, useRef, useEffect } from 'react'
-import { graphql } from 'gatsby'
 import { PlusCircleOutlined, ShoppingOutlined } from '@ant-design/icons'
-import Img from 'gatsby-image'
-
-import { formatPrice } from '../util/price'
-import { CartContext } from '../components/cart/cart'
-import { checkout } from '../stripe/checkout'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { Button, Modal } from 'antd'
-import styles from './product.module.less'
-import SEO from '../components/seo'
-
-import { useSpring, animated } from 'react-spring'
+import { graphql, navigate } from 'gatsby'
+import Img from 'gatsby-image'
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import { animated, useSpring } from 'react-spring'
 import { useDrag } from 'react-use-gesture'
-import { navigate } from 'gatsby'
-import { getProductUrl } from '../util/link'
 import { SwipeSpring } from '../components/animation/swipe'
+import { CartContext } from '../components/cart/cart'
+import SEO from '../components/seo'
+import { checkout } from '../stripe/checkout'
+import { getProductUrl } from '../util/link'
+import { formatPrice } from '../util/price'
+import styles from './product.module.less'
 
 const THRESHOLD = 20
 const NO_DRAG_THRESHOLD = 2 * THRESHOLD
@@ -36,7 +34,6 @@ const SwipableProduct = props => {
 }
 
 const Product = ({ data: { site }, pageContext, transitioning, location }) => {
-  console.log(pageContext)
   const {
     current: currentProduct,
     next: nextProduct,
@@ -206,7 +203,9 @@ const ProductRaw = ({ product }) => {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <p>{product.description}</p>
+        {!product.richDescription && <p>{product.description}</p>}
+        {product.richDescription &&
+          documentToReactComponents(product.richDescription)}
         <p>
           <strong>Prix :</strong>
           <span className={styles.marginLeft}>
