@@ -74,7 +74,7 @@
   "bugs": {
     "url": "https://github.com/D0m3-/makramonde/issues"
   },
-  "homepage": "https://makramonde.netlify.com",
+  "homepage": "https://makramonde.fr",
   "prettier": {
     "singleQuote": true,
     "semi": false
