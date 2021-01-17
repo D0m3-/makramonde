@@ -1,20 +1,18 @@
-import React, { useContext, useState, useRef, useEffect } from 'react'
-import { graphql } from 'gatsby'
 import { PlusCircleOutlined, ShoppingOutlined } from '@ant-design/icons'
-import Img from 'gatsby-image'
-
-import { formatPrice } from '../util/price'
-import { CartContext } from '../components/cart/cart'
-import { checkout } from '../stripe/checkout'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { Button, Modal } from 'antd'
-import styles from './product.module.less'
-import SEO from '../components/seo'
-
-import { useSpring, animated } from 'react-spring'
+import { graphql, navigate } from 'gatsby'
+import Img from 'gatsby-image'
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import { animated, useSpring } from 'react-spring'
 import { useDrag } from 'react-use-gesture'
-import { navigate } from 'gatsby'
-import { getProductUrl } from '../util/link'
 import { SwipeSpring } from '../components/animation/swipe'
+import { CartContext } from '../components/cart/cart'
+import SEO from '../components/seo'
+import { checkout } from '../stripe/checkout'
+import { getProductUrl } from '../util/link'
+import { formatPrice } from '../util/price'
+import styles from './product.module.less'
 
 const THRESHOLD = 20
 const NO_DRAG_THRESHOLD = 2 * THRESHOLD
@@ -35,19 +33,12 @@ const SwipableProduct = props => {
   )
 }
 
-const Product = ({
-  data: {
-    site,
-    currentProduct,
-    currentSku,
-    nextProduct,
-    nextSku,
-    previousProduct,
-    previousSku
-  },
-  transitioning,
-  location
-}) => {
+const Product = ({ data: { site }, pageContext, transitioning, location }) => {
+  const {
+    current: currentProduct,
+    next: nextProduct,
+    previous: previousProduct
+  } = pageContext
   /**
    * @constant
    * @type React.MutableRefObject<HTMLDivElement>
@@ -143,15 +134,15 @@ const Product = ({
             top: topOffset
           }}
         >
-          <ProductRaw product={previousProduct} sku={previousSku} />
+          <ProductRaw product={previousProduct} />
         </aside>
       )}
       <main className={styles.currentContainer}>
         <SEO
           title={currentProduct.name}
           description={`${currentProduct.description} - Prix : ${formatPrice(
-            currentSku.price,
-            currentSku.currency
+            currentProduct.price,
+            currentProduct.currency
           )}`}
           image={
             currentImage &&
@@ -167,7 +158,7 @@ const Product = ({
                 ({ publicURL }) => `${site.siteMetadata.siteUrl}${publicURL}`
               ),
             description: currentProduct.description,
-            sku: currentSku.id,
+            sku: currentProduct.id,
             brand: {
               '@type': 'Brand',
               name: 'Makramonde'
@@ -178,8 +169,8 @@ const Product = ({
             offers: {
               '@type': 'Offer',
               url: `${site.siteMetadata.siteUrl}${location.pathname}`,
-              priceCurrency: currentSku.currency,
-              price: currentSku.price / 100,
+              priceCurrency: currentProduct.currency,
+              price: currentProduct.price,
               itemCondition: 'https://schema.org/NewCondition',
               availability: 'https://schema.org/OnlineOnly',
               priceValidUntil: new Date(
@@ -188,7 +179,7 @@ const Product = ({
             }
           }}
         ></SEO>
-        <ProductRaw product={currentProduct} sku={currentSku} />
+        <ProductRaw product={currentProduct} />
       </main>
       {nextProduct && hasSwipeOffset && (
         <aside
@@ -197,14 +188,14 @@ const Product = ({
             top: topOffset
           }}
         >
-          <ProductRaw product={nextProduct} sku={nextSku} />
+          <ProductRaw product={nextProduct} />
         </aside>
       )}
     </animated.div>
   )
 }
 
-const ProductRaw = ({ product, sku }) => {
+const ProductRaw = ({ product }) => {
   const [image, setImage] = useState()
   const [loading, setLoading] = useState(false)
 
@@ -212,18 +203,20 @@ const ProductRaw = ({ product, sku }) => {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <p>{product.description}</p>
+        {!product.richDescription && <p>{product.description}</p>}
+        {product.richDescription &&
+          documentToReactComponents(product.richDescription)}
         <p>
           <strong>Prix :</strong>
           <span className={styles.marginLeft}>
-            {formatPrice(sku.price, sku.currency)}
+            {formatPrice(product.price, product.currency)}
           </span>
         </p>
         <p className={styles.buttons}>
           <Button
             type="default"
             icon={<PlusCircleOutlined />}
-            onClick={() => addItem(sku)}
+            onClick={() => addItem(product)}
           >
             panier
           </Button>
@@ -234,7 +227,7 @@ const ProductRaw = ({ product, sku }) => {
             icon={<ShoppingOutlined />}
             onClick={async () => {
               setLoading(true)
-              await checkout([sku])
+              await checkout([product])
               setLoading(false)
             }}
           >
@@ -281,65 +274,11 @@ const ProductRaw = ({ product, sku }) => {
 export default SwipableProduct
 
 export const query = graphql`
-  query($id: String!, $nextId: String, $previousId: String) {
+  query {
     site {
       siteMetadata {
         siteUrl
       }
-    }
-    currentProduct: stripeProduct(id: { eq: $id }) {
-      id
-      description
-      name
-      localImages {
-        childImageSharp {
-          fluid {
-            ...GatsbyImageSharpFluid_withWebp_tracedSVG
-          }
-        }
-        publicURL
-      }
-    }
-    currentSku: stripeSku(product: { id: { eq: $id } }) {
-      price
-      id
-      currency
-    }
-    nextProduct: stripeProduct(id: { eq: $nextId }) {
-      id
-      description
-      name
-      created
-      localImages {
-        childImageSharp {
-          fluid {
-            ...GatsbyImageSharpFluid_withWebp
-          }
-        }
-      }
-    }
-    nextSku: stripeSku(product: { id: { eq: $nextId } }) {
-      price
-      id
-      currency
-    }
-    previousProduct: stripeProduct(id: { eq: $previousId }) {
-      id
-      description
-      name
-      created
-      localImages {
-        childImageSharp {
-          fluid {
-            ...GatsbyImageSharpFluid_withWebp
-          }
-        }
-      }
-    }
-    previousSku: stripeSku(product: { id: { eq: $previousId } }) {
-      price
-      id
-      currency
     }
   }
 `

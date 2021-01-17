@@ -1,20 +1,20 @@
+import { Button } from 'antd'
 import React, { useMemo } from 'react'
-
+import {
+  FRANCE_METRO,
+  SHIPPING
+} from '../../functions/createCheckout/constants/shipping'
+import SwipeLink, { SwipeSpring } from '../components/animation/swipe'
+import AssemblageImage from '../components/imageAssemblage'
+import MakramondeBijouImage from '../components/imageMakramondeBijou'
 import SEO from '../components/seo'
 import { getProductUrl } from '../util/link'
-import SwipeLink, { SwipeSpring } from '../components/animation/swipe'
-import {
-  SHIPPING,
-  FRANCE_METRO
-} from '../../functions/createCheckout/constants/shipping'
-import MakramondeBijouImage from '../components/imageMakramondeBijou'
-import AssemblageImage from '../components/imageAssemblage'
-import { Button } from 'antd'
+import { getProducts } from '../util/product'
 import styles from './index.module.less'
 
 const IndexPage = ({ data, location }) => {
-  const firstProduct =
-    data.allStripeProduct.edges.length && data.allStripeProduct.edges[0].node
+  const products = getProducts(data)
+  const firstProduct = products.length && products[0]
 
   const content = useMemo(
     () => (
@@ -105,12 +105,22 @@ export const query = graphql`
       filter: { active: { eq: true }, shippable: { eq: true } }
       sort: { order: DESC, fields: updated }
     ) {
-      edges {
-        node {
-          id
-          name
-          created
-        }
+      nodes {
+        id
+        name
+        created
+        updated
+      }
+    }
+    allContentfulUniqueProduct(
+      limit: 1
+      sort: { order: DESC, fields: updatedAt }
+    ) {
+      nodes {
+        contentful_id
+        title
+        createdAt
+        updatedAt
       }
     }
     defaultImage: file(relativePath: { eq: "makramonde-bijou.png" }) {
