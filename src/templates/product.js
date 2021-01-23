@@ -1,8 +1,8 @@
 import { PlusCircleOutlined, ShoppingOutlined } from '@ant-design/icons'
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { Button, Modal } from 'antd'
 import { graphql, navigate } from 'gatsby'
 import Img from 'gatsby-image'
+import { renderRichText } from 'gatsby-source-contentful/rich-text'
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { animated, useSpring } from 'react-spring'
 import { useDrag } from 'react-use-gesture'
@@ -17,11 +17,11 @@ import styles from './product.module.less'
 const THRESHOLD = 20
 const NO_DRAG_THRESHOLD = 2 * THRESHOLD
 
-const SwipableProduct = props => {
+const SwipableProduct = (props) => {
   return (
     <div
       style={{
-        overflow: 'hidden'
+        overflow: 'hidden',
       }}
     >
       <SwipeSpring>
@@ -37,7 +37,7 @@ const Product = ({ data: { site }, pageContext, transitioning, location }) => {
   const {
     current: currentProduct,
     next: nextProduct,
-    previous: previousProduct
+    previous: previousProduct,
   } = pageContext
   /**
    * @constant
@@ -63,7 +63,7 @@ const Product = ({ data: { site }, pageContext, transitioning, location }) => {
     let ticking = false
     const onScroll = () => {
       if (!ticking) {
-        window.requestAnimationFrame(function() {
+        window.requestAnimationFrame(function () {
           setTopOffset(
             initialOffsetTop.current - ref.current.getBoundingClientRect().top
           )
@@ -91,13 +91,13 @@ const Product = ({ data: { site }, pageContext, transitioning, location }) => {
           x: swipeX * ref.current.offsetWidth,
           config: {
             tension: 250,
-            clamp: true
+            clamp: true,
           },
           onRest: () => {
             navigate(
               getProductUrl(swipeX === 1 ? previousProduct : nextProduct)
             )
-          }
+          },
         })
         return
       }
@@ -124,14 +124,14 @@ const Product = ({ data: { site }, pageContext, transitioning, location }) => {
       ref={ref}
       style={{
         position: 'relative',
-        left: x
+        left: x,
       }}
     >
       {previousProduct && hasSwipeOffset && (
         <aside
           className={styles.previousContainer}
           style={{
-            top: topOffset
+            top: topOffset,
           }}
         >
           <ProductRaw product={previousProduct} />
@@ -154,17 +154,19 @@ const Product = ({ data: { site }, pageContext, transitioning, location }) => {
             name: currentProduct.name,
             image:
               currentProduct.localImages &&
-              currentProduct.localImages.map(
-                ({ publicURL }) => `${site.siteMetadata.siteUrl}${publicURL}`
-              ),
+              currentProduct.localImages
+                .filter((localImage) => !!localImage)
+                .map(
+                  ({ publicURL }) => `${site.siteMetadata.siteUrl}${publicURL}`
+                ),
             description: currentProduct.description,
             sku: currentProduct.id,
             brand: {
               '@type': 'Brand',
-              name: 'Makramonde'
+              name: 'Makramonde',
             },
             manufacturer: {
-              name: 'Makramonde'
+              name: 'Makramonde',
             },
             offers: {
               '@type': 'Offer',
@@ -175,8 +177,8 @@ const Product = ({ data: { site }, pageContext, transitioning, location }) => {
               availability: 'https://schema.org/OnlineOnly',
               priceValidUntil: new Date(
                 new Date().setFullYear(new Date().getFullYear() + 1)
-              ).toISOString()
-            }
+              ).toISOString(),
+            },
           }}
         ></SEO>
         <ProductRaw product={currentProduct} />
@@ -185,7 +187,7 @@ const Product = ({ data: { site }, pageContext, transitioning, location }) => {
         <aside
           className={styles.nextContainer}
           style={{
-            top: topOffset
+            top: topOffset,
           }}
         >
           <ProductRaw product={nextProduct} />
@@ -204,8 +206,7 @@ const ProductRaw = ({ product }) => {
     <div className={styles.container}>
       <div className={styles.content}>
         {!product.richDescription && <p>{product.description}</p>}
-        {product.richDescription &&
-          documentToReactComponents(product.richDescription)}
+        {product.richDescription && renderRichText(product.richDescription)}
         <p>
           <strong>Prix :</strong>
           <span className={styles.marginLeft}>

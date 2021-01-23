@@ -74,8 +74,10 @@ const plugins = [
   {
     resolve: 'gatsby-plugin-less',
     options: {
-      javascriptEnabled: true,
-      modifyVars: lessToJs(fs.readFileSync('./src/makramonde.less', 'utf8')) //still needed to override variables properly
+      lessOptions: {
+        javascriptEnabled: true,
+        modifyVars: lessToJs(fs.readFileSync('./src/makramonde.less', 'utf8')) //still needed to override variables properly
+      }
     }
   },
   {

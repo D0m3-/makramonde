@@ -1,10 +1,10 @@
 const getProducts = ({
   allStripeProduct,
   allStripeSku,
-  allContentfulUniqueProduct
+  allContentfulUniqueProduct,
 }) => {
   const products = allStripeProduct.nodes
-    .map(node => {
+    .map((node) => {
       const sku =
         allStripeSku &&
         allStripeSku.nodes.find(({ product }) => product.id === node.id)
@@ -17,7 +17,7 @@ const getProducts = ({
           node.metadata && node.metadata.category
             ? [node.metadata.category]
             : [],
-        from: 'stripe'
+        from: 'stripe',
       }
     })
     .concat(
@@ -30,7 +30,7 @@ const getProducts = ({
           updatedAt,
           categories,
           images,
-          price
+          price,
         }) => ({
           id: contentful_id,
           name: title,
@@ -40,8 +40,8 @@ const getProducts = ({
           localImages: images && images.map(({ localFile }) => localFile),
           price: price * 100,
           currency: 'EUR',
-          richDescription: description ? description.json : undefined,
-          from: 'contentful'
+          richDescription: description,
+          from: 'contentful',
         })
       )
     )

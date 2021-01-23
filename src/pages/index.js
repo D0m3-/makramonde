@@ -1,8 +1,9 @@
 import { Button } from 'antd'
+import { graphql } from 'gatsby'
 import React, { useMemo } from 'react'
 import {
   FRANCE_METRO,
-  SHIPPING
+  SHIPPING,
 } from '../../functions/createCheckout/constants/shipping'
 import SwipeLink, { SwipeSpring } from '../components/animation/swipe'
 import AssemblageImage from '../components/imageAssemblage'
@@ -64,7 +65,7 @@ const IndexPage = ({ data, location }) => {
     [firstProduct]
   )
   const swipe = useMemo(() => <SwipeSpring>{() => content}</SwipeSpring>, [
-    content
+    content,
   ])
   return (
     <>
@@ -80,7 +81,7 @@ const IndexPage = ({ data, location }) => {
           description: data.site.siteMetadata.description,
           image: `${data.site.siteMetadata.siteUrl}${data.defaultImage.childImageSharp.resize.src}`,
           name: data.site.siteMetadata.title,
-          alternateName: `Makramonde | Ecommerce macramé`
+          alternateName: `Makramonde | Ecommerce macramé`,
         }}
       />
       {swipe}
