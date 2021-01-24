@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "stripe": "^8.33.0"
+    "stripe": "^8.132.0"
   },
   "devDependencies": {}
 }

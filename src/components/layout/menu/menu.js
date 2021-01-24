@@ -1,20 +1,20 @@
-import React, { useState } from 'react'
-import { Menu, Input } from 'antd'
-import SwipeLink from '../../animation/swipe'
 import {
-  TagsOutlined,
+  FileTextOutlined,
   HomeOutlined,
   MessageOutlined,
-  FileTextOutlined
+  TagsOutlined,
 } from '@ant-design/icons'
-import { StaticQuery } from 'gatsby'
+import { Input, Menu } from 'antd'
+import { graphql, StaticQuery } from 'gatsby'
+import React, { useState } from 'react'
 import { getProductUrl } from '../../../util/link'
-import styles from './menu.module.less'
 import { getProducts } from '../../../util/product'
+import SwipeLink from '../../animation/swipe'
+import styles from './menu.module.less'
 
 const { SubMenu } = Menu
 
-const SiteMenu = props => (
+const SiteMenu = (props) => (
   <StaticQuery
     query={graphql`
       query {
@@ -35,7 +35,7 @@ const SiteMenu = props => (
           nodes {
             title
             description {
-              json
+              raw
             }
             createdAt
             categories {
@@ -45,7 +45,7 @@ const SiteMenu = props => (
         }
       }
     `}
-    render={data => <InnerMenu {...props} data={data} />}
+    render={(data) => <InnerMenu {...props} data={data} />}
   />
 )
 
@@ -67,15 +67,15 @@ const InnerMenu = ({ data, location, onSelect }) => {
       autres[product.name] = getProductUrl(product)
       return categories
     }
-    product.categories.forEach(category => {
+    product.categories.forEach((category) => {
       categories[category] = {
         ...categories[category],
-        [product.name]: getProductUrl(product)
+        [product.name]: getProductUrl(product),
       }
     })
     return categories
   }, {})
-  const onChange = e => {
+  const onChange = (e) => {
     setSearch(e.target.value)
   }
   return (
@@ -102,7 +102,7 @@ const InnerMenu = ({ data, location, onSelect }) => {
         </Menu.Item>
         {Object.keys(categories)
           .sort()
-          .map(category => (
+          .map((category) => (
             <SubMenu
               key={category}
               title={
@@ -114,7 +114,7 @@ const InnerMenu = ({ data, location, onSelect }) => {
             >
               {Object.keys(categories[category])
                 .sort()
-                .map(name => (
+                .map((name) => (
                   <Menu.Item key={categories[category][name]}>
                     <SwipeLink direction="left" to={categories[category][name]}>
                       {name}
@@ -135,7 +135,7 @@ const InnerMenu = ({ data, location, onSelect }) => {
           >
             {Object.keys(autres)
               .sort()
-              .map(name => (
+              .map((name) => (
                 <Menu.Item key={autres[name]}>
                   <SwipeLink direction="left" to={autres[name]}>
                     {name}

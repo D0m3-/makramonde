@@ -10,7 +10,7 @@ const { getProducts } = require('./src/util/product')
 
 exports.sourceNodes = ({ actions, getNodes }) => {
   const hasProduct = getNodes().filter(
-    node => node.object && node.object === 'product'
+    (node) => node.object && node.object === 'product'
   ).length
   if (!hasProduct) {
     console.log('No Product found, need to define types manually')
@@ -108,7 +108,7 @@ exports.createPages = async ({ graphql, actions }) => {
             name
           }
           description {
-            json
+            raw
           }
           images {
             localFile {
@@ -136,8 +136,8 @@ exports.createPages = async ({ graphql, actions }) => {
           // in page queries as GraphQL variables.
           current: node,
           previous: index > 0 ? products[index - 1] : undefined,
-          next: index < products.length - 1 ? products[index + 1] : undefined
-        }
+          next: index < products.length - 1 ? products[index + 1] : undefined,
+        },
       })
     )
   }
@@ -170,8 +170,8 @@ exports.createPages = async ({ graphql, actions }) => {
       path: node.frontmatter.path,
       component: markdownTemplate,
       context: {
-        title: node.frontmatter.title
-      } // additional data can be passed via context
+        title: node.frontmatter.title,
+      }, // additional data can be passed via context
     })
   })
 }
