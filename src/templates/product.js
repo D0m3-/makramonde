@@ -125,6 +125,7 @@ const Product = ({ data: { site }, pageContext, transitioning, location }) => {
       style={{
         position: 'relative',
         left: x,
+        touchAction: 'pan-y pinch-zoom',
       }}
     >
       {previousProduct && hasSwipeOffset && (
