@@ -2,7 +2,7 @@
   "name": "makramonde",
   "private": true,
   "description": "makramonde ecommerce site",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "author": "Florian Bernard <florian.bernard.0@gmail.com>",
   "dependencies": {
     "@contentful/rich-text-react-renderer": "^14.1.2",
